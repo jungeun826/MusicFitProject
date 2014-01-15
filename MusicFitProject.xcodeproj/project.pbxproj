@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		001F5C051886607300B7BC3F /* BPMAnalyzeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001F5C041886607300B7BC3F /* BPMAnalyzeViewController.m */; };
 		00B1512F187F77EE0036182C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B1512E187F77EE0036182C /* Foundation.framework */; };
 		00B15131187F77EE0036182C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B15130187F77EE0036182C /* CoreGraphics.framework */; };
 		00B15133187F77EE0036182C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B15132187F77EE0036182C /* UIKit.framework */; };
@@ -14,7 +15,7 @@
 		00B1513B187F77EE0036182C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B1513A187F77EE0036182C /* main.m */; };
 		00B1513F187F77EE0036182C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B1513E187F77EE0036182C /* AppDelegate.m */; };
 		00B15142187F77EE0036182C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00B15140187F77EE0036182C /* Main.storyboard */; };
-		00B15145187F77EE0036182C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B15144187F77EE0036182C /* ViewController.m */; };
+		00B15145187F77EE0036182C /* FirstViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B15144187F77EE0036182C /* FirstViewController.m */; };
 		00B15147187F77EE0036182C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 00B15146187F77EE0036182C /* Images.xcassets */; };
 		00B1514E187F77EE0036182C /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B1514D187F77EE0036182C /* XCTest.framework */; };
 		00B1514F187F77EE0036182C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B1512E187F77EE0036182C /* Foundation.framework */; };
@@ -34,6 +35,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		001F5C031886607300B7BC3F /* BPMAnalyzeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMAnalyzeViewController.h; sourceTree = "<group>"; };
+		001F5C041886607300B7BC3F /* BPMAnalyzeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPMAnalyzeViewController.m; sourceTree = "<group>"; };
 		00B1512B187F77EE0036182C /* MusicFitProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicFitProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00B1512E187F77EE0036182C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		00B15130187F77EE0036182C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -45,8 +48,8 @@
 		00B1513D187F77EE0036182C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		00B1513E187F77EE0036182C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		00B15141187F77EE0036182C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		00B15143187F77EE0036182C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		00B15144187F77EE0036182C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		00B15143187F77EE0036182C /* FirstViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FirstViewController.h; sourceTree = "<group>"; };
+		00B15144187F77EE0036182C /* FirstViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FirstViewController.m; sourceTree = "<group>"; };
 		00B15146187F77EE0036182C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		00B1514C187F77EE0036182C /* MusicFitProjectTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MusicFitProjectTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00B1514D187F77EE0036182C /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
@@ -115,10 +118,12 @@
 				00B1513D187F77EE0036182C /* AppDelegate.h */,
 				00B1513E187F77EE0036182C /* AppDelegate.m */,
 				00B15140187F77EE0036182C /* Main.storyboard */,
-				00B15143187F77EE0036182C /* ViewController.h */,
-				00B15144187F77EE0036182C /* ViewController.m */,
+				00B15143187F77EE0036182C /* FirstViewController.h */,
+				00B15144187F77EE0036182C /* FirstViewController.m */,
 				00B15146187F77EE0036182C /* Images.xcassets */,
 				00B15135187F77EE0036182C /* Supporting Files */,
+				001F5C031886607300B7BC3F /* BPMAnalyzeViewController.h */,
+				001F5C041886607300B7BC3F /* BPMAnalyzeViewController.m */,
 			);
 			path = MusicFitProject;
 			sourceTree = "<group>";
@@ -249,9 +254,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				00B15145187F77EE0036182C /* ViewController.m in Sources */,
+				00B15145187F77EE0036182C /* FirstViewController.m in Sources */,
 				00B1513F187F77EE0036182C /* AppDelegate.m in Sources */,
 				00B1513B187F77EE0036182C /* main.m in Sources */,
+				001F5C051886607300B7BC3F /* BPMAnalyzeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +466,7 @@
 				00B1515F187F77EE0036182C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		00B15160187F77EE0036182C /* Build configuration list for PBXNativeTarget "MusicFitProjectTests" */ = {
 			isa = XCConfigurationList;
@@ -468,6 +475,7 @@
 				00B15162187F77EE0036182C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

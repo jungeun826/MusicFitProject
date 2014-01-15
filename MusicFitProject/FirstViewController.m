@@ -6,20 +6,24 @@
 //  Copyright (c) 2014년 SDT-1. All rights reserved.
 //
 
-#import "ViewController.h"
-
-@interface ViewController ()
+#import "FirstViewController.h"
+#import "BPMAnalyzeViewController.h"
+@interface FirstViewController ()
+@property (weak, nonatomic) IBOutlet UIView *BPMContainer;
 
 @end
 
-@implementation ViewController
+@implementation FirstViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
 }
-
+- (IBAction)skipTutorial:(id)sender {
+    self.BPMContainer.hidden = NO;
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
