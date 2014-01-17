@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		00072D701887775C00FE977F /* ModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00072D6F1887775C00FE977F /* ModeViewController.m */; };
 		001F5C051886607300B7BC3F /* BPMAnalyzeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001F5C041886607300B7BC3F /* BPMAnalyzeViewController.m */; };
 		00B1512F187F77EE0036182C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B1512E187F77EE0036182C /* Foundation.framework */; };
 		00B15131187F77EE0036182C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B15130187F77EE0036182C /* CoreGraphics.framework */; };
@@ -22,6 +23,7 @@
 		00B15150187F77EE0036182C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B15132187F77EE0036182C /* UIKit.framework */; };
 		00B15158187F77EE0036182C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 00B15156187F77EE0036182C /* InfoPlist.strings */; };
 		00B1515A187F77EE0036182C /* MusicFitProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B15159187F77EE0036182C /* MusicFitProjectTests.m */; };
+		00F4C2521886A47E006146CD /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4C2511886A47E006146CD /* MainViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +37,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00072D6E1887775C00FE977F /* ModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModeViewController.h; path = ../ModeViewController.h; sourceTree = "<group>"; };
+		00072D6F1887775C00FE977F /* ModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModeViewController.m; path = ../ModeViewController.m; sourceTree = "<group>"; };
 		001F5C031886607300B7BC3F /* BPMAnalyzeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMAnalyzeViewController.h; sourceTree = "<group>"; };
 		001F5C041886607300B7BC3F /* BPMAnalyzeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPMAnalyzeViewController.m; sourceTree = "<group>"; };
 		00B1512B187F77EE0036182C /* MusicFitProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicFitProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,6 +60,8 @@
 		00B15155187F77EE0036182C /* MusicFitProjectTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MusicFitProjectTests-Info.plist"; sourceTree = "<group>"; };
 		00B15157187F77EE0036182C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		00B15159187F77EE0036182C /* MusicFitProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicFitProjectTests.m; sourceTree = "<group>"; };
+		00F4C2501886A47E006146CD /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../MainViewController.h; sourceTree = "<group>"; };
+		00F4C2511886A47E006146CD /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = ../MainViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,6 +130,10 @@
 				00B15135187F77EE0036182C /* Supporting Files */,
 				001F5C031886607300B7BC3F /* BPMAnalyzeViewController.h */,
 				001F5C041886607300B7BC3F /* BPMAnalyzeViewController.m */,
+				00F4C2501886A47E006146CD /* MainViewController.h */,
+				00F4C2511886A47E006146CD /* MainViewController.m */,
+				00072D6E1887775C00FE977F /* ModeViewController.h */,
+				00072D6F1887775C00FE977F /* ModeViewController.m */,
 			);
 			path = MusicFitProject;
 			sourceTree = "<group>";
@@ -257,7 +267,9 @@
 				00B15145187F77EE0036182C /* FirstViewController.m in Sources */,
 				00B1513F187F77EE0036182C /* AppDelegate.m in Sources */,
 				00B1513B187F77EE0036182C /* main.m in Sources */,
+				00F4C2521886A47E006146CD /* MainViewController.m in Sources */,
 				001F5C051886607300B7BC3F /* BPMAnalyzeViewController.m in Sources */,
+				00072D701887775C00FE977F /* ModeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
