@@ -1,19 +1,18 @@
 //
-//  MainViewController.m
+//  SwipeViewController.m
 //  MusicFitProject
 //
-//  Created by SDT-1 on 2014. 1. 15..
+//  Created by SDT-1 on 2014. 1. 28..
 //  Copyright (c) 2014년 SDT-1. All rights reserved.
 //
 
-#import "MainViewController.h"
-#import "ModeViewController.h"
-#import "AppDelegate.h"
-@interface MainViewController ()
+#import "SwipeViewController.h"
+
+@interface SwipeViewController ()
 
 @end
 
-@implementation MainViewController
+@implementation SwipeViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,11 +33,6 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-}
-- (IBAction)moveToMode:(id)sender {
-    AppDelegate *app = [UIApplication sharedApplication].delegate;
-    ModeViewController *modeVC = [[ModeViewController alloc]init];
-    app.window.rootViewController = modeVC;
 }
 
 @end

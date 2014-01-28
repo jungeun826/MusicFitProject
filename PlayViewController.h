@@ -1,5 +1,5 @@
 //
-//  BPMAnalyzeViewController.h
+//  MainViewController.h
 //  MusicFitProject
 //
 //  Created by SDT-1 on 2014. 1. 15..
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface BPMAnalyzeViewController : UIViewController
+@interface PlayViewController : UIViewController
 
 @end

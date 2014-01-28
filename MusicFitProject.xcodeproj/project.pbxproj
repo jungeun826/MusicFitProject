@@ -7,8 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0005823B188D15D1006760D0 /* BPMAnalysis.m in Sources */ = {isa = PBXBuildFile; fileRef = 0005823A188D15D1006760D0 /* BPMAnalysis.m */; };
 		00072D701887775C00FE977F /* ModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00072D6F1887775C00FE977F /* ModeViewController.m */; };
-		001F5C051886607300B7BC3F /* BPMAnalyzeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 001F5C041886607300B7BC3F /* BPMAnalyzeViewController.m */; };
+		00077D981891FA3300891C75 /* mode_title.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00077D951891FA3300891C75 /* mode_title.jpg */; };
+		00077D991891FA3300891C75 /* table_background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00077D961891FA3300891C75 /* table_background.jpg */; };
+		00077D9A1891FA3300891C75 /* cycle.png in Resources */ = {isa = PBXBuildFile; fileRef = 00077D971891FA3300891C75 /* cycle.png */; };
+		00077D9D1891FDBE00891C75 /* DBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00077D9C1891FDBE00891C75 /* DBManager.m */; };
+		00077D9F1891FF5800891C75 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 00077D9E1891FF5800891C75 /* libsqlite3.dylib */; };
+		005BA711188D1A1F003C5889 /* aubio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005BA710188D1A1F003C5889 /* aubio.framework */; };
+		006650E81890B3C400F97DE5 /* Main.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 006650E61890B3C400F97DE5 /* Main.jpg */; };
+		006650E91890B3C400F97DE5 /* Tutorial_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 006650E71890B3C400F97DE5 /* Tutorial_0.jpg */; };
+		006650EB1890B4BA00F97DE5 /* Title.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 006650EA1890B4BA00F97DE5 /* Title.jpg */; };
+		006650EF1890DD8B00F97DE5 /* Tutorial_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 006650EC1890DD8B00F97DE5 /* Tutorial_1.jpg */; };
+		006650F01890DD8B00F97DE5 /* Tutorial_2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 006650ED1890DD8B00F97DE5 /* Tutorial_2.jpg */; };
+		006650F11890DD8B00F97DE5 /* Tutorial_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 006650EE1890DD8B00F97DE5 /* Tutorial_3.jpg */; };
+		006650F31890E19400F97DE5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 006650F21890E19400F97DE5 /* Settings.bundle */; };
+		006650F81891136E00F97DE5 /* progressCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 006650F71891136E00F97DE5 /* progressCircle.png */; };
+		009FBC361897A0A500A28E73 /* SwipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009FBC351897A0A500A28E73 /* SwipeViewController.m */; };
 		00B1512F187F77EE0036182C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B1512E187F77EE0036182C /* Foundation.framework */; };
 		00B15131187F77EE0036182C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B15130187F77EE0036182C /* CoreGraphics.framework */; };
 		00B15133187F77EE0036182C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B15132187F77EE0036182C /* UIKit.framework */; };
@@ -23,7 +38,16 @@
 		00B15150187F77EE0036182C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B15132187F77EE0036182C /* UIKit.framework */; };
 		00B15158187F77EE0036182C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 00B15156187F77EE0036182C /* InfoPlist.strings */; };
 		00B1515A187F77EE0036182C /* MusicFitProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B15159187F77EE0036182C /* MusicFitProjectTests.m */; };
-		00F4C2521886A47E006146CD /* MainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4C2511886A47E006146CD /* MainViewController.m */; };
+		00F4C2521886A47E006146CD /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4C2511886A47E006146CD /* PlayViewController.m */; };
+		00FC19AA1892218800BA2036 /* ModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19A91892218800BA2036 /* ModeManager.m */; };
+		00FC19AD1892220B00BA2036 /* Mode.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19AC1892220B00BA2036 /* Mode.m */; };
+		00FC19B618924A3500BA2036 /* nextMusic_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00FC19B118924A3500BA2036 /* nextMusic_icon.jpg */; };
+		00FC19B718924A3500BA2036 /* play_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00FC19B218924A3500BA2036 /* play_icon.jpg */; };
+		00FC19B818924A3500BA2036 /* preMusic_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00FC19B318924A3500BA2036 /* preMusic_icon.jpg */; };
+		00FC19B918924A3500BA2036 /* sound_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00FC19B418924A3500BA2036 /* sound_icon.jpg */; };
+		00FC19BA18924A3500BA2036 /* suffle_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00FC19B518924A3500BA2036 /* suffle_icon.jpg */; };
+		00FC19C11892544A00BA2036 /* AddedModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19C01892544A00BA2036 /* AddedModeCell.m */; };
+		00FC19C41892546200BA2036 /* StaticModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19C31892546200BA2036 /* StaticModeCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,10 +61,28 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		00058239188D15D1006760D0 /* BPMAnalysis.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMAnalysis.h; sourceTree = "<group>"; };
+		0005823A188D15D1006760D0 /* BPMAnalysis.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPMAnalysis.m; sourceTree = "<group>"; };
 		00072D6E1887775C00FE977F /* ModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ModeViewController.h; path = ../ModeViewController.h; sourceTree = "<group>"; };
 		00072D6F1887775C00FE977F /* ModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ModeViewController.m; path = ../ModeViewController.m; sourceTree = "<group>"; };
-		001F5C031886607300B7BC3F /* BPMAnalyzeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BPMAnalyzeViewController.h; sourceTree = "<group>"; };
-		001F5C041886607300B7BC3F /* BPMAnalyzeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BPMAnalyzeViewController.m; sourceTree = "<group>"; };
+		00077D951891FA3300891C75 /* mode_title.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = mode_title.jpg; sourceTree = "<group>"; };
+		00077D961891FA3300891C75 /* table_background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = table_background.jpg; sourceTree = "<group>"; };
+		00077D971891FA3300891C75 /* cycle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = cycle.png; sourceTree = "<group>"; };
+		00077D9B1891FDBE00891C75 /* DBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBManager.h; sourceTree = "<group>"; };
+		00077D9C1891FDBE00891C75 /* DBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBManager.m; sourceTree = "<group>"; };
+		00077D9E1891FF5800891C75 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		005BA710188D1A1F003C5889 /* aubio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = aubio.framework; sourceTree = "<group>"; };
+		006650E61890B3C400F97DE5 /* Main.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Main.jpg; sourceTree = "<group>"; };
+		006650E71890B3C400F97DE5 /* Tutorial_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tutorial_0.jpg; sourceTree = "<group>"; };
+		006650EA1890B4BA00F97DE5 /* Title.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Title.jpg; sourceTree = "<group>"; };
+		006650EC1890DD8B00F97DE5 /* Tutorial_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tutorial_1.jpg; sourceTree = "<group>"; };
+		006650ED1890DD8B00F97DE5 /* Tutorial_2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tutorial_2.jpg; sourceTree = "<group>"; };
+		006650EE1890DD8B00F97DE5 /* Tutorial_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tutorial_3.jpg; sourceTree = "<group>"; };
+		006650F21890E19400F97DE5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		006650F71891136E00F97DE5 /* progressCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressCircle.png; sourceTree = "<group>"; };
+		009FBC341897A0A500A28E73 /* SwipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeViewController.h; sourceTree = "<group>"; };
+		009FBC351897A0A500A28E73 /* SwipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeViewController.m; sourceTree = "<group>"; };
+		00A0F0DC18974413006FA3F6 /* AddedModeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddedModeDelegate.h; sourceTree = "<group>"; };
 		00B1512B187F77EE0036182C /* MusicFitProject.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MusicFitProject.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		00B1512E187F77EE0036182C /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		00B15130187F77EE0036182C /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -60,8 +102,21 @@
 		00B15155187F77EE0036182C /* MusicFitProjectTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MusicFitProjectTests-Info.plist"; sourceTree = "<group>"; };
 		00B15157187F77EE0036182C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		00B15159187F77EE0036182C /* MusicFitProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicFitProjectTests.m; sourceTree = "<group>"; };
-		00F4C2501886A47E006146CD /* MainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MainViewController.h; path = ../MainViewController.h; sourceTree = "<group>"; };
-		00F4C2511886A47E006146CD /* MainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MainViewController.m; path = ../MainViewController.m; sourceTree = "<group>"; };
+		00F4C2501886A47E006146CD /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayViewController.h; path = ../PlayViewController.h; sourceTree = "<group>"; };
+		00F4C2511886A47E006146CD /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayViewController.m; path = ../PlayViewController.m; sourceTree = "<group>"; };
+		00FC19A81892218800BA2036 /* ModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModeManager.h; sourceTree = "<group>"; };
+		00FC19A91892218800BA2036 /* ModeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModeManager.m; sourceTree = "<group>"; };
+		00FC19AB1892220B00BA2036 /* Mode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mode.h; sourceTree = "<group>"; };
+		00FC19AC1892220B00BA2036 /* Mode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mode.m; sourceTree = "<group>"; };
+		00FC19B118924A3500BA2036 /* nextMusic_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nextMusic_icon.jpg; sourceTree = "<group>"; };
+		00FC19B218924A3500BA2036 /* play_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = play_icon.jpg; sourceTree = "<group>"; };
+		00FC19B318924A3500BA2036 /* preMusic_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = preMusic_icon.jpg; sourceTree = "<group>"; };
+		00FC19B418924A3500BA2036 /* sound_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = sound_icon.jpg; sourceTree = "<group>"; };
+		00FC19B518924A3500BA2036 /* suffle_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = suffle_icon.jpg; sourceTree = "<group>"; };
+		00FC19BF1892544A00BA2036 /* AddedModeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddedModeCell.h; sourceTree = "<group>"; };
+		00FC19C01892544A00BA2036 /* AddedModeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddedModeCell.m; sourceTree = "<group>"; };
+		00FC19C21892546200BA2036 /* StaticModeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticModeCell.h; sourceTree = "<group>"; };
+		00FC19C31892546200BA2036 /* StaticModeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticModeCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,9 +124,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00077D9F1891FF5800891C75 /* libsqlite3.dylib in Frameworks */,
 				00B15131187F77EE0036182C /* CoreGraphics.framework in Frameworks */,
 				00B15133187F77EE0036182C /* UIKit.framework in Frameworks */,
 				00B1512F187F77EE0036182C /* Foundation.framework in Frameworks */,
+				005BA711188D1A1F003C5889 /* aubio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -88,9 +145,33 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		006650E51890B3C400F97DE5 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				00FC19B118924A3500BA2036 /* nextMusic_icon.jpg */,
+				00FC19B218924A3500BA2036 /* play_icon.jpg */,
+				00FC19B318924A3500BA2036 /* preMusic_icon.jpg */,
+				00FC19B418924A3500BA2036 /* sound_icon.jpg */,
+				00FC19B518924A3500BA2036 /* suffle_icon.jpg */,
+				00077D951891FA3300891C75 /* mode_title.jpg */,
+				00077D961891FA3300891C75 /* table_background.jpg */,
+				00077D971891FA3300891C75 /* cycle.png */,
+				006650F71891136E00F97DE5 /* progressCircle.png */,
+				006650EC1890DD8B00F97DE5 /* Tutorial_1.jpg */,
+				006650ED1890DD8B00F97DE5 /* Tutorial_2.jpg */,
+				006650EE1890DD8B00F97DE5 /* Tutorial_3.jpg */,
+				006650EA1890B4BA00F97DE5 /* Title.jpg */,
+				006650E61890B3C400F97DE5 /* Main.jpg */,
+				006650E71890B3C400F97DE5 /* Tutorial_0.jpg */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		00B15122187F77EE0036182C = {
 			isa = PBXGroup;
 			children = (
+				006650F21890E19400F97DE5 /* Settings.bundle */,
+				006650E51890B3C400F97DE5 /* images */,
 				00B15134187F77EE0036182C /* MusicFitProject */,
 				00B15153187F77EE0036182C /* MusicFitProjectTests */,
 				00B1512D187F77EE0036182C /* Frameworks */,
@@ -110,6 +191,8 @@
 		00B1512D187F77EE0036182C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				00077D9E1891FF5800891C75 /* libsqlite3.dylib */,
+				005BA710188D1A1F003C5889 /* aubio.framework */,
 				00B1512E187F77EE0036182C /* Foundation.framework */,
 				00B15130187F77EE0036182C /* CoreGraphics.framework */,
 				00B15132187F77EE0036182C /* UIKit.framework */,
@@ -121,19 +204,23 @@
 		00B15134187F77EE0036182C /* MusicFitProject */ = {
 			isa = PBXGroup;
 			children = (
+				00FC19BB1892540100BA2036 /* Mode */,
+				00FC19A71892216200BA2036 /* DB_Class */,
+				00B15143187F77EE0036182C /* FirstViewController.h */,
+				00B15144187F77EE0036182C /* FirstViewController.m */,
 				00B1513D187F77EE0036182C /* AppDelegate.h */,
 				00B1513E187F77EE0036182C /* AppDelegate.m */,
 				00B15140187F77EE0036182C /* Main.storyboard */,
-				00B15143187F77EE0036182C /* FirstViewController.h */,
-				00B15144187F77EE0036182C /* FirstViewController.m */,
 				00B15146187F77EE0036182C /* Images.xcassets */,
 				00B15135187F77EE0036182C /* Supporting Files */,
-				001F5C031886607300B7BC3F /* BPMAnalyzeViewController.h */,
-				001F5C041886607300B7BC3F /* BPMAnalyzeViewController.m */,
-				00F4C2501886A47E006146CD /* MainViewController.h */,
-				00F4C2511886A47E006146CD /* MainViewController.m */,
-				00072D6E1887775C00FE977F /* ModeViewController.h */,
-				00072D6F1887775C00FE977F /* ModeViewController.m */,
+				00F4C2501886A47E006146CD /* PlayViewController.h */,
+				00F4C2511886A47E006146CD /* PlayViewController.m */,
+				00058239188D15D1006760D0 /* BPMAnalysis.h */,
+				0005823A188D15D1006760D0 /* BPMAnalysis.m */,
+				00FC19AB1892220B00BA2036 /* Mode.h */,
+				00FC19AC1892220B00BA2036 /* Mode.m */,
+				009FBC341897A0A500A28E73 /* SwipeViewController.h */,
+				009FBC351897A0A500A28E73 /* SwipeViewController.m */,
 			);
 			path = MusicFitProject;
 			sourceTree = "<group>";
@@ -165,6 +252,31 @@
 				00B15156187F77EE0036182C /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		00FC19A71892216200BA2036 /* DB_Class */ = {
+			isa = PBXGroup;
+			children = (
+				00077D9B1891FDBE00891C75 /* DBManager.h */,
+				00077D9C1891FDBE00891C75 /* DBManager.m */,
+				00FC19A81892218800BA2036 /* ModeManager.h */,
+				00FC19A91892218800BA2036 /* ModeManager.m */,
+			);
+			name = DB_Class;
+			sourceTree = "<group>";
+		};
+		00FC19BB1892540100BA2036 /* Mode */ = {
+			isa = PBXGroup;
+			children = (
+				00072D6E1887775C00FE977F /* ModeViewController.h */,
+				00072D6F1887775C00FE977F /* ModeViewController.m */,
+				00FC19BF1892544A00BA2036 /* AddedModeCell.h */,
+				00FC19C01892544A00BA2036 /* AddedModeCell.m */,
+				00FC19C21892546200BA2036 /* StaticModeCell.h */,
+				00FC19C31892546200BA2036 /* StaticModeCell.m */,
+				00A0F0DC18974413006FA3F6 /* AddedModeDelegate.h */,
+			);
+			name = Mode;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -243,9 +355,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00FC19B818924A3500BA2036 /* preMusic_icon.jpg in Resources */,
+				006650EB1890B4BA00F97DE5 /* Title.jpg in Resources */,
+				006650E91890B3C400F97DE5 /* Tutorial_0.jpg in Resources */,
+				006650F81891136E00F97DE5 /* progressCircle.png in Resources */,
+				00FC19BA18924A3500BA2036 /* suffle_icon.jpg in Resources */,
+				006650F31890E19400F97DE5 /* Settings.bundle in Resources */,
+				00077D9A1891FA3300891C75 /* cycle.png in Resources */,
+				006650F01890DD8B00F97DE5 /* Tutorial_2.jpg in Resources */,
+				00FC19B618924A3500BA2036 /* nextMusic_icon.jpg in Resources */,
+				006650F11890DD8B00F97DE5 /* Tutorial_3.jpg in Resources */,
 				00B15147187F77EE0036182C /* Images.xcassets in Resources */,
+				00077D981891FA3300891C75 /* mode_title.jpg in Resources */,
+				00FC19B718924A3500BA2036 /* play_icon.jpg in Resources */,
+				00FC19B918924A3500BA2036 /* sound_icon.jpg in Resources */,
 				00B15139187F77EE0036182C /* InfoPlist.strings in Resources */,
+				006650E81890B3C400F97DE5 /* Main.jpg in Resources */,
+				00077D991891FA3300891C75 /* table_background.jpg in Resources */,
 				00B15142187F77EE0036182C /* Main.storyboard in Resources */,
+				006650EF1890DD8B00F97DE5 /* Tutorial_1.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -264,11 +392,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00FC19AD1892220B00BA2036 /* Mode.m in Sources */,
+				00FC19AA1892218800BA2036 /* ModeManager.m in Sources */,
+				00077D9D1891FDBE00891C75 /* DBManager.m in Sources */,
+				009FBC361897A0A500A28E73 /* SwipeViewController.m in Sources */,
+				0005823B188D15D1006760D0 /* BPMAnalysis.m in Sources */,
 				00B15145187F77EE0036182C /* FirstViewController.m in Sources */,
+				00FC19C41892546200BA2036 /* StaticModeCell.m in Sources */,
 				00B1513F187F77EE0036182C /* AppDelegate.m in Sources */,
 				00B1513B187F77EE0036182C /* main.m in Sources */,
-				00F4C2521886A47E006146CD /* MainViewController.m in Sources */,
-				001F5C051886607300B7BC3F /* BPMAnalyzeViewController.m in Sources */,
+				00F4C2521886A47E006146CD /* PlayViewController.m in Sources */,
+				00FC19C11892544A00BA2036 /* AddedModeCell.m in Sources */,
 				00072D701887775C00FE977F /* ModeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -396,6 +530,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/sdt-1/Documents/Projects/MusicFitProject",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MusicFitProject/MusicFitProject-Prefix.pch";
 				INFOPLIST_FILE = "MusicFitProject/MusicFitProject-Info.plist";
@@ -409,6 +547,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"/Users/sdt-1/Documents/Projects/MusicFitProject",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MusicFitProject/MusicFitProject-Prefix.pch";
 				INFOPLIST_FILE = "MusicFitProject/MusicFitProject-Info.plist";
