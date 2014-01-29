@@ -9,7 +9,17 @@
 #import "PlayViewController.h"
 #import "ModeViewController.h"
 #import "AppDelegate.h"
+
+#define CLOCKPICKERVIEW_HIDDEN_Y 600
+#define CLOCKPICKERVIEW_MARGIN_Y 100
+#define FITPROGRESSVIEW_HIDDEN_X -640
+#define FITPROGRESSVIEW_MARGIN_X 16
 @interface PlayViewController ()
+@property (weak, nonatomic) IBOutlet UIImageView *fitModeImageView;
+@property (weak, nonatomic) IBOutlet UIView *clockPickerView;
+@property (weak, nonatomic) IBOutlet UIDatePicker *clockPicker;
+@property (weak, nonatomic) IBOutlet UIView *fitProgressView;
+
 
 @end
 
@@ -32,9 +42,30 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-- (IBAction)moveToMode:(id)sender {
-    AppDelegate *app = [UIApplication sharedApplication].delegate;
-    ModeViewController *modeVC = [[ModeViewController alloc]init];
-    app.window.rootViewController = modeVC;
+- (IBAction)showclockPcikerView:(id)sender {
+    [self modeClockPickerViewWithY:CLOCKPICKERVIEW_MARGIN_Y];
+}
+- (IBAction)setClock:(id)sender {
+    [self modeClockPickerViewWithY:CLOCKPICKERVIEW_HIDDEN_Y];
+    [self movFitProgressViewWithX:FITPROGRESSVIEW_MARGIN_X];
+}
+- (IBAction)cancelSetClock:(id)sender {
+    [self modeClockPickerViewWithY:CLOCKPICKERVIEW_HIDDEN_Y];
+}
+
+
+- (void)modeClockPickerViewWithY:(NSInteger)Y{
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        CGRect frame = self.clockPickerView.frame;
+        frame.origin.y = Y;
+        self.clockPickerView.frame = frame;
+    }completion:nil];
+}
+- (void)movFitProgressViewWithX:(NSInteger)X{
+    [UIView animateWithDuration:0.2 delay:0.3 options:UIViewAnimationOptionCurveLinear animations:^{
+        CGRect frame = self.fitProgressView.frame;
+        frame.origin.x = X;
+        self.fitProgressView.frame = frame;
+    }completion:nil];
 }
 @end

@@ -48,6 +48,14 @@
 		00FC19BA18924A3500BA2036 /* suffle_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00FC19B518924A3500BA2036 /* suffle_icon.jpg */; };
 		00FC19C11892544A00BA2036 /* AddedModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19C01892544A00BA2036 /* AddedModeCell.m */; };
 		00FC19C41892546200BA2036 /* StaticModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19C31892546200BA2036 /* StaticModeCell.m */; };
+		00FEDB071898AD840072D517 /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FEDB061898AD840072D517 /* SwipeView.m */; };
+		00FEDB0B1898AF290072D517 /* UIViewController+SwipeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FEDB0A1898AF290072D517 /* UIViewController+SwipeController.m */; };
+		00FEDB101898B1C50072D517 /* SwipeGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FEDB0F1898B1C50072D517 /* SwipeGestureRecognizer.m */; };
+		00FEDB121898C3590072D517 /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 00FEDB111898C3590072D517 /* AppIcon.png */; };
+		00FEDB171898D6B70072D517 /* player_main.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00FEDB141898D6B70072D517 /* player_main.jpg */; };
+		00FEDB181898D6B70072D517 /* player.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00FEDB151898D6B70072D517 /* player.jpg */; };
+		00FEDB1A1898D8820072D517 /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 00FEDB191898D8820072D517 /* clock.png */; };
+		00FEDB1D1898E9990072D517 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FEDB1C1898E9990072D517 /* PlayerViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +125,19 @@
 		00FC19C01892544A00BA2036 /* AddedModeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddedModeCell.m; sourceTree = "<group>"; };
 		00FC19C21892546200BA2036 /* StaticModeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticModeCell.h; sourceTree = "<group>"; };
 		00FC19C31892546200BA2036 /* StaticModeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticModeCell.m; sourceTree = "<group>"; };
+		00FEDB051898AD840072D517 /* SwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeView.h; sourceTree = "<group>"; };
+		00FEDB061898AD840072D517 /* SwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeView.m; sourceTree = "<group>"; };
+		00FEDB091898AF290072D517 /* UIViewController+SwipeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SwipeController.h"; sourceTree = "<group>"; };
+		00FEDB0A1898AF290072D517 /* UIViewController+SwipeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+SwipeController.m"; sourceTree = "<group>"; };
+		00FEDB0D1898AFB70072D517 /* SwipeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeController.h; sourceTree = "<group>"; };
+		00FEDB0E1898B1C50072D517 /* SwipeGestureRecognizer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeGestureRecognizer.h; sourceTree = "<group>"; };
+		00FEDB0F1898B1C50072D517 /* SwipeGestureRecognizer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeGestureRecognizer.m; sourceTree = "<group>"; };
+		00FEDB111898C3590072D517 /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
+		00FEDB141898D6B70072D517 /* player_main.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = player_main.jpg; sourceTree = "<group>"; };
+		00FEDB151898D6B70072D517 /* player.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = player.jpg; sourceTree = "<group>"; };
+		00FEDB191898D8820072D517 /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
+		00FEDB1B1898E9990072D517 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
+		00FEDB1C1898E9990072D517 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -148,6 +169,10 @@
 		006650E51890B3C400F97DE5 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				00FEDB191898D8820072D517 /* clock.png */,
+				00FEDB141898D6B70072D517 /* player_main.jpg */,
+				00FEDB151898D6B70072D517 /* player.jpg */,
+				00FEDB111898C3590072D517 /* AppIcon.png */,
 				00FC19B118924A3500BA2036 /* nextMusic_icon.jpg */,
 				00FC19B218924A3500BA2036 /* play_icon.jpg */,
 				00FC19B318924A3500BA2036 /* preMusic_icon.jpg */,
@@ -204,6 +229,7 @@
 		00B15134187F77EE0036182C /* MusicFitProject */ = {
 			isa = PBXGroup;
 			children = (
+				00FEDB041898AD6B0072D517 /* Swipe */,
 				00FC19BB1892540100BA2036 /* Mode */,
 				00FC19A71892216200BA2036 /* DB_Class */,
 				00B15143187F77EE0036182C /* FirstViewController.h */,
@@ -217,10 +243,8 @@
 				00F4C2511886A47E006146CD /* PlayViewController.m */,
 				00058239188D15D1006760D0 /* BPMAnalysis.h */,
 				0005823A188D15D1006760D0 /* BPMAnalysis.m */,
-				00FC19AB1892220B00BA2036 /* Mode.h */,
-				00FC19AC1892220B00BA2036 /* Mode.m */,
-				009FBC341897A0A500A28E73 /* SwipeViewController.h */,
-				009FBC351897A0A500A28E73 /* SwipeViewController.m */,
+				00FEDB1B1898E9990072D517 /* PlayerViewController.h */,
+				00FEDB1C1898E9990072D517 /* PlayerViewController.m */,
 			);
 			path = MusicFitProject;
 			sourceTree = "<group>";
@@ -268,6 +292,8 @@
 		00FC19BB1892540100BA2036 /* Mode */ = {
 			isa = PBXGroup;
 			children = (
+				00FC19AB1892220B00BA2036 /* Mode.h */,
+				00FC19AC1892220B00BA2036 /* Mode.m */,
 				00072D6E1887775C00FE977F /* ModeViewController.h */,
 				00072D6F1887775C00FE977F /* ModeViewController.m */,
 				00FC19BF1892544A00BA2036 /* AddedModeCell.h */,
@@ -277,6 +303,22 @@
 				00A0F0DC18974413006FA3F6 /* AddedModeDelegate.h */,
 			);
 			name = Mode;
+			sourceTree = "<group>";
+		};
+		00FEDB041898AD6B0072D517 /* Swipe */ = {
+			isa = PBXGroup;
+			children = (
+				009FBC341897A0A500A28E73 /* SwipeViewController.h */,
+				009FBC351897A0A500A28E73 /* SwipeViewController.m */,
+				00FEDB051898AD840072D517 /* SwipeView.h */,
+				00FEDB061898AD840072D517 /* SwipeView.m */,
+				00FEDB091898AF290072D517 /* UIViewController+SwipeController.h */,
+				00FEDB0A1898AF290072D517 /* UIViewController+SwipeController.m */,
+				00FEDB0E1898B1C50072D517 /* SwipeGestureRecognizer.h */,
+				00FEDB0F1898B1C50072D517 /* SwipeGestureRecognizer.m */,
+				00FEDB0D1898AFB70072D517 /* SwipeController.h */,
+			);
+			name = Swipe;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -361,10 +403,14 @@
 				006650F81891136E00F97DE5 /* progressCircle.png in Resources */,
 				00FC19BA18924A3500BA2036 /* suffle_icon.jpg in Resources */,
 				006650F31890E19400F97DE5 /* Settings.bundle in Resources */,
+				00FEDB1A1898D8820072D517 /* clock.png in Resources */,
 				00077D9A1891FA3300891C75 /* cycle.png in Resources */,
 				006650F01890DD8B00F97DE5 /* Tutorial_2.jpg in Resources */,
 				00FC19B618924A3500BA2036 /* nextMusic_icon.jpg in Resources */,
+				00FEDB121898C3590072D517 /* AppIcon.png in Resources */,
+				00FEDB181898D6B70072D517 /* player.jpg in Resources */,
 				006650F11890DD8B00F97DE5 /* Tutorial_3.jpg in Resources */,
+				00FEDB171898D6B70072D517 /* player_main.jpg in Resources */,
 				00B15147187F77EE0036182C /* Images.xcassets in Resources */,
 				00077D981891FA3300891C75 /* mode_title.jpg in Resources */,
 				00FC19B718924A3500BA2036 /* play_icon.jpg in Resources */,
@@ -398,12 +444,16 @@
 				009FBC361897A0A500A28E73 /* SwipeViewController.m in Sources */,
 				0005823B188D15D1006760D0 /* BPMAnalysis.m in Sources */,
 				00B15145187F77EE0036182C /* FirstViewController.m in Sources */,
+				00FEDB071898AD840072D517 /* SwipeView.m in Sources */,
 				00FC19C41892546200BA2036 /* StaticModeCell.m in Sources */,
 				00B1513F187F77EE0036182C /* AppDelegate.m in Sources */,
+				00FEDB0B1898AF290072D517 /* UIViewController+SwipeController.m in Sources */,
 				00B1513B187F77EE0036182C /* main.m in Sources */,
 				00F4C2521886A47E006146CD /* PlayViewController.m in Sources */,
 				00FC19C11892544A00BA2036 /* AddedModeCell.m in Sources */,
+				00FEDB1D1898E9990072D517 /* PlayerViewController.m in Sources */,
 				00072D701887775C00FE977F /* ModeViewController.m in Sources */,
+				00FEDB101898B1C50072D517 /* SwipeGestureRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -530,6 +580,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/sdt-1/Documents/Projects/MusicFitProject",
@@ -547,6 +598,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"/Users/sdt-1/Documents/Projects/MusicFitProject",

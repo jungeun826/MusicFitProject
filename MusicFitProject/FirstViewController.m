@@ -9,6 +9,8 @@
 #import "FirstViewController.h"
 #import "PlayViewController.h"
 #import "AppDelegate.h"
+#import "SwipeViewController.h"
+#import "SwipeController.h"
 
 #define HIDDEN_X 400
 #define TUTORIAL_IMAGENUM 4
@@ -93,11 +95,36 @@
 }
 //튜토리얼에서 플레이 화면으로 넘어갈 때 실행되어야 하는 것.
 -(void)movePlayView{
-    PlayViewController *playerVC =(PlayViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"player"];
-    
+//    PlayViewController *playerVC =(PlayViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"player"];
+//    
     AppDelegate *app = [[UIApplication sharedApplication]delegate];
-    NSLog(@"changed root");
-    app.window.rootViewController = playerVC;
+//    NSLog(@"changed root");
+//    app.window.rootViewController = playerVC;
+    UIStoryboard *currentStoryboard = self.storyboard;
+    
+    UIViewController *initialViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"swipe"];
+    SwipeViewController *swipeVC = [[SwipeViewController alloc] initWithFrame:initialViewController.view.frame];
+    
+    UIViewController *modeViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"mode"];
+    modeViewController.row = 0;
+    modeViewController.col = 0;
+    
+    UIViewController *playerViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"player"];
+    playerViewController.row = 0;
+    playerViewController.col = 1;
+    
+    UIViewController *playListViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"playList"];
+    playListViewController.row = 0;
+    playListViewController.col = 2;
+    
+    UIViewController *myViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"my"];
+    myViewController.row = 0;
+    myViewController.col = 3;
+    
+    NSArray *controllers = @[ modeViewController, playerViewController,playListViewController, myViewController];
+    [swipeVC setControllers:controllers];
+    
+    app.window.rootViewController = swipeVC;
 }
 //메인 화면이 등장할 때 스크롤뷰가 움직이는 것에 대한 설정부분.
 - (void)settingScrollView{

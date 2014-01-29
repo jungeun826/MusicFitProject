@@ -7,7 +7,45 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+#import "UIViewController+SwipeController.h"
+#import "SwipeGestureRecognizer.h"
+
+typedef enum {
+    ShiftHorizontal,
+    ShiftVertical
+}ShiftDirection;
+
+@protocol SwipeControllerDelegate <NSObject>
+@optional
+- (void)willMoveToViewController:(UIViewController *)viewController atPosition:(Position)position;
+- (void)didMoveToViewController:(UIViewController *)viewController atPosition:(Position)position;
+@end
+
 
 @interface SwipeViewController : UIViewController
 
+@property(weak, nonatomic) id <SwipeControllerDelegate> delegate;
+@property(weak, readonly, nonatomic) UIViewController *visibleViewController;
+@property(strong, readonly, nonatomic) NSArray *viewControllers;
+@property(assign, readonly, nonatomic) NSInteger maxRow;
+@property(assign, readonly, nonatomic) NSInteger maxCol;
+
+- (id)initWithFrame:(CGRect)frame;
+
+- (void)resetPositions:(NSArray *)viewControllers;
+
+- (void)setControllers:(NSArray *)controllers;
+
+- (void)goToViewController:(UIViewController *)controller way:(Way)way animated:(BOOL)animated completion:(void (^)(void))completion;
+
+- (void)moveLeftAnimated:(BOOL)animated;
+
+- (void)moveRightAnimated:(BOOL)animated;
+
+- (void)moveLeftAnimated:(BOOL)animated withCompletion:(void (^)(void))completion;
+
+- (void)moveRightAnimated:(BOOL)animated withCompletion:(void (^)(void))completion;
+
+- (UIViewController *)getControllerAtPosition:(Position)position;
 @end
