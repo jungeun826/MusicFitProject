@@ -23,6 +23,12 @@
 		006650F11890DD8B00F97DE5 /* Tutorial_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 006650EE1890DD8B00F97DE5 /* Tutorial_3.jpg */; };
 		006650F31890E19400F97DE5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 006650F21890E19400F97DE5 /* Settings.bundle */; };
 		006650F81891136E00F97DE5 /* progressCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 006650F71891136E00F97DE5 /* progressCircle.png */; };
+		009ACC801898FBE000301D9E /* PlayListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009ACC7F1898FBE000301D9E /* PlayListViewController.m */; };
+		009ACC831898FC0D00301D9E /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009ACC821898FC0D00301D9E /* MyViewController.m */; };
+		009ACC861898FCE300301D9E /* CalenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009ACC851898FCE300301D9E /* CalenderViewController.m */; };
+		009ACC891898FD1A00301D9E /* FavoriteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009ACC881898FD1A00301D9E /* FavoriteListViewController.m */; };
+		009ACC8C1898FD2700301D9E /* RecommendMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009ACC8B1898FD2700301D9E /* RecommendMusicViewController.m */; };
+		009ACC8F1898FD4E00301D9E /* InterestMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009ACC8E1898FD4E00301D9E /* InterestMusicViewController.m */; };
 		009FBC361897A0A500A28E73 /* SwipeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009FBC351897A0A500A28E73 /* SwipeViewController.m */; };
 		00B1512F187F77EE0036182C /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B1512E187F77EE0036182C /* Foundation.framework */; };
 		00B15131187F77EE0036182C /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B15130187F77EE0036182C /* CoreGraphics.framework */; };
@@ -88,6 +94,18 @@
 		006650EE1890DD8B00F97DE5 /* Tutorial_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tutorial_3.jpg; sourceTree = "<group>"; };
 		006650F21890E19400F97DE5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		006650F71891136E00F97DE5 /* progressCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressCircle.png; sourceTree = "<group>"; };
+		009ACC7E1898FBE000301D9E /* PlayListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListViewController.h; sourceTree = "<group>"; };
+		009ACC7F1898FBE000301D9E /* PlayListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayListViewController.m; sourceTree = "<group>"; };
+		009ACC811898FC0D00301D9E /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
+		009ACC821898FC0D00301D9E /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
+		009ACC841898FCE300301D9E /* CalenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalenderViewController.h; sourceTree = "<group>"; };
+		009ACC851898FCE300301D9E /* CalenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalenderViewController.m; sourceTree = "<group>"; };
+		009ACC871898FD1A00301D9E /* FavoriteListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteListViewController.h; sourceTree = "<group>"; };
+		009ACC881898FD1A00301D9E /* FavoriteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteListViewController.m; sourceTree = "<group>"; };
+		009ACC8A1898FD2700301D9E /* RecommendMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendMusicViewController.h; sourceTree = "<group>"; };
+		009ACC8B1898FD2700301D9E /* RecommendMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RecommendMusicViewController.m; sourceTree = "<group>"; };
+		009ACC8D1898FD4E00301D9E /* InterestMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InterestMusicViewController.h; sourceTree = "<group>"; };
+		009ACC8E1898FD4E00301D9E /* InterestMusicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InterestMusicViewController.m; sourceTree = "<group>"; };
 		009FBC341897A0A500A28E73 /* SwipeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeViewController.h; sourceTree = "<group>"; };
 		009FBC351897A0A500A28E73 /* SwipeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeViewController.m; sourceTree = "<group>"; };
 		00A0F0DC18974413006FA3F6 /* AddedModeDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddedModeDelegate.h; sourceTree = "<group>"; };
@@ -245,6 +263,18 @@
 				0005823A188D15D1006760D0 /* BPMAnalysis.m */,
 				00FEDB1B1898E9990072D517 /* PlayerViewController.h */,
 				00FEDB1C1898E9990072D517 /* PlayerViewController.m */,
+				009ACC7E1898FBE000301D9E /* PlayListViewController.h */,
+				009ACC7F1898FBE000301D9E /* PlayListViewController.m */,
+				009ACC811898FC0D00301D9E /* MyViewController.h */,
+				009ACC821898FC0D00301D9E /* MyViewController.m */,
+				009ACC841898FCE300301D9E /* CalenderViewController.h */,
+				009ACC851898FCE300301D9E /* CalenderViewController.m */,
+				009ACC871898FD1A00301D9E /* FavoriteListViewController.h */,
+				009ACC881898FD1A00301D9E /* FavoriteListViewController.m */,
+				009ACC8A1898FD2700301D9E /* RecommendMusicViewController.h */,
+				009ACC8B1898FD2700301D9E /* RecommendMusicViewController.m */,
+				009ACC8D1898FD4E00301D9E /* InterestMusicViewController.h */,
+				009ACC8E1898FD4E00301D9E /* InterestMusicViewController.m */,
 			);
 			path = MusicFitProject;
 			sourceTree = "<group>";
@@ -440,7 +470,9 @@
 			files = (
 				00FC19AD1892220B00BA2036 /* Mode.m in Sources */,
 				00FC19AA1892218800BA2036 /* ModeManager.m in Sources */,
+				009ACC891898FD1A00301D9E /* FavoriteListViewController.m in Sources */,
 				00077D9D1891FDBE00891C75 /* DBManager.m in Sources */,
+				009ACC801898FBE000301D9E /* PlayListViewController.m in Sources */,
 				009FBC361897A0A500A28E73 /* SwipeViewController.m in Sources */,
 				0005823B188D15D1006760D0 /* BPMAnalysis.m in Sources */,
 				00B15145187F77EE0036182C /* FirstViewController.m in Sources */,
@@ -449,10 +481,14 @@
 				00B1513F187F77EE0036182C /* AppDelegate.m in Sources */,
 				00FEDB0B1898AF290072D517 /* UIViewController+SwipeController.m in Sources */,
 				00B1513B187F77EE0036182C /* main.m in Sources */,
+				009ACC8C1898FD2700301D9E /* RecommendMusicViewController.m in Sources */,
+				009ACC831898FC0D00301D9E /* MyViewController.m in Sources */,
 				00F4C2521886A47E006146CD /* PlayViewController.m in Sources */,
+				009ACC861898FCE300301D9E /* CalenderViewController.m in Sources */,
 				00FC19C11892544A00BA2036 /* AddedModeCell.m in Sources */,
 				00FEDB1D1898E9990072D517 /* PlayerViewController.m in Sources */,
 				00072D701887775C00FE977F /* ModeViewController.m in Sources */,
+				009ACC8F1898FD4E00301D9E /* InterestMusicViewController.m in Sources */,
 				00FEDB101898B1C50072D517 /* SwipeGestureRecognizer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
