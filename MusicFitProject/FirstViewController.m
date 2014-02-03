@@ -11,6 +11,8 @@
 #import "AppDelegate.h"
 #import "SwipeViewController.h"
 #import "SwipeController.h"
+#import <MediaPlayer/MediaPlayer.h>
+#import "MusicDBManager.h"
 
 #define HIDDEN_X 400
 #define TUTORIAL_IMAGENUM 4
@@ -26,6 +28,7 @@
 @end
 
 @implementation FirstViewController{
+    MusicDBManager *_musicDBManager;
     BOOL _repeat;
 }
 //FIXME:메인 페에지를 그림만 하나 있는 뷰 컨트롤러로 할 것인지 아니면 튜토리얼 위에 덮는 방식으로 가야할지 결정
@@ -55,18 +58,7 @@
     int pageNO = floor(offsetX / width);
     self.pageControl.currentPage = pageNO;
 }
-//페이지 로드시
-//메인 페이지를 어느정도 보여 준 후 튜토리얼로 넘어갈 수 있도록 함.
-- (void)viewDidLoad{
-    [super viewDidLoad];
-    
-    [self performSelector:@selector(animationMainImage) withObject:nil afterDelay:2];
-    
-    [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
-    
-    for(int index = 0; index < TUTORIAL_IMAGENUM ; index++)
-        [self loadContentsPage:index];
-}
+
 //튜토리얼 스킵 버튼을 누르면 실행되는 것
 - (IBAction)skipTutorial:(id)sender {
     if(self.BPMContainer.hidden == YES)
@@ -125,6 +117,7 @@
     [swipeVC setControllers:controllers];
     
     app.window.rootViewController = swipeVC;
+    [swipeVC moveRightAnimated:NO];
 }
 //메인 화면이 등장할 때 스크롤뷰가 움직이는 것에 대한 설정부분.
 - (void)settingScrollView{
@@ -158,5 +151,51 @@
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+//페이지 로드시
+//메인 페이지를 어느정도 보여 준 후 튜토리얼로 넘어갈 수 있도록 함.
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    
+    [self performSelector:@selector(animationMainImage) withObject:nil afterDelay:2];
+    
+    [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
+    
+    for(int index = 0; index < TUTORIAL_IMAGENUM ; index++)
+        [self loadContentsPage:index];
+    
+    _musicDBManager = [MusicDBManager sharedMusicDBManager];
+    [self getITunseSyncMusic];
+}
+- (void)getITunseSyncMusic{
+    
+    MPMediaQuery *everything = [[MPMediaQuery alloc] init];
+    NSArray *itemsFromGenericQuery = [everything items];
+    
+    NSInteger count = [itemsFromGenericQuery count] -1;
+    
+    for(int index = 0 ; index < count ; index++){
+        
+        MPMediaItem *music = [itemsFromGenericQuery objectAtIndex:index];
+        
+        NSString *stringURL = [[music valueForProperty:MPMediaItemPropertyAssetURL] absoluteString];
+        NSString *location = [stringURL substringFromIndex:32];
+        
+        if([_musicDBManager isExistWithlocation:location])
+            continue;
+        
+        
+        NSString *title = [NSString stringWithFormat:@"%@",[music valueForProperty:MPMediaItemPropertyTitle]];
+        title =[title stringByReplacingOccurrencesOfString: @"'" withString: @"''"];
+        
+        NSString *artist = [NSString stringWithFormat:@"%@",[music valueForProperty:                        MPMediaItemPropertyArtist]];
+        artist =[artist stringByReplacingOccurrencesOfString: @"'" withString: @"''"];
+        
+        
+        NSInteger BPM = [[music valueForProperty:MPMediaItemPropertyBeatsPerMinute] intValue];
+        
+        //FIXME:무조건 isMusic을 true로 넣는다 고쳐야함.
+        [_musicDBManager addMusicWithBPM:BPM title:title artist:artist location:location isMusic:YES];
+    }
 }
 @end

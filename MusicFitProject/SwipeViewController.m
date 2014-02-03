@@ -33,8 +33,12 @@
 
 - (void)setControllers:(NSArray *)controllers{
     [self setControllers:controllers withFrame:self.view.frame];
+    
+   // [self moveRightAnimated:YES];
 }
-
+- (void)viewDidLoad{
+    [super viewDidLoad];
+}
 #pragma mark - Public methods
 - (void)resetPositions:(NSArray *)viewControllers {
     UIViewController *currentVisibleViewController = _visibleViewController;
@@ -56,7 +60,8 @@
 }
 
 - (void)moveRightAnimated:(BOOL)animated withCompletion:(void (^)(void))completion{
-    [self goToViewController:_visibleViewController.rightViewController way:WayHorizontal animated:animated completion:completion];
+    UIViewController *rightVC =_visibleViewController.rightViewController;
+    [self goToViewController:rightVC way:WayHorizontal animated:animated completion:completion];
 }
 
 - (UIViewController *)getControllerAtPosition:(Position)position{
@@ -114,7 +119,7 @@
     _swipeGestureRecognizer = [[SwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDetected:)];
     [self.view addGestureRecognizer:_swipeGestureRecognizer];
     
-    _visibleViewController = [_viewControllers objectAtIndex:1];
+    _visibleViewController = [_viewControllers objectAtIndex:0];
 }
 
 - (void)swipeDetected:(SwipeGestureRecognizer *)swipe

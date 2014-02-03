@@ -7,11 +7,12 @@
 //
 
 #import "ModeViewController.h"
-#import "ModeManager.h"
+#import "ModeDBManager.h"
 #import "AddedModeCell.h"
 #import "StaticModeCell.h"
 #import "PlayViewController.h"
 #import "AppDelegate.h"
+#import "PlayListDBManager.h"
 
 #define STATICCELL_NUM 4
 #define STATIC_SECTION 0
@@ -35,7 +36,8 @@
 
 @implementation ModeViewController{
     NSArray *_staticMode;
-    ModeManager *_modeManager;
+    ModeDBManager *_modeDBManager;
+    PlayListDBManager *_playListDBManager;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     NSLog(@"return key press");
@@ -49,7 +51,7 @@
     if(section == 0) //고정 모드 4개
         return STATICCELL_NUM;
     else if(section ==1)//추가된 모드
-        return [_modeManager getNumberOfMode];
+        return [_modeDBManager getNumberOfMode];
     else//커스터마이징할 모드
         return 1;
 }
@@ -68,7 +70,7 @@
         }
         case ADDMODE_SECTION:{
             AddedModeCell *addedCell = [tableView dequeueReusableCellWithIdentifier:@"ADDEDMODE_CELL"];
-            Mode *mode = [_modeManager getModeWithIndex:indexPath.row];
+            Mode *mode = [_modeDBManager getModeWithIndex:indexPath.row];
             
             [addedCell setWithminBPM:[mode getStringMinBPM] maxBPM:[mode getStringMaxBPM]];
             addedCell.delegate = self;
@@ -81,8 +83,22 @@
     }
 }
 - (void)tableView:tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    if(indexPath.section == CUSTOMIZE_SECTION){
-        [self changePositionCustomModeViewWithY:MARGIN_Y];
+    //커스텀이 아닌 경우 해당 셀에 대한 mode정보를 얻어온 후 해당하는 범위의 bpm을 찾아 리스트를 생성한다.
+    switch (indexPath.section){
+        case STATIC_SECTION:{
+            //mode의 bpm정보
+           NSString *minBPM = _staticMode[indexPath.row][@"minBPM"];
+            
+            [_playListDBManager addPlayListWithMinBPM:[minBPM intValue] maxBPM:0];
+        }
+        case ADDMODE_SECTION:{
+            //mode의 bpm정보
+            Mode *mode = [_modeDBManager getModeWithIndex:indexPath.row];
+            [_playListDBManager addPlayListWithMinBPM:mode.minBPM maxBPM:mode.maxBPM];
+        }
+        default:{
+            [self changePositionCustomModeViewWithY:MARGIN_Y];
+        }
     }
 }
 - (void)changePositionCustomModeViewWithY:(NSInteger)Y{
@@ -101,11 +117,11 @@
 - (IBAction)saveCustomMode:(id)sender {
     //디비에 저장 후 릴로드
     //FIXME:save전에 textField값이 정상적인지 체크하는 로직 필요
-    [_modeManager addModeWithMinBPM:[self.minBPM.text intValue] maxBPM:[self.maxBPM.text intValue]];
+    [_modeDBManager addModeWithMinBPM:[self.minBPM.text intValue] maxBPM:[self.maxBPM.text intValue]];
     self.minBPM.text = @"";
     self.maxBPM.text = @"";
     
-    [_modeManager syncMode];
+    [_modeDBManager syncMode];
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:ADDMODE_SECTION];
     [self.modeTable reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -129,25 +145,26 @@
     }
     return self;
 }
-- (void)viewDidLoad{
-    [super viewDidLoad];
-    _staticMode = @[@{@"modeTitle":@"걷기",@"minBPM":@"120"},@{@"modeTitle":@"조깅,트레드밀",@"minBPM":@"140"},@{@"modeTitle":@"러닝",@"minBPM":@"160"},@{@"modeTitle":@"사이클링",@"minBPM":@"130"}];
-    _modeManager = [ModeManager sharedModeManager];
-    [_modeManager syncMode];
-}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 -(void)deleteCell{
-    int selectedIndex = [self.modeTable indexPathForSelectedRow].row;
-    Mode *mode = [_modeManager getModeWithIndex:selectedIndex];
-    NSLog(@"mode_id:%d",mode.mode_id);
-    [_modeManager deleteModeWithModeID:mode.mode_id];
-    [_modeManager syncMode];
+    int selectedIndex = (int)[self.modeTable indexPathForSelectedRow].row;
+    Mode *mode = [_modeDBManager getModeWithIndex:selectedIndex];
+    NSLog(@"mode_id:%d",(int)mode.mode_id);
+    [_modeDBManager deleteModeWithModeID:mode.mode_id];
+    [_modeDBManager syncMode];
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:ADDMODE_SECTION];
     [self.modeTable reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+}
+- (void)viewDidLoad{
+    [super viewDidLoad];
+    _staticMode = @[@{@"modeTitle":@"걷기",@"minBPM":@"120"},@{@"modeTitle":@"조깅,트레드밀",@"minBPM":@"140"},@{@"modeTitle":@"러닝",@"minBPM":@"160"},@{@"modeTitle":@"사이클링",@"minBPM":@"130"}];
+    _modeDBManager = [ModeDBManager sharedModeDBManager];
+    _playListDBManager = [PlayListDBManager sharedPlayListDBManager];
+    [_modeDBManager syncMode];
 }
 @end

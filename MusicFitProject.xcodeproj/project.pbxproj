@@ -45,7 +45,7 @@
 		00B15158187F77EE0036182C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 00B15156187F77EE0036182C /* InfoPlist.strings */; };
 		00B1515A187F77EE0036182C /* MusicFitProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B15159187F77EE0036182C /* MusicFitProjectTests.m */; };
 		00F4C2521886A47E006146CD /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4C2511886A47E006146CD /* PlayViewController.m */; };
-		00FC19AA1892218800BA2036 /* ModeManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19A91892218800BA2036 /* ModeManager.m */; };
+		00FC19AA1892218800BA2036 /* ModeDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19A91892218800BA2036 /* ModeDBManager.m */; };
 		00FC19AD1892220B00BA2036 /* Mode.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19AC1892220B00BA2036 /* Mode.m */; };
 		00FC19B618924A3500BA2036 /* nextMusic_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00FC19B118924A3500BA2036 /* nextMusic_icon.jpg */; };
 		00FC19B718924A3500BA2036 /* play_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00FC19B218924A3500BA2036 /* play_icon.jpg */; };
@@ -54,6 +54,13 @@
 		00FC19BA18924A3500BA2036 /* suffle_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00FC19B518924A3500BA2036 /* suffle_icon.jpg */; };
 		00FC19C11892544A00BA2036 /* AddedModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19C01892544A00BA2036 /* AddedModeCell.m */; };
 		00FC19C41892546200BA2036 /* StaticModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19C31892546200BA2036 /* StaticModeCell.m */; };
+		00FC8794189F428200F7F52E /* MusicDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC8793189F428200F7F52E /* MusicDBManager.m */; };
+		00FC8799189F430400F7F52E /* Music.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC8798189F430400F7F52E /* Music.m */; };
+		00FC879B189F519000F7F52E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00FC879A189F519000F7F52E /* CoreMedia.framework */; };
+		00FC879D189F519600F7F52E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00FC879C189F519600F7F52E /* AVFoundation.framework */; };
+		00FC879F189F51A200F7F52E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00FC879E189F51A200F7F52E /* MediaPlayer.framework */; };
+		00FC87A3189F556F00F7F52E /* PlayListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC87A2189F556F00F7F52E /* PlayListCell.m */; };
+		00FC87A6189F716700F7F52E /* PlayListDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC87A5189F716700F7F52E /* PlayListDBManager.m */; };
 		00FEDB071898AD840072D517 /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FEDB061898AD840072D517 /* SwipeView.m */; };
 		00FEDB0B1898AF290072D517 /* UIViewController+SwipeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FEDB0A1898AF290072D517 /* UIViewController+SwipeController.m */; };
 		00FEDB101898B1C50072D517 /* SwipeGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FEDB0F1898B1C50072D517 /* SwipeGestureRecognizer.m */; };
@@ -130,8 +137,8 @@
 		00B15159187F77EE0036182C /* MusicFitProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicFitProjectTests.m; sourceTree = "<group>"; };
 		00F4C2501886A47E006146CD /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayViewController.h; path = ../PlayViewController.h; sourceTree = "<group>"; };
 		00F4C2511886A47E006146CD /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayViewController.m; path = ../PlayViewController.m; sourceTree = "<group>"; };
-		00FC19A81892218800BA2036 /* ModeManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModeManager.h; sourceTree = "<group>"; };
-		00FC19A91892218800BA2036 /* ModeManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModeManager.m; sourceTree = "<group>"; };
+		00FC19A81892218800BA2036 /* ModeDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModeDBManager.h; sourceTree = "<group>"; };
+		00FC19A91892218800BA2036 /* ModeDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModeDBManager.m; sourceTree = "<group>"; };
 		00FC19AB1892220B00BA2036 /* Mode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mode.h; sourceTree = "<group>"; };
 		00FC19AC1892220B00BA2036 /* Mode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mode.m; sourceTree = "<group>"; };
 		00FC19B118924A3500BA2036 /* nextMusic_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = nextMusic_icon.jpg; sourceTree = "<group>"; };
@@ -143,6 +150,17 @@
 		00FC19C01892544A00BA2036 /* AddedModeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddedModeCell.m; sourceTree = "<group>"; };
 		00FC19C21892546200BA2036 /* StaticModeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticModeCell.h; sourceTree = "<group>"; };
 		00FC19C31892546200BA2036 /* StaticModeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticModeCell.m; sourceTree = "<group>"; };
+		00FC8792189F428200F7F52E /* MusicDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicDBManager.h; sourceTree = "<group>"; };
+		00FC8793189F428200F7F52E /* MusicDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicDBManager.m; sourceTree = "<group>"; };
+		00FC8797189F430400F7F52E /* Music.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Music.h; sourceTree = "<group>"; };
+		00FC8798189F430400F7F52E /* Music.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Music.m; sourceTree = "<group>"; };
+		00FC879A189F519000F7F52E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		00FC879C189F519600F7F52E /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		00FC879E189F51A200F7F52E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		00FC87A1189F556F00F7F52E /* PlayListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListCell.h; sourceTree = "<group>"; };
+		00FC87A2189F556F00F7F52E /* PlayListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayListCell.m; sourceTree = "<group>"; };
+		00FC87A4189F716700F7F52E /* PlayListDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListDBManager.h; sourceTree = "<group>"; };
+		00FC87A5189F716700F7F52E /* PlayListDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayListDBManager.m; sourceTree = "<group>"; };
 		00FEDB051898AD840072D517 /* SwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeView.h; sourceTree = "<group>"; };
 		00FEDB061898AD840072D517 /* SwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeView.m; sourceTree = "<group>"; };
 		00FEDB091898AF290072D517 /* UIViewController+SwipeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SwipeController.h"; sourceTree = "<group>"; };
@@ -163,6 +181,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00FC879F189F51A200F7F52E /* MediaPlayer.framework in Frameworks */,
+				00FC879D189F519600F7F52E /* AVFoundation.framework in Frameworks */,
+				00FC879B189F519000F7F52E /* CoreMedia.framework in Frameworks */,
 				00077D9F1891FF5800891C75 /* libsqlite3.dylib in Frameworks */,
 				00B15131187F77EE0036182C /* CoreGraphics.framework in Frameworks */,
 				00B15133187F77EE0036182C /* UIKit.framework in Frameworks */,
@@ -234,6 +255,9 @@
 		00B1512D187F77EE0036182C /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				00FC879E189F51A200F7F52E /* MediaPlayer.framework */,
+				00FC879C189F519600F7F52E /* AVFoundation.framework */,
+				00FC879A189F519000F7F52E /* CoreMedia.framework */,
 				00077D9E1891FF5800891C75 /* libsqlite3.dylib */,
 				005BA710188D1A1F003C5889 /* aubio.framework */,
 				00B1512E187F77EE0036182C /* Foundation.framework */,
@@ -247,6 +271,9 @@
 		00B15134187F77EE0036182C /* MusicFitProject */ = {
 			isa = PBXGroup;
 			children = (
+				00FC87A0189F537500F7F52E /* PlayList */,
+				00FC8796189F42EF00F7F52E /* Player */,
+				00FC8795189F42C400F7F52E /* Play */,
 				00FEDB041898AD6B0072D517 /* Swipe */,
 				00FC19BB1892540100BA2036 /* Mode */,
 				00FC19A71892216200BA2036 /* DB_Class */,
@@ -257,14 +284,8 @@
 				00B15140187F77EE0036182C /* Main.storyboard */,
 				00B15146187F77EE0036182C /* Images.xcassets */,
 				00B15135187F77EE0036182C /* Supporting Files */,
-				00F4C2501886A47E006146CD /* PlayViewController.h */,
-				00F4C2511886A47E006146CD /* PlayViewController.m */,
 				00058239188D15D1006760D0 /* BPMAnalysis.h */,
 				0005823A188D15D1006760D0 /* BPMAnalysis.m */,
-				00FEDB1B1898E9990072D517 /* PlayerViewController.h */,
-				00FEDB1C1898E9990072D517 /* PlayerViewController.m */,
-				009ACC7E1898FBE000301D9E /* PlayListViewController.h */,
-				009ACC7F1898FBE000301D9E /* PlayListViewController.m */,
 				009ACC811898FC0D00301D9E /* MyViewController.h */,
 				009ACC821898FC0D00301D9E /* MyViewController.m */,
 				009ACC841898FCE300301D9E /* CalenderViewController.h */,
@@ -313,8 +334,12 @@
 			children = (
 				00077D9B1891FDBE00891C75 /* DBManager.h */,
 				00077D9C1891FDBE00891C75 /* DBManager.m */,
-				00FC19A81892218800BA2036 /* ModeManager.h */,
-				00FC19A91892218800BA2036 /* ModeManager.m */,
+				00FC19A81892218800BA2036 /* ModeDBManager.h */,
+				00FC19A91892218800BA2036 /* ModeDBManager.m */,
+				00FC8792189F428200F7F52E /* MusicDBManager.h */,
+				00FC8793189F428200F7F52E /* MusicDBManager.m */,
+				00FC87A4189F716700F7F52E /* PlayListDBManager.h */,
+				00FC87A5189F716700F7F52E /* PlayListDBManager.m */,
 			);
 			name = DB_Class;
 			sourceTree = "<group>";
@@ -333,6 +358,37 @@
 				00A0F0DC18974413006FA3F6 /* AddedModeDelegate.h */,
 			);
 			name = Mode;
+			sourceTree = "<group>";
+		};
+		00FC8795189F42C400F7F52E /* Play */ = {
+			isa = PBXGroup;
+			children = (
+				00F4C2501886A47E006146CD /* PlayViewController.h */,
+				00F4C2511886A47E006146CD /* PlayViewController.m */,
+			);
+			name = Play;
+			sourceTree = "<group>";
+		};
+		00FC8796189F42EF00F7F52E /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				00FEDB1B1898E9990072D517 /* PlayerViewController.h */,
+				00FEDB1C1898E9990072D517 /* PlayerViewController.m */,
+				00FC8797189F430400F7F52E /* Music.h */,
+				00FC8798189F430400F7F52E /* Music.m */,
+			);
+			name = Player;
+			sourceTree = "<group>";
+		};
+		00FC87A0189F537500F7F52E /* PlayList */ = {
+			isa = PBXGroup;
+			children = (
+				009ACC7E1898FBE000301D9E /* PlayListViewController.h */,
+				009ACC7F1898FBE000301D9E /* PlayListViewController.m */,
+				00FC87A1189F556F00F7F52E /* PlayListCell.h */,
+				00FC87A2189F556F00F7F52E /* PlayListCell.m */,
+			);
+			name = PlayList;
 			sourceTree = "<group>";
 		};
 		00FEDB041898AD6B0072D517 /* Swipe */ = {
@@ -469,13 +525,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				00FC19AD1892220B00BA2036 /* Mode.m in Sources */,
-				00FC19AA1892218800BA2036 /* ModeManager.m in Sources */,
+				00FC19AA1892218800BA2036 /* ModeDBManager.m in Sources */,
 				009ACC891898FD1A00301D9E /* FavoriteListViewController.m in Sources */,
+				00FC8799189F430400F7F52E /* Music.m in Sources */,
 				00077D9D1891FDBE00891C75 /* DBManager.m in Sources */,
 				009ACC801898FBE000301D9E /* PlayListViewController.m in Sources */,
+				00FC87A3189F556F00F7F52E /* PlayListCell.m in Sources */,
 				009FBC361897A0A500A28E73 /* SwipeViewController.m in Sources */,
 				0005823B188D15D1006760D0 /* BPMAnalysis.m in Sources */,
 				00B15145187F77EE0036182C /* FirstViewController.m in Sources */,
+				00FC8794189F428200F7F52E /* MusicDBManager.m in Sources */,
 				00FEDB071898AD840072D517 /* SwipeView.m in Sources */,
 				00FC19C41892546200BA2036 /* StaticModeCell.m in Sources */,
 				00B1513F187F77EE0036182C /* AppDelegate.m in Sources */,
@@ -486,6 +545,7 @@
 				00F4C2521886A47E006146CD /* PlayViewController.m in Sources */,
 				009ACC861898FCE300301D9E /* CalenderViewController.m in Sources */,
 				00FC19C11892544A00BA2036 /* AddedModeCell.m in Sources */,
+				00FC87A6189F716700F7F52E /* PlayListDBManager.m in Sources */,
 				00FEDB1D1898E9990072D517 /* PlayerViewController.m in Sources */,
 				00072D701887775C00FE977F /* ModeViewController.m in Sources */,
 				009ACC8F1898FD4E00301D9E /* InterestMusicViewController.m in Sources */,

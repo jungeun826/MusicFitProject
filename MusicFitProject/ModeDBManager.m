@@ -6,15 +6,16 @@
 //  Copyright (c) 2014년 SDT-1. All rights reserved.
 //
 
-#import "ModeManager.h"
-@implementation ModeManager{
+#import "ModeDBManager.h"
+@implementation ModeDBManager{
     NSMutableArray *_modeList;
 }
-static ModeManager *_instance = nil;
-+ (id)sharedModeManager{
+static ModeDBManager *_instance = nil;
++ (id)sharedModeDBManager{
     if (nil == _instance) {
-        _instance = [[ModeManager alloc] init];
+        _instance = [[ModeDBManager alloc] init];
         _instance->_modeList = [[NSMutableArray alloc]init];
+        //FIXME : bpm 분석 전에 musicDB에서 openDB를 부르게 되는 경우에 아래 openDB를 삭제함.
         [_instance openDB];
     }
     return _instance;
@@ -40,8 +41,8 @@ static ModeManager *_instance = nil;
     Mode *mode = _modeList[index];
     return mode;
 }
-- (BOOL)deleteModeWithModeID:(NSInteger)index{
-    NSString *deleteQuery = [NSString stringWithFormat:@"DELETE FROM MODE WHERE mode_id = %d",(int)index];
+- (BOOL)deleteModeWithModeID:(NSInteger)modeID{
+    NSString *deleteQuery = [NSString stringWithFormat:@"DELETE FROM MODE WHERE mode_id = %d",(int)modeID];
     NSLog(@"delete query : %@", deleteQuery);
     
     char *errorMsg;

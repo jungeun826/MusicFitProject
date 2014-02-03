@@ -9,8 +9,8 @@
 #import "DBManager.h"
 #import "Mode.h"
 
-@interface ModeManager : DBManager
-+ (id)sharedModeManager;
+@interface ModeDBManager : DBManager
++ (id)sharedModeDBManager;
 - (BOOL)addModeWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
 - (Mode *)getModeWithIndex:(NSInteger)index;
 - (BOOL)deleteModeWithModeID:(NSInteger)index;

@@ -7,12 +7,35 @@
 //
 
 #import "PlayListViewController.h"
+#import "PlayListCell.h"
+#define CELL_IDENTIFIER @"PLAYLIST_CELL"
 
-@interface PlayListViewController ()
+@interface PlayListViewController (){
+    PlayListDBManager *_palyListDBManager;
+    MusicDBManager *_musicDBManager;
+}
+@property (weak, nonatomic) IBOutlet UITableView *playListTable;
 
 @end
 
 @implementation PlayListViewController
+
+-(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    NSInteger rows = [_palyListDBManager getNumberOfMusicInPlayList];
+    NSLog(@"%d", rows);
+    return rows;
+}
+
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    PlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLAYLIST_CELL" forIndexPath:indexPath];
+    NSInteger musicID = [_palyListDBManager getMusicInfoInPlayListWithIndex:indexPath.row];
+    Music *music = [_musicDBManager getMusicWithMusicID:musicID];
+    
+    NSLog(@"%@", music.title);
+    [cell setWithTitle:music.title artist:music.artist BPM:music.BPM];
+    
+    return cell;
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -27,6 +50,8 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    _musicDBManager = [MusicDBManager sharedMusicDBManager];
+    [_musicDBManager syncMusic];
 }
 
 - (void)didReceiveMemoryWarning

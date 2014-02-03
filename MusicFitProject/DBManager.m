@@ -27,17 +27,37 @@ static DBManager *_instance = nil;
         return NO;
     
     if(existFileFlag == NO){
-        char *createQuery_MODE = "CREATE TABLE IF NOT EXISTS MODE (mode_id INTEGER PRIMARY KEY, MIN_BPM INTEGER, MAX_BPM INTEGER)";
+        //Mode DB create
+        char *createQuery_MODE = "CREATE TABLE IF NOT EXISTS MODE (modeID INTEGER PRIMARY KEY, MIN_BPM INTEGER, MAX_BPM INTEGER DEFAULT 0함)";
         char *errorMsg ;
         
         ret = sqlite3_exec(db, createQuery_MODE, NULL, NULL, &errorMsg);
-        if( ret != SQLITE_OK){
+        if( ret != SQLITE_OK){//Mode DB create fail
             [fileManager removeItemAtPath:dbFilePath error:nil];
             NSLog(@"create MODE TABLE fail : %s", errorMsg);
             return NO;
         }
+        
+        //Music DB create
+        char *createQuery_MUSIC = "CREATE  TABLE  IF NOT EXISTS MUSIC (Music_ID INTEGER PRIMARY KEY, BPM INTEGER DEFAULT 0, Title VARCHAR, Artist VARCHAR, Location VARCHAR, IsMusic BOOL DEFAULT YES)";
+        
+        ret = sqlite3_exec(db, createQuery_MUSIC, NULL, NULL, &errorMsg);
+        if( ret != SQLITE_OK){//Music DB create fail
+            [fileManager removeItemAtPath:dbFilePath error:nil];
+            NSLog(@"create MUSIC TABLE fail : %s", errorMsg);
+            return NO;
+        }
+        
+        //PlayList DB create
+        char *createQuery_PLAYLIST = "CREATE  TABLE PLAYLIST (listID INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL , musicID INTEGER NOT NULL)";
+        
+        ret = sqlite3_exec(db, createQuery_PLAYLIST, NULL, NULL, &errorMsg);
+        if( ret != SQLITE_OK){//Music DB create fail
+            [fileManager removeItemAtPath:dbFilePath error:nil];
+            NSLog(@"create PLAYLIST TABLE fail : %s", errorMsg);
+            return NO;
+        }
     }
-    
     return YES;
 }
 @end
