@@ -43,25 +43,25 @@
     // Dispose of any resources that can be recreated.
 }
 - (IBAction)showclockPcikerView:(id)sender {
-    [self modeClockPickerViewWithY:CLOCKPICKERVIEW_MARGIN_Y];
+    [self moveClockPickerViewWithY:CLOCKPICKERVIEW_MARGIN_Y];
 }
 - (IBAction)setClock:(id)sender {
-    [self modeClockPickerViewWithY:CLOCKPICKERVIEW_HIDDEN_Y];
-    [self movFitProgressViewWithX:FITPROGRESSVIEW_MARGIN_X];
+    [self moveClockPickerViewWithY:CLOCKPICKERVIEW_HIDDEN_Y];
+    [self moveFitProgressViewWithX:FITPROGRESSVIEW_MARGIN_X];
 }
 - (IBAction)cancelSetClock:(id)sender {
-    [self modeClockPickerViewWithY:CLOCKPICKERVIEW_HIDDEN_Y];
+    [self moveClockPickerViewWithY:CLOCKPICKERVIEW_HIDDEN_Y];
 }
 
 
-- (void)modeClockPickerViewWithY:(NSInteger)Y{
+- (void)moveClockPickerViewWithY:(NSInteger)Y{
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
         CGRect frame = self.clockPickerView.frame;
         frame.origin.y = Y;
         self.clockPickerView.frame = frame;
     }completion:nil];
 }
-- (void)movFitProgressViewWithX:(NSInteger)X{
+- (void)moveFitProgressViewWithX:(NSInteger)X{
     [UIView animateWithDuration:0.2 delay:0.3 options:UIViewAnimationOptionCurveLinear animations:^{
         CGRect frame = self.fitProgressView.frame;
         frame.origin.x = X;

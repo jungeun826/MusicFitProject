@@ -11,7 +11,7 @@
 
 @interface ModeDBManager : DBManager
 + (id)sharedModeDBManager;
-- (BOOL)addModeWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
+- (BOOL)insertModeWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
 - (Mode *)getModeWithIndex:(NSInteger)index;
 - (BOOL)deleteModeWithModeID:(NSInteger)index;
 - (BOOL)syncMode;

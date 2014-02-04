@@ -67,16 +67,16 @@
     _playListDBManager = [PlayListDBManager sharedPlayListDBManager];
     _musicDBManager = [MusicDBManager sharedMusicDBManager];
     
-    [_playListDBManager syncPlayList];
-    Music *music = [_musicDBManager getMusicWithMusicID:[_playListDBManager getMusicInfoInPlayListWithIndex:curPlayIndex]];
-    [self setLabels:music];
-    //원하는 음악 정보를 가져오도록 predicates를 사용해보자.
-    //MPMediaQuery *everything = [[MPMediaQuery alloc] initWithFilterPredicates:<#(NSSet *)#>];
-    NSURL *musicURLPath = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", prePath,music.location]];
-    AVPlayerItem * currentItem = [AVPlayerItem playerItemWithURL:musicURLPath];
-    [_player replaceCurrentItemWithPlayerItem:currentItem];
-    [_player play];
-    [_player pause];
+//    [_playListDBManager syncPlayList];
+//    Music *music = [_musicDBManager getMusicWithMusicID:[_playListDBManager getMusicInfoInPlayListWithIndex:curPlayIndex]];
+//    [self setLabels:music];
+//    //원하는 음악 정보를 가져오도록 predicates를 사용해보자.
+//    //MPMediaQuery *everything = [[MPMediaQuery alloc] initWithFilterPredicates:<#(NSSet *)#>];
+//    NSURL *musicURLPath = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", prePath,music.location]];
+//    AVPlayerItem * currentItem = [AVPlayerItem playerItemWithURL:musicURLPath];
+//    [_player replaceCurrentItemWithPlayerItem:currentItem];
+//    [_player play];
+//    [_player pause];
 }
 - (void)setLabels:(Music *)music{
     self.titleLabel.text = music.title;
