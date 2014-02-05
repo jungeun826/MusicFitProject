@@ -174,8 +174,8 @@
     //지금은 처음 시작시 모든 음악에 대한 정보를 가지고 오는 것으로 하였으므로 이 부분에
     //music관련 디비 매니저가 필요함.
     _DBManager = [DBManager sharedDBManager];
-    _musicDBManager = [MusicDBManager sharedMusicDBManager];
-    [_musicDBManager setDB:[_DBManager dbReturn]];
+   
+
     //아이튠즈에서 음악에 대한 정보를 가져와 DB화 하는 함수를 부름
     [self getITunseSyncMusic];
 }

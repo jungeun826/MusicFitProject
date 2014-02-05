@@ -19,7 +19,7 @@ static ModeDBManager *_instance = nil;
     return _instance;
 }
 - (BOOL)insertModeWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM{
-    NSString *insertQuery = [NSString stringWithFormat:@"INSERT INTO MODE (MIN_BPM , MAX_BPM) VALUES (%d, %d)", (int)minBPM, (int)maxBPM];
+    NSString *insertQuery = [NSString stringWithFormat:@"INSERT INTO MODE (minBPM , maxBPM) VALUES (%d, %d)", (int)minBPM, (int)maxBPM];
     if(![self INSERT:insertQuery]){
         NSLog(@"Error in Mode");
         return NO;

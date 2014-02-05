@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>30F84EBA-14F7-4342-8897-7E6FF3133529</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MusicFitProject</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>95662EC4-813D-4697-8434-8BD53DFA40EF</key>
+		<string>https://github.com/jungeun826/MusicFitProject.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>MusicFitProject.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>95662EC4-813D-4697-8434-8BD53DFA40EF</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/jungeun826/MusicFitProject.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>95662EC4-813D-4697-8434-8BD53DFA40EF</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>95662EC4-813D-4697-8434-8BD53DFA40EF</string>
+			<key>IDESourceControlWCCName</key>
+			<string>MusicFitProject</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -20,9 +20,7 @@ static MusicDBManager *_instance = nil;
     }
     return _instance;
 }
-- (void)setDB:(sqlite3 *)getDB{
-    db = getDB;
-}
+
 - (BOOL)insertMusicWithBPM:(NSInteger)bpm title:(NSString *)title artist:(NSString *)artist location:(NSString *)location isMusic:(BOOL)isMusic{
     NSString *insertQuery = [NSString stringWithFormat:@"INSERT INTO MUSIC (BPM, Title, Artist, Location, IsMusic) VALUES (%d,'%@','%@','%@',%d)", (int)bpm, title, artist, location, isMusic];
    

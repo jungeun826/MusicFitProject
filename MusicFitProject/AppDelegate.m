@@ -7,7 +7,7 @@
 //
 
 #import "AppDelegate.h"
-
+#import "DBManager.h"
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -41,6 +41,8 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    DBManager *temp = [DBManager sharedDBManager];
+    [temp closeDB];
 }
 
 @end

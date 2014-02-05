@@ -18,5 +18,4 @@
 - (BOOL)syncMusic;
 - (NSInteger)getNumberOfMusic;
 - (BOOL)isExistWithlocation:(NSString *)location;
-- (void)setDB:(sqlite3 *)getDB;
 @end

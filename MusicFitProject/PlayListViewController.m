@@ -11,8 +11,7 @@
 #define CELL_IDENTIFIER @"PLAYLIST_CELL"
 
 @interface PlayListViewController (){
-    PlayListDBManager *_playListDBManager;
-    MusicDBManager *_musicDBManager;
+    DBManager *_DBManager;
 }
 @property (weak, nonatomic) IBOutlet UITableView *playListTable;
 
@@ -21,15 +20,15 @@
 @implementation PlayListViewController
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSInteger rows = [_playListDBManager getNumberOfMusicInPlayList];
+    NSInteger rows = [_DBManager getNumberOfMusicInPlayList];
     NSLog(@"%d", rows);
     return rows;
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     PlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLAYLIST_CELL" forIndexPath:indexPath];
-    NSInteger musicID = [_playListDBManager getMusicInfoInPlayListWithIndex:indexPath.row];
-    Music *music = [_musicDBManager getMusicWithMusicID:musicID];
+    NSInteger musicID = [_DBManager getMusicInfoInPlayListWithIndex:indexPath.row];
+    Music *music = [_DBManager getMusicWithMusicID:musicID];
     
     NSLog(@"%@", music.title);
     [cell setWithTitle:music.title artist:music.artist BPM:music.BPM];
@@ -53,11 +52,11 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    _musicDBManager = [MusicDBManager sharedMusicDBManager];
-    _playListDBManager = [PlayListDBManager sharedPlayListDBManager];
+    _DBManager = [DBManager sharedDBManager];
+    
     //FIXME : 아래 문장은 edit 누른 후에 곡추가 누를 경우에 수행해야 함.
-    [_musicDBManager syncMusic];
-    [_playListDBManager syncPlayList];
+    [_DBManager syncMusic];
+    [_DBManager syncPlayList];
 }
 
 - (void)didReceiveMemoryWarning{

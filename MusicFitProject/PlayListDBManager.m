@@ -69,6 +69,7 @@ static PlayListDBManager *_instance = nil;
         NSLog(@"listID= %d, musicID = %d", listID, musicID);
         
         [_musicListInPlayList addObject:musicInfoInPlayList];
+         sqlite3_reset(stmt);
     }
     sqlite3_finalize(stmt);
 //    [self closeDB];

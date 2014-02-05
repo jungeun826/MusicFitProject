@@ -7,7 +7,7 @@
 //
 
 #import "ModeViewController.h"
-#import "ModeDBManager.h"
+#import "DBManager.h"
 #import "AddedModeCell.h"
 #import "StaticModeCell.h"
 #import "PlayViewController.h"
@@ -36,9 +36,7 @@
 
 @implementation ModeViewController{
     NSArray *_staticMode;
-    ModeDBManager *_modeDBManager;
-    PlayListDBManager *_playListDBManager;
-    DBManager *_DBManaer;
+    DBManager *_DBManager;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     NSLog(@"return key press");
@@ -52,7 +50,7 @@
     if(section == 0) //고정 모드 4개
         return STATICCELL_NUM;
     else if(section ==1)//추가된 모드
-        return [_modeDBManager getNumberOfMode];
+        return [_DBManager  getNumberOfMode];
     else//커스터마이징할 모드
         return 1;
 }
@@ -71,7 +69,7 @@
         }
         case ADDMODE_SECTION:{
             AddedModeCell *addedCell = [tableView dequeueReusableCellWithIdentifier:@"ADDEDMODE_CELL"];
-            Mode *mode = [_modeDBManager getModeWithIndex:indexPath.row];
+            Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
             
             [addedCell setWithminBPM:[mode getStringMinBPM] maxBPM:[mode getStringMaxBPM]];
             addedCell.delegate = self;
@@ -90,14 +88,14 @@
             //mode의 bpm정보
            NSString *minBPM = _staticMode[indexPath.row][@"minBPM"];
             
-            [_playListDBManager createPlayListWithMinBPM:[minBPM intValue] maxBPM:0];
+            [_DBManager createPlayListWithMinBPM:[minBPM intValue] maxBPM:0];
             //[_playListDBManager ]
             break;
         }
         case ADDMODE_SECTION:{
             //mode의 bpm정보
-            Mode *mode = [_modeDBManager getModeWithIndex:indexPath.row];
-            [_playListDBManager createPlayListWithMinBPM:mode.minBPM maxBPM:mode.maxBPM];
+            Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
+            [_DBManager createPlayListWithMinBPM:mode.minBPM maxBPM:mode.maxBPM];
             break;
         }
         default:{
@@ -122,7 +120,7 @@
 - (IBAction)saveCustomMode:(id)sender {
     //디비에 저장 후 릴로드
     //FIXME:save전에 textField값이 정상적인지 체크하는 로직 필요
-    if([_modeDBManager insertModeWithMinBPM:[self.minBPM.text intValue] maxBPM:[self.maxBPM.text intValue]] == NO){
+    if([_DBManager insertModeWithMinBPM:[self.minBPM.text intValue] maxBPM:[self.maxBPM.text intValue]] == NO){
         
         self.minBPM.text = @"";
         self.maxBPM.text = @"";
@@ -135,7 +133,7 @@
     self.minBPM.text = @"";
     self.maxBPM.text = @"";
     
-    [_modeDBManager syncMode];
+    [_DBManager syncMode];
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:ADDMODE_SECTION];
     [self.modeTable reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -166,10 +164,10 @@
 }
 -(void)deleteCell{
     int selectedIndex = (int)[self.modeTable indexPathForSelectedRow].row;
-    Mode *mode = [_modeDBManager getModeWithIndex:selectedIndex];
+    Mode *mode = [_DBManager getModeWithIndex:selectedIndex];
     NSLog(@"mode_id:%d",(int)mode.mode_id);
-    [_modeDBManager deleteModeWithModeID:mode.mode_id];
-    [_modeDBManager syncMode];
+    [_DBManager deleteModeWithModeID:mode.mode_id];
+    [_DBManager syncMode];
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:ADDMODE_SECTION];
     [self.modeTable reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -182,11 +180,8 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     _staticMode = @[@{@"modeTitle":@"걷기",@"minBPM":@"120"},@{@"modeTitle":@"조깅,트레드밀",@"minBPM":@"140"},@{@"modeTitle":@"러닝",@"minBPM":@"160"},@{@"modeTitle":@"사이클링",@"minBPM":@"130"}];
-    _DBManaer = [DBManager sharedDBManager];
-    _modeDBManager = [ModeDBManager sharedModeDBManager];
-    [_modeDBManager setDB:[_DBManaer dbReturn]];
-    _playListDBManager = [PlayListDBManager sharedPlayListDBManager];
-    [_playListDBManager setDB:[_DBManaer dbReturn]];
-    [_modeDBManager syncMode];
+    _DBManager = [DBManager sharedDBManager];
+
+    [_DBManager syncMode];
 }
 @end
