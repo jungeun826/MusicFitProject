@@ -15,55 +15,38 @@ static ModeDBManager *_instance = nil;
     if (nil == _instance) {
         _instance = [[ModeDBManager alloc] init];
         _instance->_modeList = [[NSMutableArray alloc]init];
-        //FIXME : bpm 분석 전에 musicDB에서 openDB를 부르게 되는 경우에 아래 openDB를 삭제함.
-        [_instance openDB];
     }
     return _instance;
 }
-
-- (BOOL)addModeWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM{
-    
+- (BOOL)insertModeWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM{
     NSString *insertQuery = [NSString stringWithFormat:@"INSERT INTO MODE (MIN_BPM , MAX_BPM) VALUES (%d, %d)", (int)minBPM, (int)maxBPM];
-    
-    NSLog(@"insertQuery : %@", insertQuery);
-    char *errorMsg;
-    int ret = sqlite3_exec(db, [insertQuery UTF8String], nil, nil, &errorMsg);
-    
-    if(ret != SQLITE_OK){
-        NSLog(@"Error on InsertQuery : %s", errorMsg);
+    if(![self INSERT:insertQuery]){
+        NSLog(@"Error in Mode");
         return NO;
     }
-    
-    sqlite3_last_insert_rowid(db);
     return YES;
-}
-- (Mode *)getModeWithIndex:(NSInteger)index{
-    Mode *mode = _modeList[index];
-    return mode;
 }
 - (BOOL)deleteModeWithModeID:(NSInteger)modeID{
     NSString *deleteQuery = [NSString stringWithFormat:@"DELETE FROM MODE WHERE mode_id = %d",(int)modeID];
-    NSLog(@"delete query : %@", deleteQuery);
     
-    char *errorMsg;
-    int ret = sqlite3_exec(db, [deleteQuery UTF8String], NULL, NULL, &errorMsg);
-    if(ret != SQLITE_OK){
-        NSLog(@"Error on DeleteQuery : %s", errorMsg);
-        return NO;
-    }
-    return YES;
+    return [self DELETE:deleteQuery];
 }
 - (BOOL)syncMode{
     _modeList = [[NSMutableArray alloc]init];
     NSString *resolvingQuery = [NSString stringWithFormat:@"SELECT * FROM MODE"];
     sqlite3_stmt *stmt;
-    int ret = sqlite3_prepare_v2(db, [resolvingQuery UTF8String], -1, &stmt, NULL);
-    
-    NSAssert2(ret == SQLITE_OK, @"Error on resolving data", ret, sqlite3_errmsg(db));
     
     NSInteger mode_id;
     NSInteger maxBPM;
     NSInteger minBPM;
+
+//    [self openDB];
+    
+    int ret = sqlite3_prepare_v2(db, [resolvingQuery UTF8String], -1, &stmt, NULL);
+    
+    __autoreleasing NSString *errMsg;
+    errMsg = [NSString stringWithFormat:@"Error on syncMode in MODE : %s", sqlite3_errmsg(db)];
+    NSAssert2(ret == SQLITE_OK, errMsg, ret, NULL);
     
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         mode_id = sqlite3_column_int(stmt, 0);
@@ -76,9 +59,16 @@ static ModeDBManager *_instance = nil;
         [_modeList addObject:mode];
     }
     sqlite3_finalize(stmt);
+    
+//    [self closeDB];
     return YES;
 }
 - (NSInteger)getNumberOfMode{
     return [_modeList count];
+}
+
+- (Mode *)getModeWithIndex:(NSInteger)index{
+    Mode *mode = _modeList[index];
+    return mode;
 }
 @end

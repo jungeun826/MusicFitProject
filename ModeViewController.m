@@ -21,7 +21,7 @@
 #define HIDDEN_Y 600
 #define MARGIN_Y 100
 
-@interface ModeViewController () <AddedModeDelegate>{
+@interface ModeViewController () <AddedModeDelegate, UIAlertViewDelegate>{
      UIScrollView *viewsContainer;
 }
 @property (weak, nonatomic) IBOutlet UIView *customModeView;
@@ -38,6 +38,7 @@
     NSArray *_staticMode;
     ModeDBManager *_modeDBManager;
     PlayListDBManager *_playListDBManager;
+    DBManager *_DBManaer;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     NSLog(@"return key press");
@@ -89,15 +90,19 @@
             //mode의 bpm정보
            NSString *minBPM = _staticMode[indexPath.row][@"minBPM"];
             
-            [_playListDBManager addPlayListWithMinBPM:[minBPM intValue] maxBPM:0];
+            [_playListDBManager createPlayListWithMinBPM:[minBPM intValue] maxBPM:0];
+            //[_playListDBManager ]
+            break;
         }
         case ADDMODE_SECTION:{
             //mode의 bpm정보
             Mode *mode = [_modeDBManager getModeWithIndex:indexPath.row];
-            [_playListDBManager addPlayListWithMinBPM:mode.minBPM maxBPM:mode.maxBPM];
+            [_playListDBManager createPlayListWithMinBPM:mode.minBPM maxBPM:mode.maxBPM];
+            break;
         }
         default:{
             [self changePositionCustomModeViewWithY:MARGIN_Y];
+            break;
         }
     }
 }
@@ -117,7 +122,16 @@
 - (IBAction)saveCustomMode:(id)sender {
     //디비에 저장 후 릴로드
     //FIXME:save전에 textField값이 정상적인지 체크하는 로직 필요
-    [_modeDBManager addModeWithMinBPM:[self.minBPM.text intValue] maxBPM:[self.maxBPM.text intValue]];
+    if([_modeDBManager insertModeWithMinBPM:[self.minBPM.text intValue] maxBPM:[self.maxBPM.text intValue]] == NO){
+        
+        self.minBPM.text = @"";
+        self.maxBPM.text = @"";
+        
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"저장실패" message:@"실패" delegate:self cancelButtonTitle:nil otherButtonTitles:@"확인", nil];
+        [alert show];
+        
+        return;
+    }
     self.minBPM.text = @"";
     self.maxBPM.text = @"";
     
@@ -160,11 +174,19 @@
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:ADDMODE_SECTION];
     [self.modeTable reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
 }
+//FIXME : 디비를 한번에 여러개가 접근해서 생기는 문제임.
+//고쳐지면 다시 뷰 디드 로드로 옮겨야함.
+- (void)viewDidAppear:(BOOL)animated{
+    [super viewDidAppear:animated];
+}
 - (void)viewDidLoad{
     [super viewDidLoad];
     _staticMode = @[@{@"modeTitle":@"걷기",@"minBPM":@"120"},@{@"modeTitle":@"조깅,트레드밀",@"minBPM":@"140"},@{@"modeTitle":@"러닝",@"minBPM":@"160"},@{@"modeTitle":@"사이클링",@"minBPM":@"130"}];
+    _DBManaer = [DBManager sharedDBManager];
     _modeDBManager = [ModeDBManager sharedModeDBManager];
+    [_modeDBManager setDB:[_DBManaer dbReturn]];
     _playListDBManager = [PlayListDBManager sharedPlayListDBManager];
+    [_playListDBManager setDB:[_DBManaer dbReturn]];
     [_modeDBManager syncMode];
 }
 @end

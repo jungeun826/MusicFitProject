@@ -10,8 +10,8 @@
 
 @interface PlayListDBManager : DBManager
 + (id)sharedPlayListDBManager;
-- (BOOL)addPlayListWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
-- (BOOL)addPlayListWithMusicID:(NSInteger)musicID;
+- (BOOL)createPlayListWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
+- (BOOL)insertPlayListWithMusicID:(NSInteger)musicID;
 - (NSInteger)getMusicInfoInPlayListWithIndex:(NSInteger)index;
 - (BOOL)deletePlayListWithPlayListID:(NSInteger)playListID;
 - (BOOL)syncPlayList;
