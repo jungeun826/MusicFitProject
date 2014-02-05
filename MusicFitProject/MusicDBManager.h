@@ -11,12 +11,11 @@
 
 @interface MusicDBManager : DBManager
 + (id)sharedMusicDBManager;
-- (BOOL)insertMusicWithBPM:(NSInteger)bpm title:(NSString *)title artist:(NSString *)artist location:(NSString *)location isMusic:(BOOL)isMusic;
+- (BOOL)addMusicWithBPM:(NSInteger)bpm title:(NSString *)title artist:(NSString *)artist location:(NSString *)location isMusic:(BOOL)isMusic;
 - (Music *)getMusicWithIndex:(NSInteger)index;
 - (Music *)getMusicWithMusicID:(NSInteger)musicID;
 - (BOOL)deleteMusicWithMusicID:(NSInteger)musicID;
 - (BOOL)syncMusic;
 - (NSInteger)getNumberOfMusic;
 - (BOOL)isExistWithlocation:(NSString *)location;
-- (void)setDB:(sqlite3 *)getDB;
 @end

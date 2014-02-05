@@ -12,11 +12,5 @@
 @interface DBManager : NSObject{
     sqlite3 *db;
 }
-+ (id)sharedDBManager;
-- (BOOL) openDB;
-//- (BOOL) closeDB;
-- (BOOL) INSERT:(NSString *)insertQuery;
-- (BOOL) DELETE:(NSString *)deleteQuery;
-- (sqlite3 *)dbReturn;
-- (void)setDB:(sqlite3 *)getDB;
+- (BOOL)openDB;
 @end
