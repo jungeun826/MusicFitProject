@@ -59,7 +59,7 @@ static MusicDBManager *_instance = nil;
         NSString *locationString = [NSString stringWithCString:location encoding:NSUTF8StringEncoding];
         isMusic = sqlite3_column_int(stmt, 5);
         
-        NSLog(@"musicID = %d , BPM = %d, title = %@, artist = %@, location = %@, isMusic = %s ", (int)musicID, BPM, titleString, artistString, locationString, isMusic == 0 ? "NO" : "YES");
+        NSLog(@"musicID = %d , BPM = %d, title = %@, artist = %@, location = %@, isMusic = %s ", (int)musicID, (int)BPM, titleString, artistString, locationString, isMusic == 0 ? "NO" : "YES");
         
         Music *music = [[Music alloc]initWithMusicID:musicID BPM:BPM title:titleString artist:artistString location:locationString isMusic:isMusic];
         
@@ -128,7 +128,7 @@ static MusicDBManager *_instance = nil;
     NSString *locationString = [NSString stringWithCString:location encoding:NSUTF8StringEncoding];
     isMusic = sqlite3_column_int(stmt, 5);
     
-    NSLog(@"musicID = %d , BPM = %d, title = %@, artist = %@, location = %@, isMusic = %s ", (int)musicID, BPM, titleString, artistString, locationString, isMusic == 0 ? "NO" : "YES");
+    NSLog(@"musicID = %d , BPM = %d, title = %@, artist = %@, location = %@, isMusic = %s ", (int)musicID, (int)BPM, titleString, artistString, locationString, isMusic == 0 ? "NO" : "YES");
     
     Music *music = [[Music alloc]initWithMusicID:musicID BPM:BPM title:titleString artist:artistString location:locationString isMusic:isMusic];
     

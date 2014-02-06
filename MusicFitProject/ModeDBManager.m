@@ -36,7 +36,7 @@ static ModeDBManager *_instance = nil;
     NSString *resolvingQuery = [NSString stringWithFormat:@"SELECT * FROM MODE"];
     sqlite3_stmt *stmt;
     
-    NSInteger mode_id;
+    NSInteger modeID;
     NSInteger maxBPM;
     NSInteger minBPM;
 
@@ -49,12 +49,12 @@ static ModeDBManager *_instance = nil;
     NSAssert2(ret == SQLITE_OK, errMsg, ret, NULL);
     
     while (sqlite3_step(stmt) == SQLITE_ROW) {
-        mode_id = sqlite3_column_int(stmt, 0);
+        modeID = sqlite3_column_int(stmt, 0);
         minBPM = sqlite3_column_int(stmt, 1);
         maxBPM = sqlite3_column_int(stmt, 2);
         
-        NSLog(@"mode id = %d , minBPM = %d, maxBPM = %d ", (int)mode_id, (int)minBPM, (int)maxBPM);
-        Mode *mode = [[Mode alloc]initWithMode_id:mode_id minBPM:minBPM maxBPM:maxBPM];
+        NSLog(@"modeID = %d , minBPM = %d, maxBPM = %d ", (int)modeID, (int)minBPM, (int)maxBPM);
+        Mode *mode = [[Mode alloc]initWithModeID:modeID minBPM:minBPM maxBPM:maxBPM];
         
         [_modeList addObject:mode];
     }

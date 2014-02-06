@@ -39,7 +39,7 @@ static char kRightViewController;
   objc_setAssociatedObject(self, &kRow, @(row), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
   Position newPosition = self.position;
-  newPosition.row = row;
+  newPosition.row = (int)row;
   self.position = newPosition;
 }
 
@@ -47,7 +47,7 @@ static char kRightViewController;
   objc_setAssociatedObject(self, &kCol, @(col), OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 
   Position newPosition = self.position;
-  newPosition.col = col;
+  newPosition.col = (int)col;
   self.position = newPosition;
 }
 

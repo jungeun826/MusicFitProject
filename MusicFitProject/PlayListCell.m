@@ -17,7 +17,7 @@
 
 @implementation PlayListCell
 - (void)setWithTitle:(NSString *)title artist:(NSString *)artist BPM:(NSInteger)bpm{
-    self.BPMLabel.text = [NSString stringWithFormat:@"%d", bpm];
+    self.BPMLabel.text = [NSString stringWithFormat:@"%d", (int)bpm];
     self.titleLabel.text = title;
     self.artistLabel.text = artist;
 }

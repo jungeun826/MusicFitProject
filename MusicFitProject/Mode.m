@@ -9,21 +9,21 @@
 #import "Mode.h"
 
 @implementation Mode
--(id)initWithMode_id:(NSInteger)mode_id minBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM{
+-(id)initWithModeID:(NSInteger)modeID minBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM{
     self = [super init];
     if(self){
-        self.mode_id = mode_id;
+        self.modeID = modeID;
         self.minBPM = minBPM;
         self.maxBPM = maxBPM;
     }
     return self;
 }
 -(NSString *)getStringMaxBPM{
-    NSString *maxBPM = [NSString stringWithFormat:@"%d", self.maxBPM];
+    NSString *maxBPM = [NSString stringWithFormat:@"%d", (int)self.maxBPM];
     return maxBPM;
 }
 -(NSString *)getStringMinBPM{
-    NSString *minBPM = [NSString stringWithFormat:@"%d", self.minBPM];
+    NSString *minBPM = [NSString stringWithFormat:@"%d", (int)self.minBPM];
     return minBPM;
 }
 @end

@@ -103,9 +103,9 @@
     modeViewController.row = 0;
     modeViewController.col = 0;
     
-    UIViewController *playerViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"player"];
-    playerViewController.row = 0;
-    playerViewController.col = 1;
+    UIViewController *playViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"play"];
+    playViewController.row = 0;
+    playViewController.col = 1;
     
     UIViewController *playListViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"playList"];
     playListViewController.row = 0;
@@ -115,7 +115,7 @@
     myViewController.row = 0;
     myViewController.col = 3;
     
-    NSArray *controllers = @[ modeViewController, playerViewController,playListViewController, myViewController];
+    NSArray *controllers = @[ modeViewController, playViewController,playListViewController, myViewController];
     [swipeVC setControllers:controllers];
     
     app.window.rootViewController = swipeVC;
@@ -180,35 +180,35 @@
     [self getITunseSyncMusic];
 }
 - (void)getITunseSyncMusic{
-//    //아이튠즈 미디어들을 모두 가져와 초기화함
-//    MPMediaQuery *everything = [[MPMediaQuery alloc] init];
-//    //아이튠즈 미디어들을 어레이에 넣어 접근을 용이하게 함
-//    NSArray *itemsFromGenericQuery = [everything items];
-//    //
-//    NSInteger count = [itemsFromGenericQuery count] -1;
-//    for(int index = 0 ; index < count ; index++){
-//        
-//        MPMediaItem *music = [itemsFromGenericQuery objectAtIndex:index];
-//        
-//        NSString *stringURL = [[music valueForProperty:MPMediaItemPropertyAssetURL] absoluteString];
-//        NSString *location = [stringURL substringFromIndex:32];
-//        
-//        if([_musicDBManager isExistWithlocation:location])
-//            continue;
-//        
-//        
-//        NSString *title = [NSString stringWithFormat:@"%@",[music valueForProperty:MPMediaItemPropertyTitle]];
-//        title =[title stringByReplacingOccurrencesOfString: @"'" withString: @"''"];
-//        
-//        NSString *artist = [NSString stringWithFormat:@"%@",[music valueForProperty:                        MPMediaItemPropertyArtist]];
-//        artist =[artist stringByReplacingOccurrencesOfString: @"'" withString: @"''"];
-//        
-//        
-//        NSInteger BPM = [[music valueForProperty:MPMediaItemPropertyBeatsPerMinute] intValue];
-//        
-//        //FIXME:무조건 isMusic을 true로 넣는다 고쳐야함.
-//        [_musicDBManager insertMusicWithBPM:BPM title:title artist:artist location:location isMusic:YES];
-//    }
+    //아이튠즈 미디어들을 모두 가져와 초기화함
+    MPMediaQuery *everything = [[MPMediaQuery alloc] init];
+    //아이튠즈 미디어들을 어레이에 넣어 접근을 용이하게 함
+    NSArray *itemsFromGenericQuery = [everything items];
+    //
+    NSInteger count = [itemsFromGenericQuery count] -1;
+    for(int index = 0 ; index < count ; index++){
+        
+        MPMediaItem *music = [itemsFromGenericQuery objectAtIndex:index];
+        
+        NSString *stringURL = [[music valueForProperty:MPMediaItemPropertyAssetURL] absoluteString];
+        NSString *location = [stringURL substringFromIndex:32];
+        
+        if([_musicDBManager isExistWithlocation:location])
+            continue;
+        
+        
+        NSString *title = [NSString stringWithFormat:@"%@",[music valueForProperty:MPMediaItemPropertyTitle]];
+        title =[title stringByReplacingOccurrencesOfString: @"'" withString: @"''"];
+        
+        NSString *artist = [NSString stringWithFormat:@"%@",[music valueForProperty:                        MPMediaItemPropertyArtist]];
+        artist =[artist stringByReplacingOccurrencesOfString: @"'" withString: @"''"];
+        
+        
+        NSInteger BPM = [[music valueForProperty:MPMediaItemPropertyBeatsPerMinute] intValue];
+        
+        //FIXME:무조건 isMusic을 true로 넣는다 고쳐야함.
+        [_musicDBManager insertMusicWithBPM:BPM title:title artist:artist location:location isMusic:YES];
+    }
     /*
      가슴 시린 이야기 (Feat. 용준형 of BEAST), 휘성, 8605142450541980905
      가질 수 없는 너, 하이니, 8605142450541980900
@@ -242,25 +242,25 @@
      미스터리 (Feat. San E), 박지윤, 8605142450541980848
      바람이 분다 (영화 '신이 보낸 사람' 삽입곡), 포맨(4men), 8605142450541980896
      */
-    NSArray *tempMP3 = @[@{@"title":@"가슴 시린 이야기 (Feat. 용준형 of BEAST)",@"artist":@"휘성",@"location":@"8605142450541980905"},@{@"title":@"가질 수 없는 너",@"artist":@"하이니",@"location":@"8605142450541980900"},                         @{@"title":@"금요일에 만나요 (Feat. 장이정 Of HISTORY)",@"artist":@"아이유",@"location":@"8605142450541980866"}];
-    NSString *location ;
-    NSString *title ;
-    NSString *artist ;
-    NSInteger BPM;
-    int count = (int)[tempMP3 count];
-    for(int index = 0 ; index < count ; index++){
-        location= tempMP3[index][@"location"];
-        
-        if([_musicDBManager isExistWithlocation:location])
-            continue;
-        
-        title = tempMP3[index][@"title"];
-        artist = tempMP3[index][@"artist"];
-        
-        BPM = index*73 +30;
-        
-        //FIXME:무조건 isMusic을 true로 넣는다 고쳐야함.
-        [_musicDBManager insertMusicWithBPM:BPM title:title artist:artist location:location isMusic:YES];
-    }
+//    NSArray *tempMP3 = @[@{@"title":@"가슴 시린 이야기 (Feat. 용준형 of BEAST)",@"artist":@"휘성",@"location":@"8605142450541980905"},@{@"title":@"가질 수 없는 너",@"artist":@"하이니",@"location":@"8605142450541980900"},                         @{@"title":@"금요일에 만나요 (Feat. 장이정 Of HISTORY)",@"artist":@"아이유",@"location":@"8605142450541980866"}];
+//    NSString *location ;
+//    NSString *title ;
+//    NSString *artist ;
+//    NSInteger BPM;
+//    int count = (int)[tempMP3 count];
+//    for(int index = 0 ; index < count ; index++){
+//        location= tempMP3[index][@"location"];
+//        
+//        if([_musicDBManager isExistWithlocation:location])
+//            continue;
+//        
+//        title = tempMP3[index][@"title"];
+//        artist = tempMP3[index][@"artist"];
+//        
+//        BPM = index*73 +30;
+//        
+//        //FIXME:무조건 isMusic을 true로 넣는다 고쳐야함.
+//        [_musicDBManager insertMusicWithBPM:BPM title:title artist:artist location:location isMusic:YES];
+//    }
 }
 @end

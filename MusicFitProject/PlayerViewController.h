@@ -10,5 +10,6 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface PlayerViewController : UIViewController
-
+- (void)playListSync;
+- (void)changePlayMusic:(NSInteger)selectIndex;
 @end

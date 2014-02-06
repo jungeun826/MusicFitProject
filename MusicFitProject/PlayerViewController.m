@@ -10,6 +10,7 @@
 #import <AVFoundation/AVFoundation.h>
 //#import "PlayListDBManager.h"
 #import "DBManager.h"
+
 #define SOUNDVIEW_HIDDEN_X -320
 #define SOUNDVIEW_MARGIN_X 0
 #define prePath @"ipod-library://item/item.mp3?id="
@@ -21,8 +22,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *BPMLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *albumImageView;
 
-//@property (weak, nonatomic) IBOutlet UISlider *playTimeSlider;
-//@property (weak, nonatomic) IBOutlet UILabel *playTimeLabel;
+@property (weak, nonatomic) IBOutlet UISlider *playTimeSlider;
+@property (weak, nonatomic) IBOutlet UILabel *playTimeLabel;
 
 @property (strong, nonatomic) AVPlayer *player;
 @end
@@ -59,24 +60,43 @@
         [self.playOrPauseBtn setSelected:YES];
     }
 }
-- (void)refresh{
+- (void)changePlayMusic:(NSInteger)selectIndex{
+    if(curPlayIndex == selectIndex)
+        return;
+    [_player pause];
+    Music *music = [_DBManager getMusicWithMusicID:[_DBManager getMusicInfoInPlayListWithIndex:selectIndex]];
+    if(music == nil)
+        return;
+    
+    NSURL *selectMusicURLPath = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", prePath,music.location]];
+    
+    AVPlayerItem * selectItem = [AVPlayerItem playerItemWithURL:selectMusicURLPath];
+    
+    [_player replaceCurrentItemWithPlayerItem:selectItem];
+    [_player play];
+    [self.playOrPauseBtn setSelected:YES];
+    
+    [self setControlsValue:music];
+    
+    
+}
+- (void)playListSync{
     [_DBManager syncPlayList];
-    Music *music = [_DBManager getMusicWithMusicID:[_DBManager getMusicInfoInPlayListWithIndex:curPlayIndex]];
+    Music *music = [_DBManager getMusicWithMusicID:[_DBManager getMusicInfoInPlayListWithIndex:0]];
     if(music != nil){
-        [self setLabels:music];
-//        [self.playTimeSlider setMaximumValue:self.player.currentItem.duration.value];
+        [_player pause];
+        NSURL *selectMusicURLPath = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", prePath,music.location]];
         
-        [self configurePlayer];
-        //원하는 음악 정보를 가져오도록 predicates를 사용해보자.
-        //MPMediaQuery *everything = [[MPMediaQuery alloc] initWithFilterPredicates:<#(NSSet *)#>];
-        NSURL *musicURLPath = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", prePath,music.location]];
-        AVPlayerItem * currentItem = [AVPlayerItem playerItemWithURL:musicURLPath];
-        [_player replaceCurrentItemWithPlayerItem:currentItem];
+        AVPlayerItem * selectItem = [AVPlayerItem playerItemWithURL:selectMusicURLPath];
+        
+        [_player replaceCurrentItemWithPlayerItem:selectItem];
         [_player play];
+        [self.playOrPauseBtn setSelected:YES];
+        
+        [self setControlsValue:music];
     }
 }
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
@@ -84,18 +104,32 @@
     curPlayIndex = 0;
     _DBManager = [DBManager sharedDBManager];
     
-    [self refresh];
+    [self playListSync];
     [_player pause];
     //6
     [self configurePlayer];
 }
 
-- (void)setLabels:(Music *)music{
+- (void)setControlsValue:(Music *)music{
     self.titleLabel.text = music.title;
     self.artistLabel.text = music.artist;
-    self.BPMLabel.text = [NSString stringWithFormat:@"%d",music.BPM];
+    self.BPMLabel.text = [NSString stringWithFormat:@"%d",(int)music.BPM];
     //image
+
+    int duration = (int)CMTimeGetSeconds(_player.currentItem.duration);
+    int currentTime = (int)CMTimeGetSeconds(_player.currentTime);
+    int durationMin = (int)(duration / 60);
+    int durationSec = (int)(duration % 60);
+    int currentMins = (int)(currentTime / 60);
+    int currentSec = (int)(currentTime % 60);
+    
+    NSString * durationLabel =[NSString stringWithFormat:@"%02d:%02d/%02d:%02d",currentMins,currentSec,durationMin,durationSec];
+    _playTimeLabel.text = durationLabel;
+    
+    [self.playTimeSlider setMaximumValue:self.player.currentItem.duration.value];
+    _playTimeSlider.value = currentTime;
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -120,16 +154,11 @@
                                          int currentMins = (int)(currentTime / 60);
                                          int currentSec = (int)(currentTime % 60);
                                          
-                                         //                                                  int currentTime = (int)((weakSelf.player.currentTime.value)/weakSelf.player.currentTime.timescale);
-                                         //                                                  int currentMins = (int)(currentTime/60);
-                                         //                                                  int currentSec  = (int)(currentTime%60);
+                                  
+                                         NSString * durationLabel =[NSString stringWithFormat:@"%02d:%02d/%02d:%02d",currentMins,currentSec,durationMin,durationSec];
                                          
-                                         
-                                         
-//                                         NSString * durationLabel =[NSString stringWithFormat:@"%02d:%02d/%02d:%02d",currentMins,currentSec,durationMin,durationSec];
-//                                         weakSelf.playTimeLabel.text = durationLabel;
-                                         
-//                                         weakSelf.playTimeSlider.value = currentTime;
+                                         weakSelf.playTimeLabel.text = durationLabel;
+                                   weakSelf.playTimeSlider.value = currentTime;
                                      }];
     
 }

@@ -20,7 +20,7 @@
 - (BOOL) INSERT:(NSString *)insertQuery;
 - (BOOL) DELETE:(NSString *)deleteQuery;
 - (sqlite3 *)dbReturn;
-- (void)setDB:(sqlite3 *)getDB;
+//- (void)setDB:(sqlite3 *)getDB;
 //+ (id)sharedPlayListDBManager;
 - (BOOL)createPlayListWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
 - (BOOL)insertPlayListWithMusicID:(NSInteger)musicID;

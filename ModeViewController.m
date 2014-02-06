@@ -13,6 +13,7 @@
 #import "PlayViewController.h"
 #import "AppDelegate.h"
 #import "PlayListDBManager.h"
+#import "PlayerViewController.h"
 
 #define STATICCELL_NUM 4
 #define STATIC_SECTION 0
@@ -81,6 +82,9 @@
         }
     }
 }
+- (void)syncPlayer{
+    [self.childViewControllers[0] playListSync];
+}
 - (void)tableView:tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     //커스텀이 아닌 경우 해당 셀에 대한 mode정보를 얻어온 후 해당하는 범위의 bpm을 찾아 리스트를 생성한다.
     switch (indexPath.section){
@@ -89,13 +93,14 @@
            NSString *minBPM = _staticMode[indexPath.row][@"minBPM"];
             
             [_DBManager createPlayListWithMinBPM:[minBPM intValue] maxBPM:0];
-            //[_playListDBManager ]
+            [self syncPlayer];
             break;
         }
         case ADDMODE_SECTION:{
             //mode의 bpm정보
             Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
             [_DBManager createPlayListWithMinBPM:mode.minBPM maxBPM:mode.maxBPM];
+            [self syncPlayer];
             break;
         }
         default:{
@@ -165,8 +170,8 @@
 -(void)deleteCell{
     int selectedIndex = (int)[self.modeTable indexPathForSelectedRow].row;
     Mode *mode = [_DBManager getModeWithIndex:selectedIndex];
-    NSLog(@"mode_id:%d",(int)mode.mode_id);
-    [_DBManager deleteModeWithModeID:mode.mode_id];
+    NSLog(@"mode_id:%d",(int)mode.modeID);
+    [_DBManager deleteModeWithModeID:mode.modeID];
     [_DBManager syncMode];
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:ADDMODE_SECTION];

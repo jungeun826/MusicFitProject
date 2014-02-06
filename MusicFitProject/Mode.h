@@ -11,9 +11,9 @@
 @interface Mode : NSObject
 @property NSInteger maxBPM;
 @property NSInteger minBPM;
-@property NSInteger mode_id;
+@property NSInteger modeID;
 
--(id)initWithMode_id:(NSInteger)mode_id minBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
+-(id)initWithModeID:(NSInteger)modeID minBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
 -(NSString *)getStringMinBPM;
 -(NSString *)getStringMaxBPM;
 @end
