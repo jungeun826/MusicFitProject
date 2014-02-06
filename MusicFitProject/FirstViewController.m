@@ -7,13 +7,11 @@
 //
 
 #import "FirstViewController.h"
-#import "PlayViewController.h"
 #import "AppDelegate.h"
 #import "SwipeViewController.h"
-#import "SwipeController.h"
 #import <MediaPlayer/MediaPlayer.h>
-#import "MusicDBManager.h"
 #import "DBManager.h"
+#import "PlayerViewController.h"
 
 #define HIDDEN_X 400
 #define TUTORIAL_IMAGENUM 4
@@ -29,7 +27,6 @@
 @end
 
 @implementation FirstViewController{
-    MusicDBManager *_musicDBManager;
     DBManager *_DBManager;
     BOOL _repeat;
 }
@@ -89,37 +86,14 @@
 }
 //튜토리얼에서 플레이 화면으로 넘어갈 때 실행되어야 하는 것.
 -(void)movePlayView{
-//    PlayViewController *playerVC =(PlayViewController *)[self.storyboard instantiateViewControllerWithIdentifier:@"player"];
-//    
     AppDelegate *app = [[UIApplication sharedApplication]delegate];
-//    NSLog(@"changed root");
-//    app.window.rootViewController = playerVC;
+    //    NSLog(@"changed root");
+    //    app.window.rootViewController = playerVC;
     UIStoryboard *currentStoryboard = self.storyboard;
     
-    UIViewController *initialViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"swipe"];
-    SwipeViewController *swipeVC = [[SwipeViewController alloc] initWithFrame:initialViewController.view.frame];
-    
-    UIViewController *modeViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"mode"];
-    modeViewController.row = 0;
-    modeViewController.col = 0;
-    
-    UIViewController *playViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"play"];
-    playViewController.row = 0;
-    playViewController.col = 1;
-    
-    UIViewController *playListViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"playList"];
-    playListViewController.row = 0;
-    playListViewController.col = 2;
-    
-    UIViewController *myViewController = [currentStoryboard instantiateViewControllerWithIdentifier:@"my"];
-    myViewController.row = 0;
-    myViewController.col = 3;
-    
-    NSArray *controllers = @[ modeViewController, playViewController,playListViewController, myViewController];
-    [swipeVC setControllers:controllers];
-    
-    app.window.rootViewController = swipeVC;
-    [swipeVC moveRightAnimated:NO];
+    PlayerViewController *initVC = [currentStoryboard instantiateViewControllerWithIdentifier:@"player"];
+    [initVC setSwipeController];
+    app.window.rootViewController = initVC;
 }
 //메인 화면이 등장할 때 스크롤뷰가 움직이는 것에 대한 설정부분.
 - (void)settingScrollView{
@@ -193,7 +167,7 @@
         NSString *stringURL = [[music valueForProperty:MPMediaItemPropertyAssetURL] absoluteString];
         NSString *location = [stringURL substringFromIndex:32];
         
-        if([_musicDBManager isExistWithlocation:location])
+        if([_DBManager isExistWithlocation:location])
             continue;
         
         
@@ -204,10 +178,14 @@
         artist =[artist stringByReplacingOccurrencesOfString: @"'" withString: @"''"];
         
         
-        NSInteger BPM = [[music valueForProperty:MPMediaItemPropertyBeatsPerMinute] intValue];
+        //유효 bpm범위 처리를 해야함.
+//        NSInteger BPM = [[music valueForProperty:MPMediaItemPropertyBeatsPerMinute] intValue];
+        
+        //FIXME: bpm 분석 후 얻어오는 부분 추가시 위의 주석이랑 같이 처리
+        NSInteger BPM = index*3 +2;
         
         //FIXME:무조건 isMusic을 true로 넣는다 고쳐야함.
-        [_musicDBManager insertMusicWithBPM:BPM title:title artist:artist location:location isMusic:YES];
+        [_DBManager insertMusicWithBPM:BPM title:title artist:artist location:location isMusic:YES];
     }
     /*
      가슴 시린 이야기 (Feat. 용준형 of BEAST), 휘성, 8605142450541980905

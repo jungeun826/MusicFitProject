@@ -15,10 +15,11 @@
 
 #define CELL_IDENTIFIER @"PLAYLIST_CELL"
 
-@interface PlayListViewController (){
+@interface PlayListViewController () <UIAlertViewDelegate>{
     DBManager *_DBManager;
 }
 @property (weak, nonatomic) IBOutlet UITableView *playListTable;
+@property (weak, nonatomic) IBOutlet UIButton *editBtn;
 
 @end
 
@@ -33,17 +34,20 @@
 }
 
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
     PlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLAYLIST_CELL" forIndexPath:indexPath];
     NSInteger musicID = [_DBManager getMusicInfoInPlayListWithIndex:indexPath.row];
     Music *music = [_DBManager getMusicWithMusicID:musicID];
     
     NSLog(@"%@", music.title);
     [cell setWithTitle:music.title artist:music.artist BPM:music.BPM];
-    
     return cell;
-}
-- (void)changeMusic:(NSInteger)selectIndex{
     
+}
+
+- (void)changeMusic:(NSInteger)selectIndex{
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"미구현" message:Nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"확인", nil];
+    [alert show];
 }
 - (void)tableView:tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     //editMode가 아닐 경우 touch시에 음악 재생
@@ -92,5 +96,4 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
 @end

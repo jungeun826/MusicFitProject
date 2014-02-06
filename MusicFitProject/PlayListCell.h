@@ -10,4 +10,5 @@
 
 @interface PlayListCell : UITableViewCell
 - (void)setWithTitle:(NSString *)title artist:(NSString *)artist BPM:(NSInteger)bpm;
+- (void)setWithTitle:(NSString *)title artist:(NSString *)artist;
 @end

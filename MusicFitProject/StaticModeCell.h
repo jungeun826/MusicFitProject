@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AddedModeDelegate.h"
 
 @interface StaticModeCell : UITableViewCell
-
+//@property (weak, nonatomic) id<ModeDelegate> modeDelegate;
 -(void)setWithImageName:(NSString *)imageName title:(NSString *)title minBPM:(NSString *)minBPM;
 @end

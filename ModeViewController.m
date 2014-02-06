@@ -38,6 +38,7 @@
 @implementation ModeViewController{
     NSArray *_staticMode;
     DBManager *_DBManager;
+    PlayerViewController *_player;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
     NSLog(@"return key press");
@@ -55,6 +56,7 @@
     else//커스터마이징할 모드
         return 1;
 }
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
 //    StaticModeCell *staticCell;
     //addedCell;
@@ -66,6 +68,7 @@
             NSString *minBPM = _staticMode[indexPath.row][@"minBPM"];
             [staticCell setWithImageName:@"cycle.png" title: mode minBPM:minBPM];
             NSLog(@"%@,  %@",_staticMode[indexPath.row][@"modeTitle"], _staticMode[indexPath.row][@"minBPM"]);
+//            staticCell.modeDelegate = (id)_player;
             return staticCell;
         }
         case ADDMODE_SECTION:{
@@ -73,7 +76,9 @@
             Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
             
             [addedCell setWithminBPM:[mode getStringMinBPM] maxBPM:[mode getStringMaxBPM]];
-            addedCell.delegate = self;
+            addedCell.addedDelegate = self;
+            
+//            addedCell.modeDelegate = (id)_player;
             return addedCell;
         }
         default:{
@@ -82,9 +87,7 @@
         }
     }
 }
-- (void)syncPlayer{
-    [self.childViewControllers[0] playListSync];
-}
+
 - (void)tableView:tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     //커스텀이 아닌 경우 해당 셀에 대한 mode정보를 얻어온 후 해당하는 범위의 bpm을 찾아 리스트를 생성한다.
     switch (indexPath.section){
@@ -93,14 +96,12 @@
            NSString *minBPM = _staticMode[indexPath.row][@"minBPM"];
             
             [_DBManager createPlayListWithMinBPM:[minBPM intValue] maxBPM:0];
-            [self syncPlayer];
             break;
         }
         case ADDMODE_SECTION:{
             //mode의 bpm정보
             Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
             [_DBManager createPlayListWithMinBPM:mode.minBPM maxBPM:mode.maxBPM];
-            [self syncPlayer];
             break;
         }
         default:{
@@ -186,7 +187,8 @@
     [super viewDidLoad];
     _staticMode = @[@{@"modeTitle":@"걷기",@"minBPM":@"120"},@{@"modeTitle":@"조깅,트레드밀",@"minBPM":@"140"},@{@"modeTitle":@"러닝",@"minBPM":@"160"},@{@"modeTitle":@"사이클링",@"minBPM":@"130"}];
     _DBManager = [DBManager sharedDBManager];
-
+    _player = [self.storyboard instantiateViewControllerWithIdentifier:@"player"];
+    [self addChildViewController:_player];
     [_DBManager syncMode];
 }
 @end

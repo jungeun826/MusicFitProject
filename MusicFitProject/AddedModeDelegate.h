@@ -11,3 +11,7 @@
 @protocol AddedModeDelegate <NSObject>
 -(void)deleteCell;
 @end
+
+//@protocol ModeDelegate <NSObject>
+//- (void)syncPlayer;
+//@end

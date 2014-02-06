@@ -12,4 +12,5 @@
 @interface PlayerViewController : UIViewController
 - (void)playListSync;
 - (void)changePlayMusic:(NSInteger)selectIndex;
+- (void)setSwipeController;
 @end

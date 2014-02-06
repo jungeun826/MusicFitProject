@@ -32,7 +32,7 @@
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated
 {
     [super setSelected:selected animated:animated];
-
+//    [self.modeDelegate syncPlayer];
     // Configure the view for the selected state
 }
 
