@@ -14,6 +14,9 @@
 #import "AppDelegate.h"
 #import "PlayListDBManager.h"
 #import "PlayerViewController.h"
+#import "MyMusicPlayer.h"
+#import "UIViewController+SwipeController.h"
+#import "SwipeViewController.h"
 
 #define STATICCELL_NUM 4
 #define STATIC_SECTION 0
@@ -94,8 +97,13 @@
         case STATIC_SECTION:{
             //mode의 bpm정보
            NSString *minBPM = _staticMode[indexPath.row][@"minBPM"];
-            
+            //리스트 생성
             [_DBManager createPlayListWithMinBPM:[minBPM intValue] maxBPM:0];
+            //음악 재생
+            MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
+            [myMusicPlayer setPlayList];
+            //swipe
+            [self.swipeViewController moveRightAnimated:YES];
             break;
         }
         case ADDMODE_SECTION:{

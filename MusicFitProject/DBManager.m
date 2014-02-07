@@ -546,4 +546,11 @@ static DBManager *_instance = nil;
     [self closeDB];
     return music;
 }
+
+
+- (NSArray *)getPlayListArray{
+    if([_musicListInPlayList count]==0)
+        return nil;
+    return _musicListInPlayList;
+}
 @end

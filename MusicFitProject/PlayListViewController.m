@@ -9,6 +9,7 @@
 #import "PlayListViewController.h"
 #import "PlayListCell.h"
 #import "PlayerViewController.h"
+//#import "MyMusicPlayer.h"
 
 //#define PALYMODE 0 NO
 //#define EDITMODE 1 YES
@@ -78,8 +79,11 @@
     _DBManager = [DBManager sharedDBManager];
     _editMode = NO;
     //FIXME : 아래 문장은 edit 누른 후에 곡추가 누를 경우에 수행해야 함.
+    
     [_DBManager syncMusic];
     [_DBManager syncPlayList];
+    
+//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
 }
 //[self.audioPlayer pause];
 //MPMediaItem *song = [self.songsList objectAtIndex:indexPath.row];

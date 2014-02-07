@@ -34,7 +34,7 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Nvg-JK-OSJ">
-                                                <rect key="frame" x="5" y="0.0" width="46" height="46"/>
+                                                <rect key="frame" x="5" y="-2" width="46" height="46"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <color key="backgroundColor" red="0.1669921875" green="0.37452746980000001" blue="0.65055436040000003" alpha="1" colorSpace="calibratedRGB"/>
                                             </imageView>
@@ -78,46 +78,35 @@
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3SO-eN-2MD">
-                                                <rect key="frame" x="15" y="-4" width="38" height="44"/>
+                                                <rect key="frame" x="8" y="-2" width="45" height="47"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                <state key="normal" image="sound_icon.jpg">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                <state key="normal" image="play_vol.png">
+                                                    <color key="titleColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="changeVolume:" destination="a0Q-eO-Xfg" eventType="touchUpInside" id="Ttn-EN-w7Z"/>
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="snp-dD-Rej">
-                                                <rect key="frame" x="79" y="1" width="29" height="38"/>
+                                                <rect key="frame" x="96" y="0.0" width="41" height="43"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="tintColor" red="0.75294125079999996" green="0.27450981740000002" blue="0.40784317260000003" alpha="1" colorSpace="deviceRGB"/>
-                                                <state key="normal" image="preMusic_icon.jpg">
-                                                    <color key="titleShadowColor" red="0.99794929789999998" green="1" blue="0.940667107" alpha="0.0" colorSpace="calibratedRGB"/>
+                                                <state key="normal" image="play_back.png">
+                                                    <color key="titleShadowColor" red="0.64607402028922112" green="0.64795918367346939" blue="0.61503007500667051" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="playPreviouse:" destination="a0Q-eO-Xfg" eventType="touchUpInside" id="s7z-Ku-06l"/>
+                                                </connections>
                                             </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tq2-M0-CPO">
-                                                <rect key="frame" x="199" y="-8" width="41" height="54"/>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tq2-M0-CPO">
+                                                <rect key="frame" x="180" y="-1" width="43" height="45"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" backgroundImage="nextMusic_icon.jpg">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="y5M-pj-nGe">
-                                                <rect key="frame" x="261" y="-2" width="39" height="44"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" image="suffle_icon.jpg" backgroundImage="suffle_icon.jpg">
-                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                </state>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8W-Mp-2oD">
-                                                <rect key="frame" x="144" y="1" width="33" height="37"/>
-                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                <state key="normal" image="play_icon.jpg">
+                                                <state key="normal" image="play_next.png">
                                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                 </state>
                                                 <connections>
-                                                    <action selector="playOpause:" destination="a0Q-eO-Xfg" eventType="touchUpInside" id="uD4-9I-ced"/>
+                                                    <action selector="playNext:" destination="a0Q-eO-Xfg" eventType="touchUpInside" id="Zzo-Da-YfC"/>
                                                 </connections>
                                             </button>
                                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7G8-KA-gOM">
@@ -145,6 +134,18 @@
                                                 </subviews>
                                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                             </view>
+                                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N8W-Mp-2oD">
+                                                <rect key="frame" x="130" y="-4" width="60" height="47"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <state key="normal" image="play_play.png">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <state key="selected" image="play_stop.png"/>
+                                                <state key="highlighted" image="play_play_on.png"/>
+                                                <connections>
+                                                    <action selector="playORpause:" destination="a0Q-eO-Xfg" eventType="touchUpInside" id="clK-mH-hln"/>
+                                                </connections>
+                                            </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
@@ -169,7 +170,7 @@
                         <outlet property="BPMLabel" destination="FUp-DG-FjV" id="gyd-9b-yx6"/>
                         <outlet property="albumImageView" destination="Nvg-JK-OSJ" id="uBo-pl-jUH"/>
                         <outlet property="artistLabel" destination="o9Z-Mh-V5q" id="0t6-CP-mdT"/>
-                        <outlet property="playOrPauseBtn" destination="N8W-Mp-2oD" id="hKQ-0g-4eA"/>
+                        <outlet property="playBtn" destination="N8W-Mp-2oD" id="BVN-Od-dsY"/>
                         <outlet property="playTimeLabel" destination="OXa-Ka-T5T" id="av9-AE-W7c"/>
                         <outlet property="playTimeSlider" destination="wrO-8v-f3H" id="YFH-GU-9re"/>
                         <outlet property="soundView" destination="7G8-KA-gOM" id="4T1-FX-0yT"/>
@@ -292,11 +293,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ztG-Yb-7i3">
-                                <rect key="frame" x="0.0" y="439" width="320" height="110"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </containerView>
                             <imageView clearsContextBeforeDrawing="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="O34-uI-HHw">
                                 <rect key="frame" x="270" y="150" width="50" height="200"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -558,11 +554,6 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.99076186129999999" green="0.91651459850000006" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             </imageView>
-                            <containerView contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rln-em-7ZM">
-                                <rect key="frame" x="0.0" y="438" width="320" height="110"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                            </containerView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="player.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="9bj-2u-ahe">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1263,24 +1254,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="clock.png" width="50" height="50"/>
         <image name="cycle.png" width="64" height="58"/>
         <image name="mode_title.jpg" width="715" height="87"/>
-        <image name="nextMusic_icon.jpg" width="72" height="72"/>
-        <image name="play_icon.jpg" width="70" height="72"/>
-        <image name="player.jpg" width="719" height="91"/>
-        <image name="player.jpg" width="719" height="91"/>
-        <image name="player.jpg" width="719" height="91"/>
-        <image name="player.jpg" width="719" height="91"/>
-        <image name="player.jpg" width="719" height="91"/>
-        <image name="player.jpg" width="719" height="91"/>
+        <image name="play_back.png" width="128" height="86"/>
+        <image name="play_next.png" width="128" height="86"/>
+        <image name="play_play.png" width="128" height="86"/>
+        <image name="play_play_on.png" width="128" height="86"/>
+        <image name="play_stop.png" width="128" height="86"/>
+        <image name="play_vol.png" width="128" height="86"/>
         <image name="player.jpg" width="719" height="91"/>
         <image name="player_main.jpg" width="717" height="947"/>
-        <image name="preMusic_icon.jpg" width="50" height="44"/>
         <image name="progressCircle.png" width="189" height="189"/>
-        <image name="sound_icon.jpg" width="70" height="62"/>
-        <image name="suffle_icon.jpg" width="59" height="59"/>
-        <image name="suffle_icon.jpg" width="59" height="59"/>
-        <image name="table_background.jpg" width="715" height="102"/>
-        <image name="table_background.jpg" width="715" height="102"/>
-        <image name="table_background.jpg" width="715" height="102"/>
         <image name="table_background.jpg" width="715" height="102"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
