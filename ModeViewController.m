@@ -14,7 +14,7 @@
 #import "AppDelegate.h"
 #import "PlayListDBManager.h"
 #import "PlayerViewController.h"
-#import "MyMusicPlayer.h"
+//#import "MyMusicPlayer.h"
 #import "UIViewController+SwipeController.h"
 #import "SwipeViewController.h"
 
@@ -100,8 +100,8 @@
             //리스트 생성
             [_DBManager createPlayListWithMinBPM:[minBPM intValue] maxBPM:0];
             //음악 재생
-            MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-            [myMusicPlayer setPlayList];
+//            MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
+//            [myMusicPlayer setPlayList];
             //swipe
             [self.swipeViewController moveRightAnimated:YES];
             break;

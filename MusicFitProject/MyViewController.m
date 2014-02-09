@@ -8,14 +8,26 @@
 
 #import "MyViewController.h"
 
-@interface MyViewController ()
+//#define CALENDER_SECTION 0
+//#define RECOMMEND_SECTION 1
+//#define INTEREST_SECTION 2
+//#define BACKCHANGE_SECTION 3
+@interface MyViewController () <UITableViewDataSource , UITableViewDelegate>
 
 @end
 
-@implementation MyViewController
+@implementation MyViewController{
+    NSArray * _menuList;
+}
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
+    return [_menuList count];
+}
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+-(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:_menuList[indexPath.row]];
+        return cell;
+}
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -23,10 +35,11 @@
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    _menuList = @[@"CALENDER_CELL", @"RECOMMEND_CELL", @"INTEREST_CELL", @"BACKCHANGE_CELL",@"ALRAM_CELL"];
 }
 
 - (void)didReceiveMemoryWarning

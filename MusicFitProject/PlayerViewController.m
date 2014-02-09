@@ -11,7 +11,7 @@
 #import "DBManager.h"
 #import "SwipeViewController.h"
 #import "AddedModeDelegate.h"
-#import "MyMusicPlayer.h"
+//#import "MyMusicPlayer.h"
 #import "DBManager.h"
 
 #define SOUNDVIEW_HIDDEN_X -320
@@ -58,15 +58,15 @@
 }
 
 - (IBAction)playORpause:(id)sender {
-    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-    
-    if ([myMusicPlayer isPlaying]){
-        [myMusicPlayer pausePlayerForcibly:YES];
-        [myMusicPlayer pause];
-    }else{
-        [myMusicPlayer pausePlayerForcibly:NO];
-        [myMusicPlayer play];
-    }
+//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
+//    
+//    if ([myMusicPlayer isPlaying]){
+//        [myMusicPlayer pausePlayerForcibly:YES];
+//        [myMusicPlayer pause];
+//    }else{
+//        [myMusicPlayer pausePlayerForcibly:NO];
+//        [myMusicPlayer play];
+//    }
 }
 
 //- (void)changePlayMusic:(NSInteger)selectIndex{
@@ -106,133 +106,133 @@
 //    }
 //}
 - (IBAction)playNext:(id)sender {
-    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
+//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
     
-    [myMusicPlayer playNext];
+//    [myMusicPlayer playNext];
 }
 - (IBAction)playPreviouse:(id)sender {
-    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-    
-    [myMusicPlayer playPrevious];
+//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
+//    
+//    [myMusicPlayer playPrevious];
 }
 - (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-    
-    [myMusicPlayer registerHandlerPlayerRateChanged:^{
-        [self syncPlayPauseButtons];
-    }CurrentItemChanged:^(AVPlayerItem *item) {
-        [self syncPlayPauseButtons];
-    } PlayerDidReachEnd:^{
-        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Player did reach end" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
-        [alert show];
-    }];
-    
-    [myMusicPlayer registerHandlerCurrentItemPreLoaded:^(CMTime time) {
-        NSLog(@"item buffered time : %f", CMTimeGetSeconds(time));
-    }];
-    
-    [myMusicPlayer registerHandlerReadyToPlay:^(HysteriaPlayerReadyToPlay identifier) {
-        switch (identifier) {
-            case HysteriaPlayerReadyToPlayPlayer:
-                //플레이 준비시 하는 행동을 여기에서 업데이트(UI)
-                break;
-            case HysteriaPlayerReadyToPlayCurrentItem:
-                //플레이 하기 위해 아이템이 불려졌을 때 자동으로 플레이 한다.
-                //그걸 막고 싶으면 pausePlayerForcibly:YES를 해서 멈추면 된다.
-                break;
-            default:
-                break;
-        }
-    }];
-    
-    [myMusicPlayer registerHandlerFailed:^(HysteriaPlayerFailed identifier, NSError *error) {
-        switch (identifier) {
-            case HysteriaPlayerFailedCurrentItem:
-                [myMusicPlayer playNext];
-                break;
-            case HysteriaPlayerFailedPlayer:
-                break;
-            default:
-                break;
-        }
-        NSLog(@"%@", [error localizedDescription]);
-    }];
+//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
+//    
+//    [myMusicPlayer registerHandlerPlayerRateChanged:^{
+//        [self syncPlayPauseButtons];
+//    }CurrentItemChanged:^(AVPlayerItem *item) {
+//        [self syncPlayPauseButtons];
+//    } PlayerDidReachEnd:^{
+//        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Player did reach end" message:nil delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
+//        [alert show];
+//    }];
+//    
+//    [myMusicPlayer registerHandlerCurrentItemPreLoaded:^(CMTime time) {
+//        NSLog(@"item buffered time : %f", CMTimeGetSeconds(time));
+//    }];
+//    
+//    [myMusicPlayer registerHandlerReadyToPlay:^(HysteriaPlayerReadyToPlay identifier) {
+//        switch (identifier) {
+//            case HysteriaPlayerReadyToPlayPlayer:
+//                //플레이 준비시 하는 행동을 여기에서 업데이트(UI)
+//                break;
+//            case HysteriaPlayerReadyToPlayCurrentItem:
+//                //플레이 하기 위해 아이템이 불려졌을 때 자동으로 플레이 한다.
+//                //그걸 막고 싶으면 pausePlayerForcibly:YES를 해서 멈추면 된다.
+//                break;
+//            default:
+//                break;
+//        }
+//    }];
+//    
+//    [myMusicPlayer registerHandlerFailed:^(HysteriaPlayerFailed identifier, NSError *error) {
+//        switch (identifier) {
+//            case HysteriaPlayerFailedCurrentItem:
+//                [myMusicPlayer playNext];
+//                break;
+//            case HysteriaPlayerFailedPlayer:
+//                break;
+//            default:
+//                break;
+//        }
+//        NSLog(@"%@", [error localizedDescription]);
+//    }];
 }
 
 - (void)syncPlayPauseButtons{
-    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
+//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
     
     
-    switch ([myMusicPlayer getHysteriaPlayerStatus]) {
-        case HysteriaPlayerStatusUnknown:
-//            
+//    switch ([myMusicPlayer getHysteriaPlayerStatus]) {
+//        case HysteriaPlayerStatusUnknown:
+//
 //            [playBtn replaceObjectAtIndex:3 withObject:mRefresh];
-            break;
-        case HysteriaPlayerStatusForcePause:
-            self.playBtn.imageView.image = [UIImage imageNamed:@"play_play.png"];
-            break;
-        case HysteriaPlayerStatusBuffering:
-            self.playBtn.imageView.image = [UIImage imageNamed:@"play_play.png"];
-            break;
-        case HysteriaPlayerStatusPlaying:
-            self.playBtn.imageView.image = [UIImage imageNamed:@"play_play.png"];
-        default:
-            break;
-    }
+//            break;
+//        case HysteriaPlayerStatusForcePause:
+//            self.playBtn.imageView.image = [UIImage imageNamed:@"play_play.png"];
+//            break;
+//        case HysteriaPlayerStatusBuffering:
+//            self.playBtn.imageView.image = [UIImage imageNamed:@"play_play.png"];
+//            break;
+//        case HysteriaPlayerStatusPlaying:
+//            self.playBtn.imageView.image = [UIImage imageNamed:@"play_play.png"];
+//        default:
+//            break;
+//    }
 }
 
 - (void)setControlsValue:(Music *)music{
-    self.titleLabel.text = music.title;
-    self.artistLabel.text = music.artist;
-    self.BPMLabel.text = [NSString stringWithFormat:@"%d",(int)music.BPM];
-    //image
-    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-    
-    int duration = (int)CMTimeGetSeconds([myMusicPlayer getCurrentItem].duration);
-    int currentTime = (int)CMTimeGetSeconds([myMusicPlayer getCurrentItem].currentTime);
-    
-    int durationMin = (int)(duration / 60);
-    int durationSec = (int)(duration % 60);
-    int currentMins = (int)(currentTime / 60);
-    int currentSec = (int)(currentTime % 60);
-    
-    NSString * durationLabel =[NSString stringWithFormat:@"%02d:%02d/%02d:%02d",currentMins,currentSec,durationMin,durationSec];
-    _playTimeLabel.text = durationLabel;
-    
-    [self.playTimeSlider setMaximumValue:duration];
-    _playTimeSlider.value = currentTime;
+//    self.titleLabel.text = music.title;
+//    self.artistLabel.text = music.artist;
+//    self.BPMLabel.text = [NSString stringWithFormat:@"%d",(int)music.BPM];
+//    //image
+//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
+//    
+//    int duration = (int)CMTimeGetSeconds([myMusicPlayer getCurrentItem].duration);
+//    int currentTime = (int)CMTimeGetSeconds([myMusicPlayer getCurrentItem].currentTime);
+//    
+//    int durationMin = (int)(duration / 60);
+//    int durationSec = (int)(duration % 60);
+//    int currentMins = (int)(currentTime / 60);
+//    int currentSec = (int)(currentTime % 60);
+//    
+//    NSString * durationLabel =[NSString stringWithFormat:@"%02d:%02d/%02d:%02d",currentMins,currentSec,durationMin,durationSec];
+//    _playTimeLabel.text = durationLabel;
+//    
+//    [self.playTimeSlider setMaximumValue:duration];
+//    _playTimeSlider.value = currentTime;
 }
 -(void) configurePlayer {
     //7
-    __block PlayerViewController * weakSelf = self;
+//    __block PlayerViewController * weakSelf = self;
 //    __block _
     //8
-    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-
-    __block AVQueuePlayer *_player = myMusicPlayer.audioPlayer;
-    [_player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(1, 1)
-                                          queue:NULL
-                                     usingBlock:^(CMTime time) {
-                                         if(!time.value) {
-                                             return;
-                                         }
-                                         
-                                         
-                                         int duration = (int)CMTimeGetSeconds(_player.currentItem.duration);
-                                         int currentTime = (int)CMTimeGetSeconds(_player.currentTime);
-                                         int durationMin = (int)(duration / 60);
-                                         int durationSec = (int)(duration % 60);
-                                         int currentMins = (int)(currentTime / 60);
-                                         int currentSec = (int)(currentTime % 60);
-                                         
-                                         
-                                         NSString * durationLabel =[NSString stringWithFormat:@"%02d:%02d/%02d:%02d",currentMins,currentSec,durationMin,durationSec];
-                                         
-                                         weakSelf.playTimeLabel.text = durationLabel;
-                                         weakSelf.playTimeSlider.value = currentTime;
-                                     }];
+//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
+//
+//    __block AVQueuePlayer *_player = myMusicPlayer.audioPlayer;
+//    [_player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(1, 1)
+//                                          queue:NULL
+//                                     usingBlock:^(CMTime time) {
+//                                         if(!time.value) {
+//                                             return;
+//                                         }
+//                                         
+//                                         
+//                                         int duration = (int)CMTimeGetSeconds(_player.currentItem.duration);
+//                                         int currentTime = (int)CMTimeGetSeconds(_player.currentTime);
+//                                         int durationMin = (int)(duration / 60);
+//                                         int durationSec = (int)(duration % 60);
+//                                         int currentMins = (int)(currentTime / 60);
+//                                         int currentSec = (int)(currentTime % 60);
+//                                         
+//                                         
+//                                         NSString * durationLabel =[NSString stringWithFormat:@"%02d:%02d/%02d:%02d",currentMins,currentSec,durationMin,durationSec];
+//                                         
+//                                         weakSelf.playTimeLabel.text = durationLabel;
+//                                         weakSelf.playTimeSlider.value = currentTime;
+//                                     }];
     
 }
 - (void)didReceiveMemoryWarning

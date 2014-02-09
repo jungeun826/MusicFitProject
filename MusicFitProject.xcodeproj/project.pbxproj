@@ -36,7 +36,6 @@
 		000CB42B18A4920D00953C6C /* play_volume_control.png in Resources */ = {isa = PBXBuildFile; fileRef = 000CB41718A4920D00953C6C /* play_volume_control.png */; };
 		000CB42D18A4935E00953C6C /* suffle_icon.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 000CB42C18A4935E00953C6C /* suffle_icon.jpg */; };
 		000CB43018A4C91000953C6C /* MusicFitPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 000CB42F18A4C91000953C6C /* MusicFitPlayer.m */; };
-		005BA711188D1A1F003C5889 /* aubio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 005BA710188D1A1F003C5889 /* aubio.framework */; };
 		006650E81890B3C400F97DE5 /* Main.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 006650E61890B3C400F97DE5 /* Main.jpg */; };
 		006650E91890B3C400F97DE5 /* Tutorial_0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 006650E71890B3C400F97DE5 /* Tutorial_0.jpg */; };
 		006650EB1890B4BA00F97DE5 /* Title.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 006650EA1890B4BA00F97DE5 /* Title.jpg */; };
@@ -89,6 +88,13 @@
 		00FEDB181898D6B70072D517 /* player.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 00FEDB151898D6B70072D517 /* player.jpg */; };
 		00FEDB1A1898D8820072D517 /* clock.png in Resources */ = {isa = PBXBuildFile; fileRef = 00FEDB191898D8820072D517 /* clock.png */; };
 		00FEDB1D1898E9990072D517 /* PlayerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FEDB1C1898E9990072D517 /* PlayerViewController.m */; };
+		976C6BC718A76E3900721DAE /* status_claendar.png in Resources */ = {isa = PBXBuildFile; fileRef = 976C6BC018A76E3900721DAE /* status_claendar.png */; };
+		976C6BC818A76E3900721DAE /* status_like.png in Resources */ = {isa = PBXBuildFile; fileRef = 976C6BC118A76E3900721DAE /* status_like.png */; };
+		976C6BC918A76E3900721DAE /* status_mode.png in Resources */ = {isa = PBXBuildFile; fileRef = 976C6BC218A76E3900721DAE /* status_mode.png */; };
+		976C6BCA18A76E3900721DAE /* status_musicfit.png in Resources */ = {isa = PBXBuildFile; fileRef = 976C6BC318A76E3900721DAE /* status_musicfit.png */; };
+		976C6BCB18A76E3900721DAE /* status_recommend.png in Resources */ = {isa = PBXBuildFile; fileRef = 976C6BC418A76E3900721DAE /* status_recommend.png */; };
+		976C6BCC18A76E3900721DAE /* status_setting.png in Resources */ = {isa = PBXBuildFile; fileRef = 976C6BC518A76E3900721DAE /* status_setting.png */; };
+		976C6BCD18A76E3900721DAE /* status_songs.png in Resources */ = {isa = PBXBuildFile; fileRef = 976C6BC618A76E3900721DAE /* status_songs.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,7 +141,6 @@
 		000CB42C18A4935E00953C6C /* suffle_icon.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = suffle_icon.jpg; sourceTree = "<group>"; };
 		000CB42E18A4C91000953C6C /* MusicFitPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicFitPlayer.h; sourceTree = "<group>"; };
 		000CB42F18A4C91000953C6C /* MusicFitPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicFitPlayer.m; sourceTree = "<group>"; };
-		005BA710188D1A1F003C5889 /* aubio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = aubio.framework; sourceTree = "<group>"; };
 		006650E61890B3C400F97DE5 /* Main.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Main.jpg; sourceTree = "<group>"; };
 		006650E71890B3C400F97DE5 /* Tutorial_0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tutorial_0.jpg; sourceTree = "<group>"; };
 		006650EA1890B4BA00F97DE5 /* Title.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Title.jpg; sourceTree = "<group>"; };
@@ -216,6 +221,13 @@
 		00FEDB191898D8820072D517 /* clock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = clock.png; sourceTree = "<group>"; };
 		00FEDB1B1898E9990072D517 /* PlayerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayerViewController.h; sourceTree = "<group>"; };
 		00FEDB1C1898E9990072D517 /* PlayerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayerViewController.m; sourceTree = "<group>"; };
+		976C6BC018A76E3900721DAE /* status_claendar.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_claendar.png; sourceTree = "<group>"; };
+		976C6BC118A76E3900721DAE /* status_like.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_like.png; sourceTree = "<group>"; };
+		976C6BC218A76E3900721DAE /* status_mode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_mode.png; sourceTree = "<group>"; };
+		976C6BC318A76E3900721DAE /* status_musicfit.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_musicfit.png; sourceTree = "<group>"; };
+		976C6BC418A76E3900721DAE /* status_recommend.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_recommend.png; sourceTree = "<group>"; };
+		976C6BC518A76E3900721DAE /* status_setting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_setting.png; sourceTree = "<group>"; };
+		976C6BC618A76E3900721DAE /* status_songs.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = status_songs.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -230,7 +242,6 @@
 				00B15131187F77EE0036182C /* CoreGraphics.framework in Frameworks */,
 				00B15133187F77EE0036182C /* UIKit.framework in Frameworks */,
 				00B1512F187F77EE0036182C /* Foundation.framework in Frameworks */,
-				005BA711188D1A1F003C5889 /* aubio.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -294,6 +305,7 @@
 		00B15122187F77EE0036182C = {
 			isa = PBXGroup;
 			children = (
+				976C6BBD18A7639500721DAE /* addimage */,
 				006650F21890E19400F97DE5 /* Settings.bundle */,
 				006650E51890B3C400F97DE5 /* images */,
 				00B15134187F77EE0036182C /* MusicFitProject */,
@@ -319,7 +331,6 @@
 				00FC879C189F519600F7F52E /* AVFoundation.framework */,
 				00FC879A189F519000F7F52E /* CoreMedia.framework */,
 				00077D9E1891FF5800891C75 /* libsqlite3.dylib */,
-				005BA710188D1A1F003C5889 /* aubio.framework */,
 				00B1512E187F77EE0036182C /* Foundation.framework */,
 				00B15130187F77EE0036182C /* CoreGraphics.framework */,
 				00B15132187F77EE0036182C /* UIKit.framework */,
@@ -331,6 +342,7 @@
 		00B15134187F77EE0036182C /* MusicFitProject */ = {
 			isa = PBXGroup;
 			children = (
+				976C6BBA18A75D3200721DAE /* My */,
 				00FC87A0189F537500F7F52E /* PlayList */,
 				00FC8796189F42EF00F7F52E /* Player */,
 				00FC8795189F42C400F7F52E /* Play */,
@@ -346,16 +358,6 @@
 				00B15135187F77EE0036182C /* Supporting Files */,
 				00058239188D15D1006760D0 /* BPMAnalysis.h */,
 				0005823A188D15D1006760D0 /* BPMAnalysis.m */,
-				009ACC811898FC0D00301D9E /* MyViewController.h */,
-				009ACC821898FC0D00301D9E /* MyViewController.m */,
-				009ACC841898FCE300301D9E /* CalenderViewController.h */,
-				009ACC851898FCE300301D9E /* CalenderViewController.m */,
-				009ACC871898FD1A00301D9E /* FavoriteListViewController.h */,
-				009ACC881898FD1A00301D9E /* FavoriteListViewController.m */,
-				009ACC8A1898FD2700301D9E /* RecommendMusicViewController.h */,
-				009ACC8B1898FD2700301D9E /* RecommendMusicViewController.m */,
-				009ACC8D1898FD4E00301D9E /* InterestMusicViewController.h */,
-				009ACC8E1898FD4E00301D9E /* InterestMusicViewController.m */,
 			);
 			path = MusicFitProject;
 			sourceTree = "<group>";
@@ -471,6 +473,45 @@
 			name = Swipe;
 			sourceTree = "<group>";
 		};
+		976C6BBA18A75D3200721DAE /* My */ = {
+			isa = PBXGroup;
+			children = (
+				009ACC811898FC0D00301D9E /* MyViewController.h */,
+				009ACC821898FC0D00301D9E /* MyViewController.m */,
+				976C6BBB18A75D3F00721DAE /* Calender */,
+				009ACC871898FD1A00301D9E /* FavoriteListViewController.h */,
+				009ACC881898FD1A00301D9E /* FavoriteListViewController.m */,
+				009ACC8A1898FD2700301D9E /* RecommendMusicViewController.h */,
+				009ACC8B1898FD2700301D9E /* RecommendMusicViewController.m */,
+				009ACC8D1898FD4E00301D9E /* InterestMusicViewController.h */,
+				009ACC8E1898FD4E00301D9E /* InterestMusicViewController.m */,
+			);
+			name = My;
+			sourceTree = "<group>";
+		};
+		976C6BBB18A75D3F00721DAE /* Calender */ = {
+			isa = PBXGroup;
+			children = (
+				009ACC841898FCE300301D9E /* CalenderViewController.h */,
+				009ACC851898FCE300301D9E /* CalenderViewController.m */,
+			);
+			name = Calender;
+			sourceTree = "<group>";
+		};
+		976C6BBD18A7639500721DAE /* addimage */ = {
+			isa = PBXGroup;
+			children = (
+				976C6BC018A76E3900721DAE /* status_claendar.png */,
+				976C6BC118A76E3900721DAE /* status_like.png */,
+				976C6BC218A76E3900721DAE /* status_mode.png */,
+				976C6BC318A76E3900721DAE /* status_musicfit.png */,
+				976C6BC418A76E3900721DAE /* status_recommend.png */,
+				976C6BC518A76E3900721DAE /* status_setting.png */,
+				976C6BC618A76E3900721DAE /* status_songs.png */,
+			);
+			name = addimage;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -518,6 +559,9 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "SDT-1";
 				TargetAttributes = {
+					00B1512A187F77EE0036182C = {
+						DevelopmentTeam = F4FT6M5A89;
+					};
 					00B1514B187F77EE0036182C = {
 						TestTargetID = 00B1512A187F77EE0036182C;
 					};
@@ -547,8 +591,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				976C6BCB18A76E3900721DAE /* status_recommend.png in Resources */,
 				006650EB1890B4BA00F97DE5 /* Title.jpg in Resources */,
 				006650E91890B3C400F97DE5 /* Tutorial_0.jpg in Resources */,
+				976C6BCA18A76E3900721DAE /* status_musicfit.png in Resources */,
 				000CB42618A4920D00953C6C /* play_stop.png in Resources */,
 				006650F81891136E00F97DE5 /* progressCircle.png in Resources */,
 				006650F31890E19400F97DE5 /* Settings.bundle in Resources */,
@@ -561,6 +607,8 @@
 				000CB42A18A4920D00953C6C /* play_volume_control_bg.png in Resources */,
 				00FEDB121898C3590072D517 /* AppIcon.png in Resources */,
 				000CB42718A4920D00953C6C /* play_vol_on.png in Resources */,
+				976C6BCD18A76E3900721DAE /* status_songs.png in Resources */,
+				976C6BC918A76E3900721DAE /* status_mode.png in Resources */,
 				00FEDB181898D6B70072D517 /* player.jpg in Resources */,
 				006650F11890DD8B00F97DE5 /* Tutorial_3.jpg in Resources */,
 				00FEDB171898D6B70072D517 /* player_main.jpg in Resources */,
@@ -570,6 +618,7 @@
 				000CB41F18A4920D00953C6C /* play_play_on.png in Resources */,
 				000CB42218A4920D00953C6C /* play_right1.png in Resources */,
 				00B15147187F77EE0036182C /* Images.xcassets in Resources */,
+				976C6BC718A76E3900721DAE /* status_claendar.png in Resources */,
 				00F5C1FE18A36463007DC1F0 /* icon_songs_cancel.png in Resources */,
 				00077D981891FA3300891C75 /* mode_title.jpg in Resources */,
 				000CB41E18A4920D00953C6C /* play_next.png in Resources */,
@@ -582,6 +631,8 @@
 				000CB42D18A4935E00953C6C /* suffle_icon.jpg in Resources */,
 				00077D991891FA3300891C75 /* table_background.jpg in Resources */,
 				000CB41A18A4920D00953C6C /* play_cancel.png in Resources */,
+				976C6BCC18A76E3900721DAE /* status_setting.png in Resources */,
+				976C6BC818A76E3900721DAE /* status_like.png in Resources */,
 				000CB42118A4920D00953C6C /* play_right0.png in Resources */,
 				000CB42818A4920D00953C6C /* play_vol.png in Resources */,
 				00B15142187F77EE0036182C /* Main.storyboard in Resources */,
@@ -761,14 +812,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/sdt-1/Documents/Projects/MusicFitProject",
-				);
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MusicFitProject/MusicFitProject-Prefix.pch";
 				INFOPLIST_FILE = "MusicFitProject/MusicFitProject-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -779,14 +828,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"/Users/sdt-1/Documents/Projects/MusicFitProject",
-				);
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "MusicFitProject/MusicFitProject-Prefix.pch";
 				INFOPLIST_FILE = "MusicFitProject/MusicFitProject-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
