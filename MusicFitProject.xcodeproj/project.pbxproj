@@ -44,9 +44,13 @@
 		006650F11890DD8B00F97DE5 /* Tutorial_3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 006650EE1890DD8B00F97DE5 /* Tutorial_3.jpg */; };
 		006650F31890E19400F97DE5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 006650F21890E19400F97DE5 /* Settings.bundle */; };
 		006650F81891136E00F97DE5 /* progressCircle.png in Resources */ = {isa = PBXBuildFile; fileRef = 006650F71891136E00F97DE5 /* progressCircle.png */; };
+		00784CB018A8AD5D00536347 /* pop.png in Resources */ = {isa = PBXBuildFile; fileRef = 00784CAF18A8AD5D00536347 /* pop.png */; };
+		00784CB218A8BB2400536347 /* PlayList_albumDefault.png in Resources */ = {isa = PBXBuildFile; fileRef = 00784CB118A8BB2400536347 /* PlayList_albumDefault.png */; };
+		00784CB518A8BCFC00536347 /* icon_songs_cancel_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 00784CB318A8BCFC00536347 /* icon_songs_cancel_on.png */; };
+		00784CB618A8BCFC00536347 /* icon_songs_cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 00784CB418A8BCFC00536347 /* icon_songs_cancel.png */; };
+		00784CB818A8D05A00536347 /* Main3.5inch.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 00784CB718A8D05A00536347 /* Main3.5inch.storyboard */; };
 		009ACC801898FBE000301D9E /* PlayListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009ACC7F1898FBE000301D9E /* PlayListViewController.m */; };
 		009ACC831898FC0D00301D9E /* MyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009ACC821898FC0D00301D9E /* MyViewController.m */; };
-		009ACC861898FCE300301D9E /* CalenderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009ACC851898FCE300301D9E /* CalenderViewController.m */; };
 		009ACC891898FD1A00301D9E /* FavoriteListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009ACC881898FD1A00301D9E /* FavoriteListViewController.m */; };
 		009ACC8C1898FD2700301D9E /* RecommendMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009ACC8B1898FD2700301D9E /* RecommendMusicViewController.m */; };
 		009ACC8F1898FD4E00301D9E /* InterestMusicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 009ACC8E1898FD4E00301D9E /* InterestMusicViewController.m */; };
@@ -65,21 +69,20 @@
 		00B15150187F77EE0036182C /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00B15132187F77EE0036182C /* UIKit.framework */; };
 		00B15158187F77EE0036182C /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 00B15156187F77EE0036182C /* InfoPlist.strings */; };
 		00B1515A187F77EE0036182C /* MusicFitProjectTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00B15159187F77EE0036182C /* MusicFitProjectTests.m */; };
+		00EEDC8618A8703C006E9ABA /* CalendarViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00EEDC8318A8703C006E9ABA /* CalendarViewController.m */; };
+		00EEDC8718A8703C006E9ABA /* DayCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00EEDC8518A8703C006E9ABA /* DayCell.m */; };
 		00F4C2521886A47E006146CD /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4C2511886A47E006146CD /* PlayViewController.m */; };
 		00F5C1FD18A36463007DC1F0 /* icon_songs_cancel_on.png in Resources */ = {isa = PBXBuildFile; fileRef = 00F5C1FB18A36463007DC1F0 /* icon_songs_cancel_on.png */; };
 		00F5C1FE18A36463007DC1F0 /* icon_songs_cancel.png in Resources */ = {isa = PBXBuildFile; fileRef = 00F5C1FC18A36463007DC1F0 /* icon_songs_cancel.png */; };
 		00F5C20118A36B2F007DC1F0 /* EditModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F5C20018A36B2F007DC1F0 /* EditModeViewController.m */; };
-		00FC19AA1892218800BA2036 /* ModeDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19A91892218800BA2036 /* ModeDBManager.m */; };
 		00FC19AD1892220B00BA2036 /* Mode.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19AC1892220B00BA2036 /* Mode.m */; };
 		00FC19C11892544A00BA2036 /* AddedModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19C01892544A00BA2036 /* AddedModeCell.m */; };
 		00FC19C41892546200BA2036 /* StaticModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19C31892546200BA2036 /* StaticModeCell.m */; };
-		00FC8794189F428200F7F52E /* MusicDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC8793189F428200F7F52E /* MusicDBManager.m */; };
 		00FC8799189F430400F7F52E /* Music.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC8798189F430400F7F52E /* Music.m */; };
 		00FC879B189F519000F7F52E /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00FC879A189F519000F7F52E /* CoreMedia.framework */; };
 		00FC879D189F519600F7F52E /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00FC879C189F519600F7F52E /* AVFoundation.framework */; };
 		00FC879F189F51A200F7F52E /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 00FC879E189F51A200F7F52E /* MediaPlayer.framework */; };
 		00FC87A3189F556F00F7F52E /* PlayListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC87A2189F556F00F7F52E /* PlayListCell.m */; };
-		00FC87A6189F716700F7F52E /* PlayListDBManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC87A5189F716700F7F52E /* PlayListDBManager.m */; };
 		00FEDB071898AD840072D517 /* SwipeView.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FEDB061898AD840072D517 /* SwipeView.m */; };
 		00FEDB0B1898AF290072D517 /* UIViewController+SwipeController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FEDB0A1898AF290072D517 /* UIViewController+SwipeController.m */; };
 		00FEDB101898B1C50072D517 /* SwipeGestureRecognizer.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FEDB0F1898B1C50072D517 /* SwipeGestureRecognizer.m */; };
@@ -149,12 +152,15 @@
 		006650EE1890DD8B00F97DE5 /* Tutorial_3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Tutorial_3.jpg; sourceTree = "<group>"; };
 		006650F21890E19400F97DE5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		006650F71891136E00F97DE5 /* progressCircle.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = progressCircle.png; sourceTree = "<group>"; };
+		00784CAF18A8AD5D00536347 /* pop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pop.png; sourceTree = "<group>"; };
+		00784CB118A8BB2400536347 /* PlayList_albumDefault.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PlayList_albumDefault.png; sourceTree = "<group>"; };
+		00784CB318A8BCFC00536347 /* icon_songs_cancel_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_songs_cancel_on.png; sourceTree = "<group>"; };
+		00784CB418A8BCFC00536347 /* icon_songs_cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_songs_cancel.png; sourceTree = "<group>"; };
+		00784CB718A8D05A00536347 /* Main3.5inch.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main3.5inch.storyboard; sourceTree = "<group>"; };
 		009ACC7E1898FBE000301D9E /* PlayListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListViewController.h; sourceTree = "<group>"; };
 		009ACC7F1898FBE000301D9E /* PlayListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayListViewController.m; sourceTree = "<group>"; };
 		009ACC811898FC0D00301D9E /* MyViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyViewController.h; sourceTree = "<group>"; };
 		009ACC821898FC0D00301D9E /* MyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyViewController.m; sourceTree = "<group>"; };
-		009ACC841898FCE300301D9E /* CalenderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalenderViewController.h; sourceTree = "<group>"; };
-		009ACC851898FCE300301D9E /* CalenderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalenderViewController.m; sourceTree = "<group>"; };
 		009ACC871898FD1A00301D9E /* FavoriteListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavoriteListViewController.h; sourceTree = "<group>"; };
 		009ACC881898FD1A00301D9E /* FavoriteListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavoriteListViewController.m; sourceTree = "<group>"; };
 		009ACC8A1898FD2700301D9E /* RecommendMusicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecommendMusicViewController.h; sourceTree = "<group>"; };
@@ -183,22 +189,22 @@
 		00B15155187F77EE0036182C /* MusicFitProjectTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MusicFitProjectTests-Info.plist"; sourceTree = "<group>"; };
 		00B15157187F77EE0036182C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		00B15159187F77EE0036182C /* MusicFitProjectTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MusicFitProjectTests.m; sourceTree = "<group>"; };
+		00EEDC8218A8703C006E9ABA /* CalendarViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalendarViewController.h; sourceTree = "<group>"; };
+		00EEDC8318A8703C006E9ABA /* CalendarViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalendarViewController.m; sourceTree = "<group>"; };
+		00EEDC8418A8703C006E9ABA /* DayCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayCell.h; sourceTree = "<group>"; };
+		00EEDC8518A8703C006E9ABA /* DayCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayCell.m; sourceTree = "<group>"; };
 		00F4C2501886A47E006146CD /* PlayViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PlayViewController.h; path = ../PlayViewController.h; sourceTree = "<group>"; };
 		00F4C2511886A47E006146CD /* PlayViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PlayViewController.m; path = ../PlayViewController.m; sourceTree = "<group>"; };
 		00F5C1FB18A36463007DC1F0 /* icon_songs_cancel_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_songs_cancel_on.png; sourceTree = "<group>"; };
 		00F5C1FC18A36463007DC1F0 /* icon_songs_cancel.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon_songs_cancel.png; sourceTree = "<group>"; };
 		00F5C1FF18A36B2F007DC1F0 /* EditModeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditModeViewController.h; sourceTree = "<group>"; };
 		00F5C20018A36B2F007DC1F0 /* EditModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditModeViewController.m; sourceTree = "<group>"; };
-		00FC19A81892218800BA2036 /* ModeDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModeDBManager.h; sourceTree = "<group>"; };
-		00FC19A91892218800BA2036 /* ModeDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ModeDBManager.m; sourceTree = "<group>"; };
 		00FC19AB1892220B00BA2036 /* Mode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mode.h; sourceTree = "<group>"; };
 		00FC19AC1892220B00BA2036 /* Mode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mode.m; sourceTree = "<group>"; };
 		00FC19BF1892544A00BA2036 /* AddedModeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AddedModeCell.h; sourceTree = "<group>"; };
 		00FC19C01892544A00BA2036 /* AddedModeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AddedModeCell.m; sourceTree = "<group>"; };
 		00FC19C21892546200BA2036 /* StaticModeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StaticModeCell.h; sourceTree = "<group>"; };
 		00FC19C31892546200BA2036 /* StaticModeCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StaticModeCell.m; sourceTree = "<group>"; };
-		00FC8792189F428200F7F52E /* MusicDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MusicDBManager.h; sourceTree = "<group>"; };
-		00FC8793189F428200F7F52E /* MusicDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MusicDBManager.m; sourceTree = "<group>"; };
 		00FC8797189F430400F7F52E /* Music.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Music.h; sourceTree = "<group>"; };
 		00FC8798189F430400F7F52E /* Music.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Music.m; sourceTree = "<group>"; };
 		00FC879A189F519000F7F52E /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -206,8 +212,6 @@
 		00FC879E189F51A200F7F52E /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		00FC87A1189F556F00F7F52E /* PlayListCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListCell.h; sourceTree = "<group>"; };
 		00FC87A2189F556F00F7F52E /* PlayListCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayListCell.m; sourceTree = "<group>"; };
-		00FC87A4189F716700F7F52E /* PlayListDBManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListDBManager.h; sourceTree = "<group>"; };
-		00FC87A5189F716700F7F52E /* PlayListDBManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayListDBManager.m; sourceTree = "<group>"; };
 		00FEDB051898AD840072D517 /* SwipeView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SwipeView.h; sourceTree = "<group>"; };
 		00FEDB061898AD840072D517 /* SwipeView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SwipeView.m; sourceTree = "<group>"; };
 		00FEDB091898AF290072D517 /* UIViewController+SwipeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+SwipeController.h"; sourceTree = "<group>"; };
@@ -354,6 +358,7 @@
 				00B1513D187F77EE0036182C /* AppDelegate.h */,
 				00B1513E187F77EE0036182C /* AppDelegate.m */,
 				00B15140187F77EE0036182C /* Main.storyboard */,
+				00784CB718A8D05A00536347 /* Main3.5inch.storyboard */,
 				00B15146187F77EE0036182C /* Images.xcassets */,
 				00B15135187F77EE0036182C /* Supporting Files */,
 				00058239188D15D1006760D0 /* BPMAnalysis.h */,
@@ -396,12 +401,6 @@
 			children = (
 				00077D9B1891FDBE00891C75 /* DBManager.h */,
 				00077D9C1891FDBE00891C75 /* DBManager.m */,
-				00FC19A81892218800BA2036 /* ModeDBManager.h */,
-				00FC19A91892218800BA2036 /* ModeDBManager.m */,
-				00FC8792189F428200F7F52E /* MusicDBManager.h */,
-				00FC8793189F428200F7F52E /* MusicDBManager.m */,
-				00FC87A4189F716700F7F52E /* PlayListDBManager.h */,
-				00FC87A5189F716700F7F52E /* PlayListDBManager.m */,
 			);
 			name = DB_Class;
 			sourceTree = "<group>";
@@ -492,8 +491,10 @@
 		976C6BBB18A75D3F00721DAE /* Calender */ = {
 			isa = PBXGroup;
 			children = (
-				009ACC841898FCE300301D9E /* CalenderViewController.h */,
-				009ACC851898FCE300301D9E /* CalenderViewController.m */,
+				00EEDC8218A8703C006E9ABA /* CalendarViewController.h */,
+				00EEDC8318A8703C006E9ABA /* CalendarViewController.m */,
+				00EEDC8418A8703C006E9ABA /* DayCell.h */,
+				00EEDC8518A8703C006E9ABA /* DayCell.m */,
 			);
 			name = Calender;
 			sourceTree = "<group>";
@@ -501,6 +502,10 @@
 		976C6BBD18A7639500721DAE /* addimage */ = {
 			isa = PBXGroup;
 			children = (
+				00784CB318A8BCFC00536347 /* icon_songs_cancel_on.png */,
+				00784CB418A8BCFC00536347 /* icon_songs_cancel.png */,
+				00784CB118A8BB2400536347 /* PlayList_albumDefault.png */,
+				00784CAF18A8AD5D00536347 /* pop.png */,
 				976C6BC018A76E3900721DAE /* status_claendar.png */,
 				976C6BC118A76E3900721DAE /* status_like.png */,
 				976C6BC218A76E3900721DAE /* status_mode.png */,
@@ -593,14 +598,18 @@
 			files = (
 				976C6BCB18A76E3900721DAE /* status_recommend.png in Resources */,
 				006650EB1890B4BA00F97DE5 /* Title.jpg in Resources */,
+				00784CB518A8BCFC00536347 /* icon_songs_cancel_on.png in Resources */,
+				00784CB618A8BCFC00536347 /* icon_songs_cancel.png in Resources */,
 				006650E91890B3C400F97DE5 /* Tutorial_0.jpg in Resources */,
 				976C6BCA18A76E3900721DAE /* status_musicfit.png in Resources */,
 				000CB42618A4920D00953C6C /* play_stop.png in Resources */,
+				00784CB218A8BB2400536347 /* PlayList_albumDefault.png in Resources */,
 				006650F81891136E00F97DE5 /* progressCircle.png in Resources */,
 				006650F31890E19400F97DE5 /* Settings.bundle in Resources */,
 				000CB42518A4920D00953C6C /* play_stop_on.png in Resources */,
 				00FEDB1A1898D8820072D517 /* clock.png in Resources */,
 				000CB41818A4920D00953C6C /* play_back_on.png in Resources */,
+				00784CB818A8D05A00536347 /* Main3.5inch.storyboard in Resources */,
 				00077D9A1891FA3300891C75 /* cycle.png in Resources */,
 				006650F01890DD8B00F97DE5 /* Tutorial_2.jpg in Resources */,
 				000CB42018A4920D00953C6C /* play_play.png in Resources */,
@@ -625,6 +634,7 @@
 				000CB41918A4920D00953C6C /* play_back.png in Resources */,
 				00B15139187F77EE0036182C /* InfoPlist.strings in Resources */,
 				000CB42B18A4920D00953C6C /* play_volume_control.png in Resources */,
+				00784CB018A8AD5D00536347 /* pop.png in Resources */,
 				006650E81890B3C400F97DE5 /* Main.jpg in Resources */,
 				000CB42918A4920D00953C6C /* play_volume_control_bg_on.png in Resources */,
 				000CB41C18A4920D00953C6C /* play_left.png in Resources */,
@@ -658,7 +668,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				00FC19AD1892220B00BA2036 /* Mode.m in Sources */,
-				00FC19AA1892218800BA2036 /* ModeDBManager.m in Sources */,
 				009ACC891898FD1A00301D9E /* FavoriteListViewController.m in Sources */,
 				00FC8799189F430400F7F52E /* Music.m in Sources */,
 				00077D9D1891FDBE00891C75 /* DBManager.m in Sources */,
@@ -667,7 +676,6 @@
 				009FBC361897A0A500A28E73 /* SwipeViewController.m in Sources */,
 				0005823B188D15D1006760D0 /* BPMAnalysis.m in Sources */,
 				00B15145187F77EE0036182C /* FirstViewController.m in Sources */,
-				00FC8794189F428200F7F52E /* MusicDBManager.m in Sources */,
 				00FEDB071898AD840072D517 /* SwipeView.m in Sources */,
 				000CB43018A4C91000953C6C /* MusicFitPlayer.m in Sources */,
 				00FC19C41892546200BA2036 /* StaticModeCell.m in Sources */,
@@ -677,10 +685,10 @@
 				009ACC8C1898FD2700301D9E /* RecommendMusicViewController.m in Sources */,
 				009ACC831898FC0D00301D9E /* MyViewController.m in Sources */,
 				00F4C2521886A47E006146CD /* PlayViewController.m in Sources */,
-				009ACC861898FCE300301D9E /* CalenderViewController.m in Sources */,
+				00EEDC8618A8703C006E9ABA /* CalendarViewController.m in Sources */,
 				00FC19C11892544A00BA2036 /* AddedModeCell.m in Sources */,
 				00F5C20118A36B2F007DC1F0 /* EditModeViewController.m in Sources */,
-				00FC87A6189F716700F7F52E /* PlayListDBManager.m in Sources */,
+				00EEDC8718A8703C006E9ABA /* DayCell.m in Sources */,
 				00FEDB1D1898E9990072D517 /* PlayerViewController.m in Sources */,
 				00072D701887775C00FE977F /* ModeViewController.m in Sources */,
 				009ACC8F1898FD4E00301D9E /* InterestMusicViewController.m in Sources */,

@@ -11,13 +11,13 @@
 #import "DBManager.h"
 #import "SwipeViewController.h"
 #import "AddedModeDelegate.h"
-//#import "MyMusicPlayer.h"
+#import "MusicFitPlayer.h"
 #import "DBManager.h"
 
 #define SOUNDVIEW_HIDDEN_X -320
 #define SOUNDVIEW_MARGIN_X 0
 
-@interface PlayerViewController () <UIAlertViewDelegate>
+@interface PlayerViewController () <UIAlertViewDelegate, MusicFitPlayerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *swipeView;
 @property (weak, nonatomic) IBOutlet UIView *soundView;
@@ -58,68 +58,39 @@
 }
 
 - (IBAction)playORpause:(id)sender {
-//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-//    
-//    if ([myMusicPlayer isPlaying]){
-//        [myMusicPlayer pausePlayerForcibly:YES];
-//        [myMusicPlayer pause];
-//    }else{
-//        [myMusicPlayer pausePlayerForcibly:NO];
-//        [myMusicPlayer play];
-//    }
+    MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
+    BOOL isPlaying = [player isPlaying];
+    if(isPlaying)
+        [player pause];
+    else
+        [player play];
 }
 
-//- (void)changePlayMusic:(NSInteger)selectIndex{
-//    if(curPlayIndex == selectIndex)
-//        return;
-//    [_player pause];
-//    Music *music = [_DBManager getMusicWithMusicID:[_DBManager getMusicInfoInPlayListWithIndex:selectIndex]];
-//    if(music == nil)
-//        return;
-//    
-//    NSURL *selectMusicURLPath = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", prePath,music.location]];
-//    
-//    AVPlayerItem * selectItem = [AVPlayerItem playerItemWithURL:selectMusicURLPath];
-//    
-//    [_player replaceCurrentItemWithPlayerItem:selectItem];
-//    [_player play];
-//    [self.playBtn setSelected:YES];
-//    
-//    [self setControlsValue:music];
-//    
-//    
-//}
-//- (void)playListSync{
-//    [_DBManager syncPlayList];
-//    Music *music = [_DBManager getMusicWithMusicID:[_DBManager getMusicInfoInPlayListWithIndex:0]];
-//    if(music != nil){
-//        [_player pause];
-//        NSURL *selectMusicURLPath = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", prePath,music.location]];
-//        
-//        AVPlayerItem * selectItem = [AVPlayerItem playerItemWithURL:selectMusicURLPath];
-//        
-//        [_player replaceCurrentItemWithPlayerItem:selectItem];
-//        [_player play];
-//        [self.playBtn setSelected:YES];
-//        
-//        [self setControlsValue:music];
-//    }
-//}
 - (IBAction)playNext:(id)sender {
-//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
+    MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
     
-//    [myMusicPlayer playNext];
+    [player nextPlay];
 }
 - (IBAction)playPreviouse:(id)sender {
-//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-//    
-//    [myMusicPlayer playPrevious];
+    MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
+    
+    [player prevPlay];
 }
+- (IBAction)changePlayPoint:(id)sender {
+    MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
+    
+    [player changePlayPoint:self.playTimeSlider.value];
+}
+
 - (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-//    
+    MusicFitPlayer *player= [MusicFitPlayer sharedPlayer];
+    
+    player.delegate = self;
+    [player syncData];
+    [player checkCurTime];
+    [player setSliderMaxDelegate];
 //    [myMusicPlayer registerHandlerPlayerRateChanged:^{
 //        [self syncPlayPauseButtons];
 //    }CurrentItemChanged:^(AVPlayerItem *item) {
@@ -159,81 +130,6 @@
 //        }
 //        NSLog(@"%@", [error localizedDescription]);
 //    }];
-}
-
-- (void)syncPlayPauseButtons{
-//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-    
-    
-//    switch ([myMusicPlayer getHysteriaPlayerStatus]) {
-//        case HysteriaPlayerStatusUnknown:
-//
-//            [playBtn replaceObjectAtIndex:3 withObject:mRefresh];
-//            break;
-//        case HysteriaPlayerStatusForcePause:
-//            self.playBtn.imageView.image = [UIImage imageNamed:@"play_play.png"];
-//            break;
-//        case HysteriaPlayerStatusBuffering:
-//            self.playBtn.imageView.image = [UIImage imageNamed:@"play_play.png"];
-//            break;
-//        case HysteriaPlayerStatusPlaying:
-//            self.playBtn.imageView.image = [UIImage imageNamed:@"play_play.png"];
-//        default:
-//            break;
-//    }
-}
-
-- (void)setControlsValue:(Music *)music{
-//    self.titleLabel.text = music.title;
-//    self.artistLabel.text = music.artist;
-//    self.BPMLabel.text = [NSString stringWithFormat:@"%d",(int)music.BPM];
-//    //image
-//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-//    
-//    int duration = (int)CMTimeGetSeconds([myMusicPlayer getCurrentItem].duration);
-//    int currentTime = (int)CMTimeGetSeconds([myMusicPlayer getCurrentItem].currentTime);
-//    
-//    int durationMin = (int)(duration / 60);
-//    int durationSec = (int)(duration % 60);
-//    int currentMins = (int)(currentTime / 60);
-//    int currentSec = (int)(currentTime % 60);
-//    
-//    NSString * durationLabel =[NSString stringWithFormat:@"%02d:%02d/%02d:%02d",currentMins,currentSec,durationMin,durationSec];
-//    _playTimeLabel.text = durationLabel;
-//    
-//    [self.playTimeSlider setMaximumValue:duration];
-//    _playTimeSlider.value = currentTime;
-}
--(void) configurePlayer {
-    //7
-//    __block PlayerViewController * weakSelf = self;
-//    __block _
-    //8
-//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-//
-//    __block AVQueuePlayer *_player = myMusicPlayer.audioPlayer;
-//    [_player addPeriodicTimeObserverForInterval:CMTimeMakeWithSeconds(1, 1)
-//                                          queue:NULL
-//                                     usingBlock:^(CMTime time) {
-//                                         if(!time.value) {
-//                                             return;
-//                                         }
-//                                         
-//                                         
-//                                         int duration = (int)CMTimeGetSeconds(_player.currentItem.duration);
-//                                         int currentTime = (int)CMTimeGetSeconds(_player.currentTime);
-//                                         int durationMin = (int)(duration / 60);
-//                                         int durationSec = (int)(duration % 60);
-//                                         int currentMins = (int)(currentTime / 60);
-//                                         int currentSec = (int)(currentTime % 60);
-//                                         
-//                                         
-//                                         NSString * durationLabel =[NSString stringWithFormat:@"%02d:%02d/%02d:%02d",currentMins,currentSec,durationMin,durationSec];
-//                                         
-//                                         weakSelf.playTimeLabel.text = durationLabel;
-//                                         weakSelf.playTimeSlider.value = currentTime;
-//                                     }];
-    
 }
 - (void)didReceiveMemoryWarning
 {
@@ -277,5 +173,28 @@
     [swipeVC setControllers:controllers];
     
     [swipeVC moveRightAnimated:NO];
+}
+
+- (void)syncLabels:(UIImage *)albumImage music:(Music *)music{
+    self.albumImageView.image = albumImage;
+    
+    self.titleLabel.text = music.title;
+    self.artistLabel.text = music.artist;
+    self.BPMLabel.text = [NSString stringWithFormat:@"%d",music.BPM];
+    
+//    NSLog(@"%@,%@,%@,%d", albumImage, music.title, music.artist, music.BPM);
+    [self.albumImageView setNeedsDisplay];
+        [self.titleLabel setNeedsDisplay];
+        [self.titleLabel setNeedsDisplay];
+        [self.titleLabel setNeedsDisplay];
+}
+- (void)syncMusicProgress:(NSString *)timeString timePoint:(NSInteger)timePoint{
+    self.playTimeLabel.text = timeString;
+    self.playTimeSlider.value = timePoint;
+}
+
+- (void)setMusicProgressMax:(NSInteger)max{
+    [self.playTimeSlider setMaximumValue:max];
+    NSLog(@"%d",max);
 }
 @end

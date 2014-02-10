@@ -12,7 +12,35 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Override point for customization after application launch.
+    CGSize iOSDeviceScreenSize = [[UIScreen mainScreen] bounds].size;
+    
+    if (iOSDeviceScreenSize.height == 480) //화면세로길이가 480 (3gs,4, 4s)
+    {
+        // UIStoryboard 생성
+        UIStoryboard *iPhone35Storyboard = [UIStoryboard storyboardWithName:@"Main3.5inch" bundle:nil];
+        // 생성한 UIStoryboard에서  initial view controller를 가져온다.
+        UIViewController *initialViewController = [iPhone35Storyboard instantiateInitialViewController];
+        
+        // 화면크기로 윈도우 생성
+        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        
+        // window의 rootViewController를 스토리보드의 initial view controller로 설정
+        self.window.rootViewController  = initialViewController;
+        
+        // 윈도우 보이기
+        [self.window makeKeyAndVisible];
+    }
+    
+    if (iOSDeviceScreenSize.height == 568) //화면세로길이가 568 (5)
+    {
+        //동일
+        UIStoryboard *iPhone4Storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        
+        UIViewController *initialViewController = [iPhone4Storyboard instantiateInitialViewController];
+        self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+        self.window.rootViewController  = initialViewController;
+        [self.window makeKeyAndVisible];
+    }
     return YES;
 }
 							

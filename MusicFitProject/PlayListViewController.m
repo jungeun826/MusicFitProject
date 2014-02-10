@@ -9,7 +9,7 @@
 #import "PlayListViewController.h"
 #import "PlayListCell.h"
 #import "PlayerViewController.h"
-//#import "MyMusicPlayer.h"
+#import "MusicFitPlayer.h"
 
 //#define PALYMODE 0 NO
 //#define EDITMODE 1 YES
@@ -30,7 +30,7 @@
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSInteger rows = [_DBManager getNumberOfMusicInPlayList];
-    NSLog(@"%d", (int)rows);
+//    NSLog(@"%d", (int)rows);
     return rows;
 }
 
@@ -40,8 +40,8 @@
     NSInteger musicID = [_DBManager getMusicInfoInPlayListWithIndex:indexPath.row];
     Music *music = [_DBManager getMusicWithMusicID:musicID];
     
-    NSLog(@"%@", music.title);
-    [cell setWithTitle:music.title artist:music.artist BPM:music.BPM];
+//    NSLog(@"%@", music.title);
+    [cell setWithTitle:music.title artist:music.artist BPM:music.BPM image:[music getAlbumImage]];
     return cell;
     
 }
@@ -55,8 +55,11 @@
     if(_editMode){
         
     }else{
-        //[_DBManager getMusicWithMusicID:[_DBManager getMusicInfoInPlayListWithIndex:indexPath.row]];
-        [self changeMusic:[self.playListTable indexPathForSelectedRow].row];
+        [_DBManager syncPlayList];
+        //음악 재생
+        MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
+        
+        [player changePlayMusicWithIndex:indexPath.row];
     }
 }
 
@@ -85,17 +88,6 @@
     
 //    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
 }
-//[self.audioPlayer pause];
-//MPMediaItem *song = [self.songsList objectAtIndex:indexPath.row];
-//AVPlayerItem * currentItem = [AVPlayerItem playerItemWithURL:[song valueForProperty:MPMediaItemPropertyAssetURL]];
-//
-//[self.audioPlayer replaceCurrentItemWithPlayerItem:currentItem];
-//[self.audioPlayer play];
-//[self.togglePlayPause setSelected:YES];
-//MPMediaItem *currentSong = [self.songsList objectAtIndex:indexPath.row];
-//NSString *songTitle = [currentSong valueForProperty: MPMediaItemPropertyTitle];
-//self.songName.text = songTitle;
-//[self.sliderOutlet setMaximumValue:self.audioPlayer.currentItem.duration.value/self.audioPlayer.currentItem.duration.timescale];
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

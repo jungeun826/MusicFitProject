@@ -42,5 +42,5 @@
 - (BOOL)syncMusic;
 - (NSInteger)getNumberOfMusic;
 - (BOOL)isExistWithlocation:(NSString *)location;
-- (NSArray *)getPlayListArray;
+- (NSMutableArray *)getPlayListArray;
 @end

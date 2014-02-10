@@ -96,14 +96,14 @@ static DBManager *_instance = nil;
 - (BOOL) closeDB{
     if (db){
         int rc = sqlite3_close(db);
-        NSLog(@"close rc=%d", rc);
+//        NSLog(@"close rc=%d", rc);
         
         if (rc == SQLITE_BUSY){
             NSLog(@"SQLITE_BUSY: not all statements cleanly finalized");
             
             sqlite3_stmt *stmt;
             while ((stmt = sqlite3_next_stmt(db, 0x00)) != 0){
-                NSLog(@"finalizing stmt");
+//                NSLog(@"finalizing stmt");
                 sqlite3_finalize(stmt);
             }
             
@@ -128,7 +128,7 @@ static DBManager *_instance = nil;
         NSLog(@"InsertQuery Error : %s", sqlite3_errmsg(db));
         return NO;
     }else
-        NSLog(@"insert Query : %@", insertQuery);
+//        NSLog(@"insert Query : %@", insertQuery);
     
     sqlite3_finalize(stmt);
     
@@ -144,7 +144,7 @@ static DBManager *_instance = nil;
         NSLog(@"DeleteQuery Error : %s", sqlite3_errmsg(db));
         return NO;
     }else
-        NSLog(@"delete Query : %@", deleteQuery);
+//        NSLog(@"delete Query : %@", deleteQuery);
     
     sqlite3_finalize(stmt);
     return YES;
@@ -161,7 +161,7 @@ static DBManager *_instance = nil;
         NSLog(@"Error on selectQuery: %s",sqlite3_errmsg(db));
         return nil;
     }else
-        NSLog(@"select Query: %@", selectQuery);
+//        NSLog(@"select Query: %@", selectQuery);
     return stmt;
 }
 
@@ -214,7 +214,7 @@ static DBManager *_instance = nil;
     int listID;
     int musicID;
     NSDictionary *playListTableInfo = [[NSDictionary alloc]init];
-    NSString *allSelectQuery = [NSString stringWithFormat:@"SELECT * FROM PLAYLIST"];
+    NSString *allSelectQuery = [NSString stringWithFormat:@"SELECT * FROM PLAYLIST ORDER BY listID asc"];
     sqlite3_stmt *allSelectStmt = nil;
     
     
@@ -228,7 +228,7 @@ static DBManager *_instance = nil;
         musicID = sqlite3_column_int(allSelectStmt, 1);
         playListTableInfo = @{@"listID":[NSString stringWithFormat:@"%d",listID ], @"musicID":[NSString stringWithFormat:@"%d", musicID]};
         
-        NSLog(@"listID= %d, musicID = %d", listID, musicID);
+//        NSLog(@"listID= %d, musicID = %d", listID, musicID);
         
         [_musicListInPlayList addObject:playListTableInfo];
     }
@@ -254,6 +254,7 @@ static DBManager *_instance = nil;
         insertQuery = [NSString stringWithFormat:@"INSERT INTO PLAYLIST (musicID) SELECT musicID FROM MUSIC where BPM > %d ORDER BY title ASC", (int)minBPM];
     else
         insertQuery = [NSString stringWithFormat:@"INSERT INTO PLAYLIST (musicID) SELECT musicID FROM MUSIC where BPM > %d AND BPM < %d ORDER BY title ASC", (int)minBPM, (int)maxBPM];
+    
     if(![self INSERT:insertQuery]){
         NSLog(@"Error createMusicIDArrayWithBPM... in PLAYLIST ");
         [self closeDB];
@@ -279,7 +280,7 @@ static DBManager *_instance = nil;
         musicID = sqlite3_column_int(selectStmt, 1);
         playListTableInfo = @{@"listID":[NSString stringWithFormat:@"%d",listID ], @"musicID":[NSString stringWithFormat:@"%d", musicID]};
         
-        NSLog(@"listID= %d, musicID = %d", listID, musicID);
+//        NSLog(@"listID= %d, musicID = %d", listID, musicID);
         
         [_musicListInPlayList addObject:playListTableInfo];
     }
@@ -378,7 +379,7 @@ static DBManager *_instance = nil;
         minBPM = sqlite3_column_int(stmt, 1);
         maxBPM = sqlite3_column_int(stmt, 2);
         
-        NSLog(@"modeID = %d , minBPM = %d, maxBPM = %d ", (int)modeID, (int)minBPM, (int)maxBPM);
+//        NSLog(@"modeID = %d , minBPM = %d, maxBPM = %d ", (int)modeID, (int)minBPM, (int)maxBPM);
         Mode *mode = [[Mode alloc]initWithModeID:modeID minBPM:minBPM maxBPM:maxBPM];
         
         [_modeList addObject:mode];
@@ -462,7 +463,7 @@ static DBManager *_instance = nil;
         NSString *locationString = [NSString stringWithCString:location encoding:NSUTF8StringEncoding];
         isMusic = sqlite3_column_int(stmt, 5);
         
-        NSLog(@"musicID = %d , BPM = %d, title = %@, artist = %@, location = %@, isMusic = %s ", (int)musicID, (int)BPM, titleString, artistString, locationString, isMusic == 0 ? "NO" : "YES");
+//        NSLog(@"musicID = %d , BPM = %d, title = %@, artist = %@, location = %@, isMusic = %s ", (int)musicID, (int)BPM, titleString, artistString, locationString, isMusic == 0 ? "NO" : "YES");
         
         Music *music = [[Music alloc]initWithMusicID:musicID BPM:BPM title:titleString artist:artistString location:locationString isMusic:isMusic];
         
@@ -538,7 +539,7 @@ static DBManager *_instance = nil;
     NSString *locationString = [NSString stringWithCString:location encoding:NSUTF8StringEncoding];
     isMusic = sqlite3_column_int(stmt, 5);
     
-    NSLog(@"musicID = %d , BPM = %d, title = %@, artist = %@, location = %@, isMusic = %s ", (int)musicID, (int)BPM, titleString, artistString, locationString, isMusic == 0 ? "NO" : "YES");
+//    NSLog(@"musicID = %d , BPM = %d, title = %@, artist = %@, location = %@, isMusic = %s ", (int)musicID, (int)BPM, titleString, artistString, locationString, isMusic == 0 ? "NO" : "YES");
     
     Music *music = [[Music alloc]initWithMusicID:musicID BPM:BPM title:titleString artist:artistString location:locationString isMusic:isMusic];
     
@@ -548,7 +549,7 @@ static DBManager *_instance = nil;
 }
 
 
-- (NSArray *)getPlayListArray{
+- (NSMutableArray *)getPlayListArray{
     if([_musicListInPlayList count]==0)
         return nil;
     return _musicListInPlayList;

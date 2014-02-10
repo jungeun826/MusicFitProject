@@ -201,13 +201,13 @@
     
     if (way == WayHorizontal && way == _lastSwipeWay && (overHorizontalThreshold || overVelocityXThreshold)) {
         if (direction == DirectionLeft) {
-            NSLog(@"goto left controller");
+//            NSLog(@"goto left controller");
             [self goToViewController:_visibleViewController.leftViewController translation:translation velocity:velocity way:WayHorizontal animated:YES completion:^{
             }];
             return;
         }
         else if (direction == DirectionRight) {
-            NSLog(@"goto right controller");
+//            NSLog(@"goto right controller");
             [self goToViewController:_visibleViewController.rightViewController translation:translation velocity:velocity way:WayHorizontal animated:YES completion:^{
             }];
             return;

@@ -13,23 +13,29 @@
 @property (weak, nonatomic) IBOutlet UILabel *artistLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *albumImageView;
 @property (weak, nonatomic) IBOutlet UIView *BPMView;
-@property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *selectImage;
 
 @end
 
 @implementation PlayListCell
 
-- (void)setWithTitle:(NSString *)title artist:(NSString *)artist BPM:(NSInteger)bpm{
+//edit안눌렀을 경우
+- (void)setWithTitle:(NSString *)title artist:(NSString *)artist BPM:(NSInteger)bpm image:(UIImage *)image{
     self.BPMLabel.text = [NSString stringWithFormat:@"%d", (int)bpm];
     self.titleLabel.text = title;
     self.artistLabel.text = artist;
     self.BPMView.hidden = NO;
-    self.deleteBtn.hidden = YES;
+    self.selectImage.hidden = YES;
+    
+    self.albumImageView.image = image;
 }
-- (void)setWithTitle:(NSString *)title artist:(NSString *)artist{
+//눌렀을 때
+- (void)setWithTitle:(NSString *)title artist:(NSString *)artist {
     self.titleLabel.text = title;
     self.artistLabel.text = artist;
-    self.deleteBtn.hidden = NO;
+    self.albumImageView.image = [UIImage imageNamed:@"PlayList_albumDefault.png"];
+    self.selectImage.hidden = NO;
+    self.selectImage.image = [UIImage imageNamed:@"icon_songs_cancel.png"];
     self.BPMView.hidden = YES;
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
@@ -45,12 +51,10 @@
     [super setSelected:selected animated:animated];
 
     if(self.BPMView.hidden == YES){
-        BOOL selected = self.deleteBtn.selected;
-        self.deleteBtn.selected = !self.deleteBtn.selected;
-        if(selected ==YES){
-            self.deleteBtn.imageView.image = [UIImage imageNamed:@"icon_songs_cancel.png"];
+        if(selected){
+            self.selectImage.image = [UIImage imageNamed:@"icon_songs_cancel_on.png"];
         }else{
-            self.deleteBtn.imageView.image = [UIImage imageNamed:@"icon_songs_cancel.png"];
+            self.selectImage.image = [UIImage imageNamed:@"icon_songs_cancel.png"];
         }
     }
     // Configure the view for the selected state

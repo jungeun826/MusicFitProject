@@ -18,4 +18,5 @@
 @property (nonatomic, readonly) BOOL isMusic;
 
 -(id)initWithMusicID:(NSInteger)musicID BPM:(NSInteger)bpm title:(NSString *)title artist:(NSString *)artist location:(NSString *)location isMusic:(BOOL)isMusic;
+- (UIImage *)getAlbumImage;
 @end

@@ -151,7 +151,7 @@
    
 
     //아이튠즈에서 음악에 대한 정보를 가져와 DB화 하는 함수를 부름
-//    [self getITunseSyncMusic];
+    [self getITunseSyncMusic];
 }
 - (void)getITunseSyncMusic{
     //아이튠즈 미디어들을 모두 가져와 초기화함
@@ -166,6 +166,7 @@
         
         NSString *stringURL = [[music valueForProperty:MPMediaItemPropertyAssetURL] absoluteString];
         NSString *location = [stringURL substringFromIndex:32];
+
         
         if([_DBManager isExistWithlocation:location])
             continue;

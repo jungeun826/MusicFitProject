@@ -12,9 +12,8 @@
 #import "StaticModeCell.h"
 #import "PlayViewController.h"
 #import "AppDelegate.h"
-#import "PlayListDBManager.h"
 #import "PlayerViewController.h"
-//#import "MyMusicPlayer.h"
+#import "MusicFitPlayer.h"
 #import "UIViewController+SwipeController.h"
 #import "SwipeViewController.h"
 
@@ -44,7 +43,7 @@
     PlayerViewController *_player;
 }
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
-    NSLog(@"return key press");
+//    NSLog(@"return key press");
     [textField resignFirstResponder];
     return YES;
 }
@@ -70,7 +69,7 @@
             NSString *mode =_staticMode[indexPath.row][@"modeTitle"];
             NSString *minBPM = _staticMode[indexPath.row][@"minBPM"];
             [staticCell setWithImageName:@"cycle.png" title: mode minBPM:minBPM];
-            NSLog(@"%@,  %@",_staticMode[indexPath.row][@"modeTitle"], _staticMode[indexPath.row][@"minBPM"]);
+//            NSLog(@"%@,  %@",_staticMode[indexPath.row][@"modeTitle"], _staticMode[indexPath.row][@"minBPM"]);
 //            staticCell.modeDelegate = (id)_player;
             return staticCell;
         }
@@ -99,9 +98,11 @@
            NSString *minBPM = _staticMode[indexPath.row][@"minBPM"];
             //리스트 생성
             [_DBManager createPlayListWithMinBPM:[minBPM intValue] maxBPM:0];
+//            [_DBManager syncPlayList];
             //음악 재생
-//            MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
-//            [myMusicPlayer setPlayList];
+            MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
+            [player setPlayList];
+            //[player changePlayMusicWithIndex:0];
             //swipe
             [self.swipeViewController moveRightAnimated:YES];
             break;
@@ -110,6 +111,14 @@
             //mode의 bpm정보
             Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
             [_DBManager createPlayListWithMinBPM:mode.minBPM maxBPM:mode.maxBPM];
+            
+//            [_DBManager syncPlayList];
+            //음악 재생
+            MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
+            [player setPlayList];
+            //[player changePlayMusicWithIndex:0];
+            //swipe
+            [self.swipeViewController moveRightAnimated:YES];
             break;
         }
         default:{
@@ -179,7 +188,7 @@
 -(void)deleteCell{
     int selectedIndex = (int)[self.modeTable indexPathForSelectedRow].row;
     Mode *mode = [_DBManager getModeWithIndex:selectedIndex];
-    NSLog(@"mode_id:%d",(int)mode.modeID);
+//    NSLog(@"mode_id:%d",(int)mode.modeID);
     [_DBManager deleteModeWithModeID:mode.modeID];
     [_DBManager syncMode];
     

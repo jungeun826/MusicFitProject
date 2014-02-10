@@ -11,7 +11,5 @@
 #import <AVFoundation/AVFoundation.h>
 
 @interface PlayerViewController : UIViewController <AVAudioSessionDelegate>
-- (void)playListSync;
-- (void)changePlayMusic:(NSInteger)selectIndex;
 - (void)setSwipeController;
 @end
