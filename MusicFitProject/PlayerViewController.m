@@ -29,6 +29,7 @@
 
 @property (weak, nonatomic) IBOutlet UISlider *playTimeSlider;
 @property (weak, nonatomic) IBOutlet UILabel *playTimeLabel;
+@property (weak, nonatomic) IBOutlet UISlider *playVolumSlider;
 
 @end
 
@@ -80,6 +81,11 @@
     MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
     
     [player changePlayPoint:self.playTimeSlider.value];
+}
+- (IBAction)changePlayVolume:(id)sender {
+    MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
+    
+    [player changePlayVolume:self.playVolumSlider.value];
 }
 
 - (void)viewDidLoad{
@@ -141,7 +147,8 @@
     SwipeViewController *swipeVC = [[SwipeViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 438)];
     [self addChildViewController:swipeVC];
 
-    [self.view.subviews[0] addSubview:swipeVC.view];
+    
+    [self.view.subviews[1] addSubview:swipeVC.view];
     [swipeVC didMoveToParentViewController:self];
     
     UIViewController *modeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"mode"];
@@ -180,7 +187,7 @@
     
     self.titleLabel.text = music.title;
     self.artistLabel.text = music.artist;
-    self.BPMLabel.text = [NSString stringWithFormat:@"%d",music.BPM];
+    self.BPMLabel.text = [NSString stringWithFormat:@"%d",(int)music.BPM];
     
 //    NSLog(@"%@,%@,%@,%d", albumImage, music.title, music.artist, music.BPM);
     [self.albumImageView setNeedsDisplay];
@@ -195,6 +202,10 @@
 
 - (void)setMusicProgressMax:(NSInteger)max{
     [self.playTimeSlider setMaximumValue:max];
-    NSLog(@"%d",max);
+//    NSLog(@"%d",(int)max);
+}
+
+- (void)initMusicProgress{
+    self.playTimeSlider.value = 0;
 }
 @end

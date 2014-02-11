@@ -13,4 +13,6 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+#define IS_4_INCH_DEVICE CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(320.0f, 568.0f)) || CGSizeEqualToSize([UIScreen mainScreen].bounds.size, CGSizeMake(568.0f, 320.0f)) 
+
 #endif

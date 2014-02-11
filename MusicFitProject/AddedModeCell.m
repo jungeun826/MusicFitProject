@@ -11,12 +11,13 @@
 @interface AddedModeCell()
 @property (weak, nonatomic) IBOutlet UIButton *imageView;
 @property (weak, nonatomic) IBOutlet UILabel *BPMRangeLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *selecteImageView;
 
 @end
 @implementation AddedModeCell
 - (void)setWithminBPM:(NSString *)minBPM maxBPM:(NSString *)maxBPM{
     NSString *text = [NSString stringWithFormat:@"%@ ~ %@",minBPM, maxBPM];
-
+    [self changeBackground];
     self.BPMRangeLabel.text = text;
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
@@ -26,12 +27,16 @@
     }
     return self;
 }
+- (void)changeBackground{
+    UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:self.frame];
+    backgroundImageView.image = [UIImage imageNamed:@"basic_bg.png"];
+    backgroundImageView.contentMode = UIViewContentModeScaleToFill;
+    
+    [self setSelecteImageView:backgroundImageView];
+}
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated{
     [super setSelected:selected animated:animated];
-
-//    [self.modeDelegate syncPlayer];
     // Configure the view for the selected state
 }
 - (IBAction)deleteCustomizeCell:(id)sender {

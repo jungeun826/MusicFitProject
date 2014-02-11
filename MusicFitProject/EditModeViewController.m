@@ -43,7 +43,11 @@
     return cell;
     
 }
-
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(buttonIndex == alertView.cancelButtonIndex){
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }
+}
 - (void)tableView:tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     //editMode가 아닐 경우 touch시에 음악 재생
 }

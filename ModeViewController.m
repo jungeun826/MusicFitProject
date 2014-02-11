@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UITextField *minBPM;
 @property (weak, nonatomic) IBOutlet UITableView *modeTable;
 
+
 - (IBAction)saveCustomMode:(id)sender;
 - (IBAction)cancleCustomMode:(id)sender;
 @end
@@ -85,12 +86,17 @@
         }
         default:{
              UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CUSTOMIZE_CELL"];
+            UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:cell.frame];
+            backgroundImageView.image = [UIImage imageNamed:@"basic_bg.png"];
+            backgroundImageView.contentMode = UIViewContentModeScaleToFill;
+
             return cell;
         }
     }
 }
 
 - (void)tableView:tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [self.modeTable deselectRowAtIndexPath:indexPath animated:YES];
     //커스텀이 아닌 경우 해당 셀에 대한 mode정보를 얻어온 후 해당하는 범위의 bpm을 찾아 리스트를 생성한다.
     switch (indexPath.section){
         case STATIC_SECTION:{

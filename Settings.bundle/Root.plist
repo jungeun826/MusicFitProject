@@ -34,7 +34,7 @@
 			<key>Key</key>
 			<string>turorial_preference</string>
 			<key>Title</key>
-			<string>Tutorial 설정</string>
+			<string>Tutorial 보기 설정</string>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 		</dict>

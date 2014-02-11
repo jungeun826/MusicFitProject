@@ -15,6 +15,7 @@
 - (void)syncMusicProgress:(NSString *)timeString timePoint:(NSInteger)timePoint;
 - (void)setMusicProgressMax:(NSInteger)max;
 - (void)initMusicProgress;
+
 @end
 
 @interface MusicFitPlayer : NSObject
@@ -33,6 +34,8 @@
 - (BOOL)isPlaying;
 
 - (void)changePlayPoint:(NSInteger)changeTimePoint;
+- (void)changePlayVolume:(CGFloat)changeVolumeValue;
+
 - (void)setSliderMaxDelegate;
 - (void)syncData;
 - (void)checkCurTime;

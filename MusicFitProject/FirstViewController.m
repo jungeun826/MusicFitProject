@@ -8,121 +8,44 @@
 
 #import "FirstViewController.h"
 #import "AppDelegate.h"
-#import "SwipeViewController.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "DBManager.h"
 #import "PlayerViewController.h"
+#import "FirstViewController.h"
 
-#define HIDDEN_X 400
-#define TUTORIAL_IMAGENUM 4
-#define MAX_WIDTH 320
-#define MAX_HEIGHT 548
-@interface FirstViewController () <UIScrollViewDelegate>
-@property (weak, nonatomic) IBOutlet UIView *BPMContainer;
+@interface FirstViewController ()
 @property (weak, nonatomic) IBOutlet UIImageView *mainImageView;
-@property (weak, nonatomic) IBOutlet UIScrollView *tutorialScrollView;
-@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
-@property (weak, nonatomic) IBOutlet UIImageView *progressImageView;
-
 @end
 
 @implementation FirstViewController{
     DBManager *_DBManager;
     BOOL _repeat;
 }
-//FIXME:메인 페에지를 그림만 하나 있는 뷰 컨트롤러로 할 것인지 아니면 튜토리얼 위에 덮는 방식으로 가야할지 결정
-//페이지가 움직일 때 해당하는 그림을 보여주기 위함
-- (void) pageChangeValue:(id)sender {
-    UIPageControl *pageControl = (UIPageControl *) sender;
-    [self.tutorialScrollView setContentOffset:CGPointMake(pageControl.currentPage*MAX_WIDTH, 0) animated:YES];
-}
-//해당페이지의 그림을 미리 로드시켜 놓을때 쓰는 함수.
--(void)loadContentsPage:(int)pageNo{
-    if(pageNo<0 ||pageNo < self.pageControl.currentPage || pageNo >= TUTORIAL_IMAGENUM)
-        return;
-    
-    NSString *fileName = [NSString stringWithFormat:@"Tutorial_%d", pageNo];
-    NSString *filePath = [[NSBundle mainBundle]pathForResource:fileName ofType:@"jpg"];
-    UIImage *image = [UIImage imageWithContentsOfFile:filePath];
-    UIImageView *imageView = [[UIImageView alloc]initWithImage:image];
-    //imageView.contentMode = UIViewContentModeScaleAspectFill;
-    imageView.frame = CGRectMake(MAX_WIDTH* pageNo, 0, MAX_WIDTH, MAX_HEIGHT);
-    [self.tutorialScrollView addSubview:imageView];
-}
-//스크롤뷰가 넘어갈 때 로드됨...?
-//페이지 컨트롤러 표시를 바꾸기 위해 추가
--(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView{
-    float width = scrollView.frame.size.width;
-    float offsetX = scrollView.contentOffset.x;
-    int pageNO = floor(offsetX / width);
-    self.pageControl.currentPage = pageNO;
+- (BOOL)loadFromUserDefaultTutorial{
+    BOOL tutorialSetting = [[NSUserDefaults standardUserDefaults] boolForKey:@"tutorial_preference"];
+    return tutorialSetting;
 }
 
-//튜토리얼 스킵 버튼을 누르면 실행되는 것
-- (IBAction)skipTutorial:(id)sender {
-    if(self.BPMContainer.hidden == YES)
-        self.BPMContainer.hidden = NO;
-    _repeat = YES;
-    //분석 시작을 위해 것을 부름
-    [self animationBPManalysis];
-    int count = 0;
-    do{
-        if(count == 5)
-            _repeat = NO;
-        //분석이 완료되었다는 것을 알 수 있는 함수를 부른 후
-        //그 함수가 리턴하는 값이 YES이면 탈출하도록 함
-        // perform을 이용해 delay를 주어 반복 실행하도록 되나........?
-        //애니매이션?
-    }while(!_repeat);
-    //탈출하면 분석이 진행된 것이므로 사라지는 애니매이션과 같이 플레이 뷰로 옮기도록 함
-    [self performSelector:@selector(movePlayView) withObject:nil afterDelay:0.3];
-}
-- (BOOL)loadFromUserDefaultTutorial{
-    NSString *tutorialSetting = [[NSUserDefaults standardUserDefaults] valueForKey:@"tutorial_preference"];
-    if([tutorialSetting isEqualToString:@"NO"])
-        return NO;
-    else
-        return YES;
-}
-//튜토리얼에서 플레이 화면으로 넘어갈 때 실행되어야 하는 것.
--(void)movePlayView{
-    AppDelegate *app = [[UIApplication sharedApplication]delegate];
-    //    NSLog(@"changed root");
-    //    app.window.rootViewController = playerVC;
-    UIStoryboard *currentStoryboard = self.storyboard;
-    
-    PlayerViewController *initVC = [currentStoryboard instantiateViewControllerWithIdentifier:@"player"];
-    [initVC setSwipeController];
-    app.window.rootViewController = initVC;
-}
-//메인 화면이 등장할 때 스크롤뷰가 움직이는 것에 대한 설정부분.
-- (void)settingScrollView{
-    self.tutorialScrollView.pagingEnabled = YES;
-    self.tutorialScrollView.contentSize = CGSizeMake(MAX_WIDTH*TUTORIAL_IMAGENUM, MAX_HEIGHT);
-}
 //FIXME: 튜토리얼 다시 안보기 설정시 분기를 이용해 메인/튜토리얼 로 넘어가게 하기.
-- (void)animationMainImage{
+- (void)movePlayerOrTutorial{
+     AppDelegate *app = [[UIApplication sharedApplication]delegate];
     if([self loadFromUserDefaultTutorial]==NO){
-        [self movePlayView];
+        //NO : 안볼래요를 누른 경우
+        PlayerViewController *initVC = [self.storyboard instantiateViewControllerWithIdentifier:@"player"];
+        [initVC setSwipeController];
+        app.window.rootViewController = initVC;
     }else{
-        [self settingScrollView];
-        [UIView animateWithDuration:1.0 animations:^{
-            self.mainImageView.alpha = 0;
-            self.mainImageView.backgroundColor = [UIColor clearColor];
-            }completion:^(BOOL finished){
-            [self.mainImageView removeFromSuperview];
-        }];
+        FirstViewController *initVC = [self.storyboard instantiateViewControllerWithIdentifier:@"tutorial"];
+        app.window.rootViewController = initVC;
     }
 }
-//무한루프를 돌면서 분석중임을 알려주는 애니매이션
-- (void)animationBPManalysis{
-    [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        [self.progressImageView setTransform:CGAffineTransformRotate(self.progressImageView.transform, M_PI_2)];
-    }completion:^(BOOL finished){
-        if (_repeat) {
-            [self animationBPManalysis];
-        }
-    }];
+- (void)animationMainImage{
+    [UIView animateWithDuration:1.0 animations:^{
+        self.mainImageView.alpha = 0;
+        self.mainImageView.backgroundColor = [UIColor clearColor];
+//        [self getITunseSyncMusic];
+    }completion:nil];
+    [self performSelector:@selector(movePlayerOrTutorial) withObject:nil afterDelay:0.2];
 }
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
@@ -132,27 +55,11 @@
 //메인 페이지를 어느정도 보여 준 후 튜토리얼로 넘어갈 수 있도록 함.
 - (void)viewDidLoad{
     [super viewDidLoad];
-    
-    //메인 페이지가 2초 후에 애니매이션으로 사라지도록 하기 위해
-    //performSelector를 사용함.
-    [self performSelector:@selector(animationMainImage) withObject:nil afterDelay:2];
-    
-    //페이지 컨트롤러에 대한 이벤트를 추가함
-    [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
-    
-    //미리 모든 페이지 로드해놓는다.
-    for(int index = 0; index < TUTORIAL_IMAGENUM ; index++)
-        [self loadContentsPage:index];
-    
-    //FIXME : 음악 로드 시점에 대해 명확해지면 고쳐야함.
-    //지금은 처음 시작시 모든 음악에 대한 정보를 가지고 오는 것으로 하였으므로 이 부분에
-    //music관련 디비 매니저가 필요함.
-    _DBManager = [DBManager sharedDBManager];
-   
 
-    //아이튠즈에서 음악에 대한 정보를 가져와 DB화 하는 함수를 부름
-    [self getITunseSyncMusic];
+    [self performSelector:@selector(animationMainImage) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(getITunseSyncMusic) withObject:nil afterDelay:0.2];
 }
+//아이튠즈에서 음악에 대한 정보를 가져와 DB화 하는 함수를 부름
 - (void)getITunseSyncMusic{
     //아이튠즈 미디어들을 모두 가져와 초기화함
     MPMediaQuery *everything = [[MPMediaQuery alloc] init];
