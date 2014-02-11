@@ -34,8 +34,8 @@ static MusicFitPlayer *_playerInstance = nil;
         
         DBManager *dbManager = [DBManager sharedDBManager];
         _playList = [[NSMutableArray alloc]init];
-        [dbManager syncPlayList];
-        _playList = [dbManager getPlayListArray];
+        [dbManager syncList];
+        _playList = [dbManager getListArray];
         
         _curPlayMusic = [[Music alloc]init];
         _curPlayIndex = 0;
@@ -280,7 +280,7 @@ static MusicFitPlayer *_playerInstance = nil;
 - (BOOL)setPlayList{
     DBManager *dbManager = [DBManager sharedDBManager];
     [_playList removeAllObjects];
-    _playList = [dbManager getPlayListArray];
+    _playList = [dbManager getListArray];
     if(_playList == nil)
         return NO;
     else{

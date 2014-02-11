@@ -29,7 +29,7 @@
 }
 
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSInteger rows = [_DBManager getNumberOfMusicInPlayList];
+    NSInteger rows = [_DBManager getNumberOfMusicInList];
 //    NSLog(@"%d", (int)rows);
     return rows;
 }
@@ -37,11 +37,11 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     PlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLAYLIST_CELL" forIndexPath:indexPath];
-    NSInteger musicID = [_DBManager getMusicInfoInPlayListWithIndex:indexPath.row];
-    Music *music = [_DBManager getMusicWithMusicID:musicID];
+//    NSInteger musicID = [_DBManager getMusicInfoInPlayListWithIndex:indexPath.row];
+//    Music *music = [_DBManager getMusicWithMusicID:musicID];
     
 //    NSLog(@"%@", music.title);
-    [cell setWithTitle:music.title artist:music.artist BPM:music.BPM image:[music getAlbumImage]];
+//    [cell setWithTitle:music.title artist:music.artist BPM:music.BPM image:[music getAlbumImage]];
     return cell;
     
 }
@@ -55,7 +55,7 @@
     if(_editMode){
         
     }else{
-        [_DBManager syncPlayList];
+        [_DBManager syncList];
         //음악 재생
         MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
         
@@ -84,7 +84,7 @@
     //FIXME : 아래 문장은 edit 누른 후에 곡추가 누를 경우에 수행해야 함.
     
     [_DBManager syncMusic];
-    [_DBManager syncPlayList];
+    [_DBManager syncList];
     
 //    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
 }

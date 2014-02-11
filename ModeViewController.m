@@ -8,11 +8,7 @@
 
 #import "ModeViewController.h"
 #import "DBManager.h"
-#import "AddedModeCell.h"
-#import "StaticModeCell.h"
-#import "PlayViewController.h"
-#import "AppDelegate.h"
-#import "PlayerViewController.h"
+#import "ModeCell.h"
 #import "MusicFitPlayer.h"
 #import "UIViewController+SwipeController.h"
 #import "SwipeViewController.h"
@@ -22,27 +18,35 @@
 #define ADDMODE_SECTION 1
 #define CUSTOMIZE_SECTION 2
 #define HIDDEN_Y 600
-#define MARGIN_Y 100
+#define MARGIN_Y 50
 
-@interface ModeViewController () <AddedModeDelegate, UIAlertViewDelegate>{
-     UIScrollView *viewsContainer;
-}
-@property (weak, nonatomic) IBOutlet UIView *customModeView;
+@interface ModeViewController () <AddedModeDelegate, UIAlertViewDelegate>@property (weak, nonatomic) IBOutlet UIView *customModeView;
 @property (weak, nonatomic) IBOutlet UIView *backView;
-@property (weak, nonatomic) IBOutlet UITextField *maxBPM;
-@property (weak, nonatomic) IBOutlet UITextField *minBPM;
+@property (weak, nonatomic) IBOutlet UITextField *maxBPMTextField;
+@property (weak, nonatomic) IBOutlet UITextField *minBPMTextField;
 @property (weak, nonatomic) IBOutlet UITableView *modeTable;
+@property (weak, nonatomic) IBOutlet UITextField *titleTextField;
+@property (weak, nonatomic) IBOutlet UIButton *saveBtn;
 
 
 - (IBAction)saveCustomMode:(id)sender;
-- (IBAction)cancleCustomMode:(id)sender;
+- (IBAction)cancelCustomMode:(id)sender;
+
 @end
 
 @implementation ModeViewController{
-    NSArray *_staticMode;
     DBManager *_DBManager;
-    PlayerViewController *_player;
 }
+- (IBAction)checkTextFieldLength:(id)sender {
+    NSInteger titleLength = [self.titleTextField.text length];
+    NSInteger minBPMLength = [self.minBPMTextField.text length];
+    NSInteger maxBPMLegnth = [self.maxBPMTextField.text length];
+    if(titleLength >0 && minBPMLength >0 && maxBPMLegnth >0){
+        self.saveBtn.enabled = YES;
+    }else
+        self.saveBtn.enabled = NO;
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField *)textField{
 //    NSLog(@"return key press");
     [textField resignFirstResponder];
@@ -55,7 +59,7 @@
     if(section == 0) //고정 모드 4개
         return STATICCELL_NUM;
     else if(section ==1)//추가된 모드
-        return [_DBManager  getNumberOfMode];
+        return [_DBManager  getNumberOfMode]-4;
     else//커스터마이징할 모드
         return 1;
 }
@@ -66,22 +70,20 @@
    // UITableViewCell *cell;
     switch (indexPath.section){
         case STATIC_SECTION:{
-            StaticModeCell *staticCell = [tableView dequeueReusableCellWithIdentifier:@"STATICMODE_CELL" forIndexPath:indexPath];
-            NSString *mode =_staticMode[indexPath.row][@"modeTitle"];
-            NSString *minBPM = _staticMode[indexPath.row][@"minBPM"];
-            [staticCell setWithImageName:@"cycle.png" title: mode minBPM:minBPM];
-//            NSLog(@"%@,  %@",_staticMode[indexPath.row][@"modeTitle"], _staticMode[indexPath.row][@"minBPM"]);
-//            staticCell.modeDelegate = (id)_player;
+            ModeCell *staticCell = [tableView dequeueReusableCellWithIdentifier:@"MODE_CELL" forIndexPath:indexPath];
+           Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
+            
+            [staticCell setStaticWithImageName:[NSString stringWithFormat:@"icon_mode%d.png", indexPath.row+1] title:mode.title minBPM:[mode getStringMinBPM]];
+
             return staticCell;
         }
         case ADDMODE_SECTION:{
-            AddedModeCell *addedCell = [tableView dequeueReusableCellWithIdentifier:@"ADDEDMODE_CELL"];
-            Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
+            ModeCell *addedCell = [tableView dequeueReusableCellWithIdentifier:@"MODE_CELL"];
+            Mode *mode = [_DBManager getModeWithIndex:indexPath.row+4];
             
-            [addedCell setWithminBPM:[mode getStringMinBPM] maxBPM:[mode getStringMaxBPM]];
+            [addedCell setAddedWithTitle:mode.title minBPM:mode.minBPM maxBPM:mode.maxBPM];
             addedCell.addedDelegate = self;
             
-//            addedCell.modeDelegate = (id)_player;
             return addedCell;
         }
         default:{
@@ -90,6 +92,8 @@
             backgroundImageView.image = [UIImage imageNamed:@"basic_bg.png"];
             backgroundImageView.contentMode = UIViewContentModeScaleToFill;
 
+            [cell setBackgroundView:backgroundImageView];
+            
             return cell;
         }
     }
@@ -101,9 +105,9 @@
     switch (indexPath.section){
         case STATIC_SECTION:{
             //mode의 bpm정보
-           NSString *minBPM = _staticMode[indexPath.row][@"minBPM"];
+//           Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
             //리스트 생성
-            [_DBManager createPlayListWithMinBPM:[minBPM intValue] maxBPM:0];
+            [_DBManager getModeListWithIndex:indexPath.row];
 //            [_DBManager syncPlayList];
             //음악 재생
             MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
@@ -115,9 +119,9 @@
         }
         case ADDMODE_SECTION:{
             //mode의 bpm정보
-            Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
-            [_DBManager createPlayListWithMinBPM:mode.minBPM maxBPM:mode.maxBPM];
-            
+//            Mode *mode = [_DBManager getModeWithIndex:indexPath.row+3];
+//            [_DBManager createListWithMinBPM:mode.minBPM maxBPM:mode.maxBPM];
+            [_DBManager getModeListWithIndex:indexPath.row+4];
 //            [_DBManager syncPlayList];
             //음악 재생
             MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
@@ -146,37 +150,47 @@
         }completion:nil];
     }
 }
+
 - (IBAction)saveCustomMode:(id)sender {
     //디비에 저장 후 릴로드
     //FIXME:save전에 textField값이 정상적인지 체크하는 로직 필요
-    if([_DBManager insertModeWithMinBPM:[self.minBPM.text intValue] maxBPM:[self.maxBPM.text intValue]] == NO){
+    self.saveBtn.enabled = NO;
+    
+    if([_DBManager insertModeWithMinBPM:[self.minBPMTextField.text intValue] maxBPM:[self.maxBPMTextField.text intValue] title:self.titleTextField.text] == NO){
         
-        self.minBPM.text = @"";
-        self.maxBPM.text = @"";
+        self.minBPMTextField.text = @"";
+        self.maxBPMTextField.text = @"";
+        self.titleTextField.text = @"";
         
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"저장실패" message:@"실패" delegate:self cancelButtonTitle:nil otherButtonTitles:@"확인", nil];
         [alert show];
         
         return;
     }
-    self.minBPM.text = @"";
-    self.maxBPM.text = @"";
+    self.minBPMTextField.text = @"";
+    self.maxBPMTextField.text = @"";
+    self.titleTextField.text = @"";
     
-    [_DBManager syncMode];
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:ADDMODE_SECTION];
     [self.modeTable reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
     
-    [self.minBPM resignFirstResponder];
-    [self.maxBPM resignFirstResponder];
+    [self.minBPMTextField resignFirstResponder];
+    [self.maxBPMTextField resignFirstResponder];
+    [self.titleTextField resignFirstResponder];
     [self changePositionCustomModeViewWithY:HIDDEN_Y];
 }
-- (IBAction)cancleCustomMode:(id)sender {
-    self.minBPM.text = @"";
-    self.maxBPM.text = @"";
+- (IBAction)cancelCustomMode:(id)sender {
+    self.minBPMTextField.text = @"";
+    self.maxBPMTextField.text = @"";
+    self.titleTextField.text = @"";
     
-    [self.minBPM resignFirstResponder];
-    [self.maxBPM resignFirstResponder];
+    self.saveBtn.enabled = NO;
+    
+    [self.minBPMTextField resignFirstResponder];
+    [self.maxBPMTextField resignFirstResponder];
+    [self.titleTextField resignFirstResponder];
+    
     [self changePositionCustomModeViewWithY:HIDDEN_Y];
 }
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
@@ -186,8 +200,7 @@
     }
     return self;
 }
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
@@ -208,10 +221,9 @@
 }
 - (void)viewDidLoad{
     [super viewDidLoad];
-    _staticMode = @[@{@"modeTitle":@"걷기",@"minBPM":@"120"},@{@"modeTitle":@"조깅,트레드밀",@"minBPM":@"140"},@{@"modeTitle":@"러닝",@"minBPM":@"160"},@{@"modeTitle":@"사이클링",@"minBPM":@"130"}];
+    
     _DBManager = [DBManager sharedDBManager];
-    _player = [self.storyboard instantiateViewControllerWithIdentifier:@"player"];
-    [self addChildViewController:_player];
+
     [_DBManager syncMode];
 }
 @end

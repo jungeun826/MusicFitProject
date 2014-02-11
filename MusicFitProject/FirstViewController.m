@@ -55,9 +55,10 @@
 //메인 페이지를 어느정도 보여 준 후 튜토리얼로 넘어갈 수 있도록 함.
 - (void)viewDidLoad{
     [super viewDidLoad];
-
+    _DBManager = [DBManager sharedDBManager];
     [self performSelector:@selector(animationMainImage) withObject:nil afterDelay:1.0];
     [self performSelector:@selector(getITunseSyncMusic) withObject:nil afterDelay:0.2];
+
 }
 //아이튠즈에서 음악에 대한 정보를 가져와 DB화 하는 함수를 부름
 - (void)getITunseSyncMusic{
@@ -95,6 +96,8 @@
         //FIXME:무조건 isMusic을 true로 넣는다 고쳐야함.
         [_DBManager insertMusicWithBPM:BPM title:title artist:artist location:location isMusic:YES];
     }
+    
+    [_DBManager initStaticMode];
     /*
      가슴 시린 이야기 (Feat. 용준형 of BEAST), 휘성, 8605142450541980905
      가질 수 없는 너, 하이니, 8605142450541980900

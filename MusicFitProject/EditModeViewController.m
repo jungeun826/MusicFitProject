@@ -13,14 +13,17 @@
 #define ORIGINMUSIC_SECTION 0
 #define ADDEDMUSIC_SECTION 1
 @interface EditModeViewController () <UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@property (weak, nonatomic) IBOutlet UITableView *editTable;
 
 @end
 
 @implementation EditModeViewController{
     DBManager *_DBManager;
+    NSMutableArray *_addSongList;
+    NSArray *_deleteSongList;
 }
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSInteger rows = [_DBManager getNumberOfMusicInPlayList];
+    NSInteger rows = [_DBManager getNumberOfMusicInList];
     NSLog(@"%d", (int)rows);
     return rows;
 }
@@ -29,27 +32,27 @@
     
     [alert show];
 }
-- (void)backPlayListVC{
-    
-}
+
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     PlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLAYLIST_CELL" forIndexPath:indexPath];
-    NSInteger musicID = [_DBManager getMusicInfoInPlayListWithIndex:indexPath.row];
-    Music *music = [_DBManager getMusicWithMusicID:musicID];
+//    NSInteger musicID = [_DBManager getMusicInfoInPlayListWithIndex:indexPath.row];
+//    Music *music = [_DBManager getMusicWithMusicID:musicID];
     
-    NSLog(@"%@", music.title);
-    [cell setWithTitle:music.title artist:music.artist];
+//    NSLog(@"%@", music.title);
+//    [cell setWithTitle:music.title artist:music.artist];
     return cell;
     
 }
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(buttonIndex == alertView.cancelButtonIndex){
         [self dismissViewControllerAnimated:YES completion:nil];
+    }else if(buttonIndex == alertView.firstOtherButtonIndex){
+        //delete select된것을 삭제하도록 함.
+        _deleteSongList = [self.editTable indexPathsForSelectedRows];
+        
+
     }
-}
-- (void)tableView:tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
-    //editMode가 아닐 경우 touch시에 음악 재생
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -66,6 +69,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     _DBManager = [DBManager sharedDBManager];
+    _deleteSongList = [[NSArray alloc]init];
 }
 
 - (void)didReceiveMemoryWarning

@@ -9,29 +9,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MusicFitProject/FirstViewController.m"
-            timestampString = "413789620.102364"
+            filePath = "ModeViewController.m"
+            timestampString = "413813987.295184"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "78"
-            endingLineNumber = "78"
-            landmarkName = "-getITunseSyncMusic"
-            landmarkType = "5">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MusicFitProject/PlayerViewController.m"
-            timestampString = "413785477.586413"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "205"
-            endingLineNumber = "205"
-            landmarkName = "-setMusicProgressMax:"
+            startingLineNumber = "45"
+            endingLineNumber = "45"
+            landmarkName = "-checkTextFieldLength:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -42,12 +26,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "ModeViewController.m"
-            timestampString = "413784524.469107"
+            timestampString = "413813987.295184"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "102"
-            endingLineNumber = "102"
-            landmarkName = "-tableView:didSelectRowAtIndexPath:"
+            startingLineNumber = "44"
+            endingLineNumber = "44"
+            landmarkName = "-checkTextFieldLength:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,29 +41,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MusicFitProject/FirstViewController.m"
-            timestampString = "413787987.36843"
+            filePath = "MusicFitProject/DBManager.m"
+            timestampString = "413814217.091561"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "17"
-            endingLineNumber = "17"
-            landmarkName = "mainImageView"
-            landmarkType = "19">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "MusicFitProject/FirstViewController.m"
-            timestampString = "413789563.416423"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
-            landmarkName = "-movePlayerOrTutorial"
+            startingLineNumber = "359"
+            endingLineNumber = "359"
+            landmarkName = "-initStaticMode"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -89,13 +57,13 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MusicFitProject/FirstViewController.m"
-            timestampString = "413789620.102364"
+            filePath = "MusicFitProject/DBManager.m"
+            timestampString = "413814811.603219"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "59"
-            endingLineNumber = "59"
-            landmarkName = "-viewDidLoad"
+            startingLineNumber = "350"
+            endingLineNumber = "350"
+            landmarkName = "-initStaticMode"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -105,13 +73,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MusicFitProject/FirstViewController.m"
-            timestampString = "413789559.201527"
+            filePath = "MusicFitProject/DBManager.m"
+            timestampString = "413814988.234386"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "26"
-            endingLineNumber = "26"
-            landmarkName = "-loadFromUserDefaultTutorial"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "-SELECT:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

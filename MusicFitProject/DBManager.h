@@ -21,15 +21,21 @@
 - (BOOL) DELETE:(NSString *)deleteQuery;
 - (sqlite3 *)dbReturn;
 //- (void)setDB:(sqlite3 *)getDB;
+
+
 //+ (id)sharedPlayListDBManager;
-- (BOOL)createPlayListWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
-- (BOOL)insertPlayListWithMusicID:(NSInteger)musicID;
-- (NSInteger)getMusicInfoInPlayListWithIndex:(NSInteger)index;
-- (BOOL)deletePlayListWithPlayListID:(NSInteger)playListID;
-- (BOOL)syncPlayList;
-- (NSInteger)getNumberOfMusicInPlayList;
+- (BOOL)createListWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
+- (BOOL)insertListWithMusicID:(NSInteger)musicID;
+- (BOOL)deleteListWithListID:(NSInteger)ListID;
+- (BOOL)syncList;
+- (NSInteger)getNumberOfMusicInList;
+- (NSInteger)getKeyValueInListWithKey:(NSString *)key index:(NSInteger)index;
+- (BOOL)getModeListWithIndex:(NSInteger)index;
+
+
 //+ (id)sharedModeDBManager;
-- (BOOL)insertModeWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
+-(void)initStaticMode;
+-(BOOL)insertModeWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM title:(NSString *)title;
 - (Mode *)getModeWithIndex:(NSInteger)index;
 - (BOOL)deleteModeWithModeID:(NSInteger)index;
 - (BOOL)syncMode;
@@ -42,5 +48,5 @@
 - (BOOL)syncMusic;
 - (NSInteger)getNumberOfMusic;
 - (BOOL)isExistWithlocation:(NSString *)location;
-- (NSMutableArray *)getPlayListArray;
+- (NSMutableArray *)getListArray;
 @end

@@ -212,6 +212,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="mainImageView" destination="qG3-TW-WK2" id="Ca1-MA-9Ul"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IUp-9u-Q81" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -471,22 +474,22 @@
                                 <color key="backgroundColor" cocoaTouchSystemColor="lightTextColor"/>
                             </view>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fHW-Q4-UZb">
-                                <rect key="frame" x="26" y="600" width="270" height="200"/>
+                                <rect key="frame" x="26" y="100" width="270" height="200"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="원하는 BPM영역을 설정해 보세요." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSI-V7-NSa">
-                                        <rect key="frame" x="17" y="27" width="234" height="21"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="BPM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GSI-V7-NSa">
+                                        <rect key="frame" x="7" y="64" width="40" height="21"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bt2-Z3-0Hz">
-                                        <rect key="frame" x="25" y="63" width="218" height="34"/>
+                                        <rect key="frame" x="55" y="58" width="198" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <subviews>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hyf-3x-wlr">
-                                                <rect key="frame" x="0.0" y="2" width="97" height="30"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="minBPM" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hyf-3x-wlr">
+                                                <rect key="frame" x="3" y="2" width="78" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -496,8 +499,8 @@
                                                     <outlet property="delegate" destination="ZdQ-tC-CCv" id="6RT-W1-Nai"/>
                                                 </connections>
                                             </textField>
-                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BLs-gp-aNq">
-                                                <rect key="frame" x="121" y="2" width="97" height="30"/>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="maxBPM" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BLs-gp-aNq">
+                                                <rect key="frame" x="112" y="2" width="78" height="30"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -508,7 +511,7 @@
                                                 </connections>
                                             </textField>
                                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="~" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fWm-zw-TxO">
-                                                <rect key="frame" x="99" y="2" width="20" height="22"/>
+                                                <rect key="frame" x="86" y="2" width="20" height="22"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="32"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -517,8 +520,26 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfQ-PG-X7B">
-                                        <rect key="frame" x="43" y="114" width="71" height="33"/>
+                                    <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lM8-q7-6bn">
+                                        <rect key="frame" x="55" y="104" width="198" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <subviews>
+                                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="1JU-lM-Poj">
+                                                <rect key="frame" x="3" y="2" width="188" height="30"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="ZdQ-tC-CCv" id="qIN-hC-RI2"/>
+                                                </connections>
+                                            </textField>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bfQ-PG-X7B">
+                                        <rect key="frame" x="44" y="152" width="71" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -529,8 +550,20 @@
                                             <action selector="saveCustomMode:" destination="ZdQ-tC-CCv" eventType="touchUpInside" id="xmh-1R-RnS"/>
                                         </connections>
                                     </button>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WoY-qN-hgE">
+                                        <rect key="frame" x="7" y="110" width="40" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="New Mode Create" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mTS-HQ-oKH">
+                                        <rect key="frame" x="20" y="6" width="230" height="39"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CPl-ev-L6g">
-                                        <rect key="frame" x="154" y="114" width="69" height="34"/>
+                                        <rect key="frame" x="165" y="152" width="69" height="34"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -538,7 +571,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="cancleCustomMode:" destination="ZdQ-tC-CCv" eventType="touchUpInside" id="n2d-m9-opd"/>
+                                            <action selector="cancelCustomMode:" destination="ZdQ-tC-CCv" eventType="touchUpInside" id="mhf-0N-cbX"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -551,9 +584,11 @@
                     <connections>
                         <outlet property="backView" destination="Q8x-Zv-YHu" id="YWP-j6-ABP"/>
                         <outlet property="customModeView" destination="fHW-Q4-UZb" id="jaa-QW-7BE"/>
-                        <outlet property="maxBPM" destination="BLs-gp-aNq" id="wrw-35-epi"/>
-                        <outlet property="minBPM" destination="Hyf-3x-wlr" id="hoS-40-ycr"/>
+                        <outlet property="maxBPMTextField" destination="Hyf-3x-wlr" id="SYP-Jc-OIe"/>
+                        <outlet property="minBPMTextField" destination="BLs-gp-aNq" id="Yjz-Cy-Oe0"/>
                         <outlet property="modeTable" destination="nET-8i-310" id="aHb-2d-5ES"/>
+                        <outlet property="saveBtn" destination="bfQ-PG-X7B" id="ASu-XP-fJn"/>
+                        <outlet property="titleTextField" destination="1JU-lM-Poj" id="dg5-hN-hut"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jmo-F9-dN4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -626,7 +661,6 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="saveCustomMode:" destination="ZdQ-tC-CCv" eventType="touchUpInside" id="XZk-IF-3YD"/>
                                             <action selector="setClock:" destination="Nge-uW-p8b" eventType="touchUpInside" id="X5G-B2-2lP"/>
                                         </connections>
                                     </button>
@@ -640,7 +674,6 @@
                                         </state>
                                         <connections>
                                             <action selector="cancelSetClock:" destination="Nge-uW-p8b" eventType="touchUpInside" id="cpu-C3-1Ji"/>
-                                            <action selector="cancleCustomMode:" destination="ZdQ-tC-CCv" eventType="touchUpInside" id="Ktd-5V-446"/>
                                         </connections>
                                     </button>
                                     <datePicker contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="countDownTimer" minuteInterval="1" translatesAutoresizingMaskIntoConstraints="NO" id="yLi-GP-UpQ">
@@ -1412,6 +1445,9 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <outlet property="editTable" destination="Tcj-FG-4UL" id="oX9-0s-Ij8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i5I-0L-Gk9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

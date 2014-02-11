@@ -7,14 +7,19 @@
 //
 
 #import "Mode.h"
+@interface Mode()
 
+
+
+@end
 @implementation Mode
--(id)initWithModeID:(NSInteger)modeID minBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM{
+-(id)initWithModeID:(NSInteger)modeID minBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM title:(NSString *)title{
     self = [super init];
     if(self){
         self.modeID = modeID;
         self.minBPM = minBPM;
         self.maxBPM = maxBPM;
+        self.title = title;
     }
     return self;
 }

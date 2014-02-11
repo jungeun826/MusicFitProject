@@ -11,7 +11,6 @@
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
-    
 //    CGSize iOSDeviceScreenSize = [[UIScreen mainScreen] bounds].size;
 //    
 //    if (iOSDeviceScreenSize.height == 480) //화면세로길이가 480 (3gs,4, 4s)
@@ -46,19 +45,19 @@
     
     
     
-//    UIStoryboard *storyboard = nil;
-//    UIViewController *initialViewController = nil;
-//    
-//    if(IS_4_INCH_DEVICE)
-//        storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    else
-//        storyboard = [UIStoryboard storyboardWithName:@"Main3.5inch" bundle:nil];
-//    
-//    initialViewController = [storyboard instantiateInitialViewController];
-//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    self.window.rootViewController = initialViewController;
-//    
-//    [self.window makeKeyAndVisible];
+    UIStoryboard *storyboard = nil;
+    UIViewController *initialViewController = nil;
+    
+    if(IS_4_INCH_DEVICE)
+        storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    else
+        storyboard = [UIStoryboard storyboardWithName:@"Main3.5inch" bundle:nil];
+    
+    initialViewController = [storyboard instantiateInitialViewController];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = initialViewController;
+    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 							

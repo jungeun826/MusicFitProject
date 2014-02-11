@@ -12,8 +12,9 @@
 @property NSInteger maxBPM;
 @property NSInteger minBPM;
 @property NSInteger modeID;
+@property (strong) NSString *title;
 
--(id)initWithModeID:(NSInteger)modeID minBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
+-(id)initWithModeID:(NSInteger)modeID minBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM title:(NSString *)title;
 -(NSString *)getStringMinBPM;
 -(NSString *)getStringMaxBPM;
 @end
