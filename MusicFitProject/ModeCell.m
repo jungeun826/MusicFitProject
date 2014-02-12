@@ -23,6 +23,11 @@
     self.title_Label.text = title;
     self.rangeImageView.image = [UIImage imageNamed:@"icon_mode_cancel"];
     self.rangeImageView.hidden = YES;
+    CGRect frame = self.BPMView.frame;
+    frame.origin.x += 10;
+    [self.BPMView setFrame:frame];
+
+    
 //    self.BPMView.hidden = YES;
     [self.BPMRangeLabel setNumberOfLines:2];
     [self.BPMRangeLabel setTextAlignment:NSTextAlignmentCenter];
@@ -32,9 +37,6 @@
     
     [self.BPMRangeLabel.font fontWithSize:12];
     self.BPMRangeLabel.text = [NSString stringWithFormat:@"%d  ~\n %6d", minBPM,maxBPM];
-    CGRect frame = self.BPMView.frame;
-    frame.origin.x += 10;
-    self.BPMView.frame = frame;
 //    self.BPMRangeLabel.hidden = YES;
     [self setSelectedColor];
 }

@@ -8,6 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "DBManager.h"
+@protocol FitModeImageViewDelegate <NSObject>
+
+- (void)startFitModeAnimation;
+- (void)stopFitModeAnimation;
+- (void)setWorkPlayer:(BOOL)isPlaying;
+@end
 
 @protocol MusicFitPlayerDelegate <NSObject>
 
@@ -20,7 +26,11 @@
 
 @interface MusicFitPlayer : NSObject
 
-@property (weak) id<MusicFitPlayerDelegate> delegate;
+@property NSInteger curMode;
+@property NSInteger curPlayIndex;
+@property BOOL playingItemDeleted;
+@property (weak) id<MusicFitPlayerDelegate> playerDelegate;
+@property (weak) id<FitModeImageViewDelegate> fitModeDelegate;
 
 + (id)sharedPlayer;
 - (BOOL)setPlayList;

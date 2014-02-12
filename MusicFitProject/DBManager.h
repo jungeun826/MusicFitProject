@@ -24,8 +24,8 @@
 
 
 //+ (id)sharedPlayListDBManager;
-- (BOOL)createListWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
 - (BOOL)insertListWithMusicID:(NSInteger)musicID;
+- (BOOL)deleteListWithArray:(NSArray *)deleteArr;
 - (BOOL)deleteListWithListID:(NSInteger)ListID;
 - (BOOL)syncList;
 - (NSInteger)getNumberOfMusicInList;
@@ -36,6 +36,7 @@
 //+ (id)sharedModeDBManager;
 -(void)initStaticMode;
 -(BOOL)insertModeWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM title:(NSString *)title;
+- (NSInteger)getCurModeID;
 - (Mode *)getModeWithIndex:(NSInteger)index;
 - (BOOL)deleteModeWithModeID:(NSInteger)index;
 - (BOOL)syncMode;

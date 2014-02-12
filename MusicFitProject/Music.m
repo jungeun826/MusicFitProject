@@ -44,7 +44,7 @@
         if (artwork)
             albumImage = [artwork imageWithSize:CGSizeMake (30, 30)];
     }else
-        albumImage = [UIImage imageNamed:@"pop.png"];
+        albumImage = [UIImage imageNamed:@"artview.png"];
     return albumImage;
 }
 @end

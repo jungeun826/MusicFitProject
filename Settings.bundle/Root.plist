@@ -5,18 +5,18 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
-			<key>Title</key>
-			<string>Setting</string>
 			<key>Type</key>
-			<string>PSGroupSpecifier</string>
+			<string>PSChildPaneSpecifier</string>
+			<key>Key</key>
+			<string>mode_preference</string>
+			<key>DefaultValue</key>
+			<integer>1</integer>
 		</dict>
 		<dict>
 			<key>AutocapitalizationType</key>
 			<string>None</string>
 			<key>AutocorrectionType</key>
 			<string>No</string>
-			<key>DefaultValue</key>
-			<string></string>
 			<key>IsSecure</key>
 			<false/>
 			<key>Key</key>

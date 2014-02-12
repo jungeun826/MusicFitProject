@@ -16,7 +16,6 @@
     AVPlayer *_player;
     NSMutableArray *_playList;
     Music *_curPlayMusic;
-    NSInteger _curPlayIndex;
     AVPlayerItem *_curPlayItem;
     BOOL _playing;
 }
@@ -30,16 +29,20 @@ static MusicFitPlayer *_playerInstance = nil;
 - (id)init{
     self = [super init];
     if(self){
-        _player = [[AVQueuePlayer alloc]init];
+        _player = [[AVPlayer alloc]init];
+        _playingItemDeleted = NO;
         
         DBManager *dbManager = [DBManager sharedDBManager];
         _playList = [[NSMutableArray alloc]init];
         [dbManager syncList];
         _playList = [dbManager getListArray];
         
+        self.curMode = [dbManager getCurModeID];
+        
         _curPlayMusic = [[Music alloc]init];
         _curPlayIndex = 0;
         _playing = NO;
+        
         [self settingNoit];
         [self playMusicWithIndex:_curPlayIndex];
         [self pause];
@@ -47,19 +50,17 @@ static MusicFitPlayer *_playerInstance = nil;
     
     return self;
 }
+- (NSInteger)getCurPlayIndex{
+    return _curPlayIndex;
+}
 - (void)settingNoit{
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(playerItemDidReachEnd:)
                                                  name:AVPlayerItemDidPlayToEndTimeNotification
                                                object:nil];
     
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(interruption:)
-                                                 name:AVAudioSessionInterruptionNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(routeChange:)
-                                                 name:AVAudioSessionRouteChangeNotification
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(interruption:) name:AVAudioSessionInterruptionNotification object:nil];
+//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(routeChange:) name:AVAudioSessionRouteChangeNotification object:nil];
     
 //    [_player addObserver:self forKeyPath:@"status" options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:nil];
 //    [_player addObserver:self forKeyPath:@"rate" options:0 context:nil];
@@ -224,7 +225,7 @@ static MusicFitPlayer *_playerInstance = nil;
 //            if (_audioPlayer.items.count == 1 || !_isPreBuffered) {
 //                NSInteger nowIndex = [CHECK_Order integerValue];
 //                if (nowIndex + 1 < items_count) {
-                    [self nextPlay];
+    [self nextPlay];
 //                } else {
 //                    if (_repeatMode == RepeatMode_off) {
 //                        [self pausePlayerForcibly:YES];
@@ -279,15 +280,40 @@ static MusicFitPlayer *_playerInstance = nil;
 
 - (BOOL)setPlayList{
     DBManager *dbManager = [DBManager sharedDBManager];
+    NSInteger modeID = [dbManager getCurModeID];
     [_playList removeAllObjects];
     _playList = [dbManager getListArray];
+    
     if(_playList == nil)
         return NO;
-    else{
-        [self playMusicWithIndex:0];
-        [self.delegate initMusicProgress];
+    
+    //플레이 리스트가 편집되었는데 현재 듣고 있는 음악이 삭제됨 -> 다음 노래 플레이
+    if (_curMode == modeID && _playingItemDeleted) {
+//        [self nextPlay];
+        [self playMusicWithIndex:_curPlayIndex];
+        
+        [self.fitModeDelegate setWorkPlayer:_playing];
+        [self.playerDelegate initMusicProgress];
+        [self.fitModeDelegate startFitModeAnimation];
+        
+        _playingItemDeleted = NO;
+    }else if(_curMode == modeID && !_playingItemDeleted){
+        //플레이 리스트가 편집되었는데 현재 듣고 있는 음악 삭제 안됨.
+        //그냥 현재 인덱스만 바뀜 (dbManager에서 바꿈)
+        
         return YES;
     }
+
+    //리스트를 새로 불러옴.
+    if(_curMode != modeID){
+            [self playMusicWithIndex:0];
+        
+            [self.fitModeDelegate setWorkPlayer:_playing];
+            [self.playerDelegate initMusicProgress];
+            [self.fitModeDelegate startFitModeAnimation];
+    }
+    
+        return YES;
 }
 - (BOOL)changePlayMusicWithIndex:(NSInteger)index{
     if(_curPlayIndex == index){
@@ -305,17 +331,22 @@ static MusicFitPlayer *_playerInstance = nil;
 - (void)pause{
     _playing = NO;
     [_player pause];
+    [self.fitModeDelegate setWorkPlayer:_playing];
+//    [self.fitModeDelegate stopFitModeAnimation];
 }
 - (void)play{
     _playing = YES;
+//    NSLog(@"%d",[_player status]);
     [_player play];
+    [self.fitModeDelegate setWorkPlayer:_playing];
+    [self.fitModeDelegate startFitModeAnimation];
 }
 - (void)nextPlay{
     ++_curPlayIndex;
     if(_curPlayIndex == [_playList count])
         _curPlayIndex = 0;
-    
-    [self.delegate initMusicProgress];
+
+    [self.playerDelegate initMusicProgress];
     [self playMusicWithIndex:_curPlayIndex];
 }
 - (void)prevPlay{
@@ -323,14 +354,13 @@ static MusicFitPlayer *_playerInstance = nil;
     if(_curPlayIndex == 0)
         _curPlayIndex = [_playList count]-1;
     
-    [self.delegate initMusicProgress];
+    [self.playerDelegate initMusicProgress];
     [self playMusicWithIndex:_curPlayIndex];
 }
 
 - (BOOL)playMusicWithIndex:(NSInteger)index{
-    _playing = NO;
     _curPlayIndex = index;
-    [_player pause];
+
     DBManager *dbManager = [DBManager sharedDBManager];
     NSInteger musicID = [_playList[_curPlayIndex][@"musicID"] intValue];
     
@@ -343,10 +373,11 @@ static MusicFitPlayer *_playerInstance = nil;
     
     _curPlayItem = [AVPlayerItem playerItemWithURL:[NSURL URLWithString:url]];
     
+    [self pause];
     [_player replaceCurrentItemWithPlayerItem:_curPlayItem];
+    [self play];
+    
     [self setSliderMaxDelegate];
-    [_player play];
-    _playing = YES;
     
     [self syncData];
     return YES;
@@ -355,11 +386,11 @@ static MusicFitPlayer *_playerInstance = nil;
 - (void)setSliderMaxDelegate{
     CMTime duration = _player.currentItem.asset.duration;
     
-    [self.delegate setMusicProgressMax:(int)CMTimeGetSeconds(duration)];
+    [self.playerDelegate setMusicProgressMax:(int)CMTimeGetSeconds(duration)];
 }
 
 - (void)syncData{
-    [self.delegate syncLabels:[_curPlayMusic getAlbumImage] music:_curPlayMusic];
+    [self.playerDelegate syncLabels:[_curPlayMusic getAlbumImage] music:_curPlayMusic];
 }
 - (BOOL)isPlaying{
     return _playing;
@@ -372,7 +403,10 @@ static MusicFitPlayer *_playerInstance = nil;
 }
 
 - (void)callMusicProgressDelegate:(NSString *)timeString timePoint:(NSInteger)timePoint{
-    [self.delegate syncMusicProgress:timeString timePoint:timePoint];
+    [self.playerDelegate syncMusicProgress:timeString timePoint:timePoint];
+}
+- (void)callAnimationDelegate{
+    [self.fitModeDelegate startFitModeAnimation];
 }
 - (void)checkCurTime{
     __block MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];

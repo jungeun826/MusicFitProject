@@ -9,7 +9,7 @@
 #import "SwipeViewController.h"
 #import "SwipeView.h"
 
-#define alphaHiddenControllers 0.0
+//#define alphaHiddenControllers 0.0
 
 @interface SwipeViewController ()
 @property(strong, nonatomic) SwipeGestureRecognizer *swipeGestureRecognizer;
@@ -171,10 +171,10 @@
         movedPoints = fabsf(translation.x);
     }
     
-    float alphaValue = movedPoints / totalPoints;
-    _visibleViewController.view.alpha = alphaHiddenControllers + fabsf(1 - alphaValue);
-    for (UIViewController *destination in _destinationControllersInWay)
-        destination.view.alpha = alphaHiddenControllers + alphaValue;
+//    float alphaValue = movedPoints / totalPoints;
+//    _visibleViewController.view.alpha = alphaHiddenControllers + fabsf(1 - alphaValue);
+//    for (UIViewController *destination in _destinationControllersInWay)
+//        destination.view.alpha = alphaHiddenControllers + alphaValue;
 }
 
 - (void)handleEndedSwipeWithDirection:(Direction)direction way:(Way)way velocity:(CGPoint)velocity translation:(CGPoint)translation{
@@ -240,11 +240,11 @@
         frameForVisibleViewController.origin.x = -newController.view.frame.origin.x;
         self.view.frame = frameForVisibleViewController;
         
-        if (_visibleViewController != newController){
-            _visibleViewController.view.alpha = alphaHiddenControllers;
-            newController.view.alpha = 1.0;
-        }else
-            _visibleViewController.view.alpha = 1.0;
+//        if (_visibleViewController != newController){
+//            _visibleViewController.view.alpha = alphaHiddenControllers;
+//            newController.view.alpha = 1.0;
+//        }else
+//            _visibleViewController.view.alpha = 1.0;
     }completion:^(BOOL finished) {
         if (finished) {
             // call UIKit view callbacks. not sure it's right

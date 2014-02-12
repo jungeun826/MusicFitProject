@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface PlayListCell : UITableViewCell
-- (void)setWithTitle:(NSString *)title artist:(NSString *)artist BPM:(NSInteger)bpm image:(UIImage *)image;
-- (void)setWithTitle:(NSString *)title artist:(NSString *)artist;
+- (void)setPlayListWithTitle:(NSString *)title artist:(NSString *)artist BPM:(NSInteger)bpm image:(UIImage *)image;
+- (void)setEditWithTitle:(NSString *)title artist:(NSString *)artist;
+- (void)setAddWithTitle:(NSString *)title artist:(NSString *)artist;
 @end

@@ -93,7 +93,7 @@
 	// Do any additional setup after loading the view.
     MusicFitPlayer *player= [MusicFitPlayer sharedPlayer];
     
-    player.delegate = self;
+    player.playerDelegate = self;
     [player syncData];
     [player checkCurTime];
     [player setSliderMaxDelegate];

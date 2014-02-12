@@ -7,7 +7,10 @@
 //
 
 #import "DBManager.h"
+#import "MusicFitPlayer.h"
 
+#define KEY_LISTID @"listID"
+#define KEY_MUSICID @"musicID"
 @implementation DBManager{
     NSMutableArray *_curPlayMusicList;
     NSMutableArray *_modeList;
@@ -172,9 +175,9 @@ static DBManager *_instance = nil;
 
 
 
-//FIXME: List관련 부분
+//FIXME: List관련 부분 modeID 추가 필요
 - (BOOL)insertListWithMusicID:(NSInteger)musicID{
-    NSString *insertQuery = [NSString stringWithFormat:@"INSERT INTO List (musicID) VALUES (%d)",(int)musicID];
+    NSString *insertQuery = [NSString stringWithFormat:@"INSERT INTO List (musicID, modeID) VALUES (%d,%d)",(int)musicID, _curModeID];
     
     [self openDB];
     if(![self INSERT:insertQuery]){
@@ -185,8 +188,8 @@ static DBManager *_instance = nil;
     [self closeDB];
     return YES;
 }
-- (BOOL)deleteListWithListID:(NSInteger)ListID{
-    NSString *deleteQuery = [NSString stringWithFormat:@"DELETE FROM List WHERE ListID = %d",(int)ListID];
+- (BOOL)deleteListWithListID:(NSInteger)listID{
+    NSString *deleteQuery = [NSString stringWithFormat:@"DELETE FROM List WHERE ListID = %d",(int)listID];
     
     [self openDB];
     if(![self DELETE:deleteQuery]){
@@ -197,13 +200,63 @@ static DBManager *_instance = nil;
     [self closeDB];
     return YES;
 }
+- (BOOL)deleteListWithArray:(NSArray *)deleteArr{
+    //indexPath
+    int count = [deleteArr count];
+    sqlite3_stmt *deleteStmt;
+    char *deleteQuery = "DELETE FROM LIST WHERE listID = ? ";
+    
+    [self openDB];
+    int ret = sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStmt, NULL);
+    if(ret != SQLITE_OK){
+        NSLog(@"error delete array: %s", sqlite3_errmsg(db));
+        return NO;
+    }
+    MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
+    NSInteger curPlayIndex = player.curPlayIndex;
+    
+    for(int index = 0 ; index < count ; index++) {
+        
+        NSIndexPath *selectIndexPath = deleteArr[index];
+        int listIndex = selectIndexPath.row;
+        if(listIndex < curPlayIndex)
+            (player.curPlayIndex)--;
+        if(listIndex == curPlayIndex)
+            player.playingItemDeleted = YES;
+        
+        int listID = [_curPlayMusicList[listIndex][@"listID"] intValue];
+        
+        ret = sqlite3_bind_int(deleteStmt, 1, listID);
+        
+        ret = sqlite3_step(deleteStmt);
+        
+        ret = sqlite3_reset(deleteStmt);
+    }
+    sqlite3_finalize(deleteStmt);
+    [self syncList];
+    [self closeDB];
+    return YES;
+}
+- (BOOL)deleteListWithModeID:(NSInteger)modeID{
+    NSString *deleteQuery = [NSString stringWithFormat:@"DELETE FROM List WHERE modeID = %d",(int)modeID];
+    
+    [self openDB];
+    if(![self DELETE:deleteQuery]){
+        NSLog(@"Error in List");
+        [self closeDB];
+        return NO;
+    }
+    [self closeDB];
+    return YES;
+}
+
 - (BOOL)syncList{
     _curPlayMusicList = [[NSMutableArray alloc]init];
     int listID;
     int musicID;
     NSDictionary *ListTableInfo = [[NSDictionary alloc]init];
     //FIXME: select문 where mode id추가
-    NSString *allSelectQuery = [NSString stringWithFormat:@"SELECT * FROM List ORDER BY listID asc"];
+    NSString *allSelectQuery = [NSString stringWithFormat:@"SELECT * FROM List where modeID = %d ORDER BY listID asc",(int)_curModeID];
     sqlite3_stmt *allSelectStmt = nil;
     
     
@@ -226,58 +279,6 @@ static DBManager *_instance = nil;
     [self closeDB];
     return YES;
 }
-//music테이블에 있는 bpm에 대한 값을 이용해 걸러낸 후 해당하는 musicID를 저장.
-//후에 그 뮤직아이디를 리스트 아이디와 같이 저장.
-- (BOOL)createListWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM{
-
-    NSString *allDeleteQuery = @"DELETE FROM List";
-    [self openDB];
-    if(![self DELETE:allDeleteQuery]){
-        NSLog(@"Error in List");
-        [self closeDB];
-        return NO;
-    }
-    
-    NSString *insertQuery;
-    if(maxBPM == 0) //max 설정 안함
-        insertQuery = [NSString stringWithFormat:@"INSERT INTO List (musicID) SELECT musicID FROM MUSIC where BPM > %d ORDER BY title ASC", (int)minBPM];
-    else
-        insertQuery = [NSString stringWithFormat:@"INSERT INTO List (musicID) SELECT musicID FROM MUSIC where BPM > %d AND BPM < %d ORDER BY title ASC", (int)minBPM, (int)maxBPM];
-    
-    if(![self INSERT:insertQuery]){
-        NSLog(@"Error createMusicIDArrayWithBPM... in List ");
-        [self closeDB];
-        return NO;
-    }
-    
-    NSString *allSelectQuery = @"SELECT * FROM List";
-    sqlite3_stmt *selectStmt = nil;
-    selectStmt = [self SELECT:allSelectQuery];
-    if(selectStmt == nil){
-        NSLog(@"Error createMusicIDArrayWithBPM... in List ");
-        sqlite3_finalize(selectStmt);
-        [self closeDB];
-        return NO;
-    }
-    
-    int musicID;
-    int listID;
-    _curPlayMusicList = [[NSMutableArray alloc]init];
-    NSDictionary *ListTableInfo = [[NSDictionary alloc]init];
-    while (sqlite3_step(selectStmt) == SQLITE_ROW) {
-        listID = sqlite3_column_int(selectStmt, 0);
-        musicID = sqlite3_column_int(selectStmt, 1);
-        ListTableInfo = @{@"listID":[NSString stringWithFormat:@"%d",listID ], @"musicID":[NSString stringWithFormat:@"%d", musicID]};
-        
-//        NSLog(@"listID= %d, musicID = %d", listID, musicID);
-        
-        [_curPlayMusicList addObject:ListTableInfo];
-    }
-    sqlite3_finalize(selectStmt);
-    
-    [self closeDB];
-    return YES;
-}
 //table생성시 필요
 - (NSInteger)getNumberOfMusicInList{
     return [_curPlayMusicList count];
@@ -293,11 +294,19 @@ static DBManager *_instance = nil;
     }
     return keyValue;
 }
+
+- (void)setUserDefualtMode{
+    NSUserDefaults *userDefualt = [NSUserDefaults standardUserDefaults];
+    [userDefualt setInteger:_curModeID forKey:@"mode_preference"];
+}
 - (BOOL)getModeListWithIndex:(NSInteger)index{
     
     _curPlayMusicList = [[NSMutableArray alloc]init];
-    NSInteger modeID = [self getModeIDInMODEWithIndex:index];
-    NSString *modeListSelectQuery = [NSString stringWithFormat:@"SELECT ListID, musicID FROM LIST where modeID= %d", (int)modeID];
+    _curModeID = [self getModeIDInMODEWithIndex:index];
+    [self setUserDefualtMode];
+    
+    NSLog(@"선택 modeID : %d", _curModeID);
+    NSString *modeListSelectQuery = [NSString stringWithFormat:@"SELECT ListID, musicID FROM LIST where modeID= %d", (int)_curModeID];
 
     sqlite3_stmt *stmt;
 
@@ -314,7 +323,7 @@ static DBManager *_instance = nil;
         musicID = sqlite3_column_int(stmt, 1);
         ListTableInfo = @{@"listID":[NSString stringWithFormat:@"%d",listID ], @"musicID":[NSString stringWithFormat:@"%d", musicID]};
         
-        NSLog(@"listID= %d, musicID = %d", listID, musicID);
+//        NSLog(@"listID= %d, musicID = %d", listID, musicID);
         
         [_curPlayMusicList addObject:ListTableInfo];
     }
@@ -352,8 +361,12 @@ static DBManager *_instance = nil;
     
     sqlite3_finalize(stmt);
     [self closeDB];
-    if(index == 4)
+    if(index == 4){
+        NSInteger lastestMode = [[[NSUserDefaults standardUserDefaults] stringForKey:@"mode_preference"] intValue];
+        
+        _curModeID = lastestMode;
         return;
+    }
     
     if(index != 4){
         if([self insertModeWithMinBPM:120 maxBPM:0 title:@"걷기"] == NO){
@@ -372,6 +385,7 @@ static DBManager *_instance = nil;
             [self closeDB];
             return ;
         }
+        _curModeID = 1;
     }
 }
 
@@ -391,12 +405,13 @@ static DBManager *_instance = nil;
         [self closeDB];
         return NO;
     }
-//    int modeID = sqlite3_column_int(insertStmt, 0);
-        //        NSLog(@"insert Query : %@", insertQuery);
-    int index = (int)sqlite3_last_insert_rowid(db)-1;
-    sqlite3_finalize(insertStmt);
     
-//    [self syncMode];
+    sqlite3_finalize(insertStmt);
+    //modeInsert 종료
+    
+    //mode sync
+    int index = (int)sqlite3_last_insert_rowid(db)-1;
+    
     _modeList = [[NSMutableArray alloc]init];
     NSString *allSelectQuery = [NSString stringWithFormat:@"SELECT * FROM MODE ORDER BY modeID"];
     sqlite3_stmt *stmt;
@@ -425,7 +440,10 @@ static DBManager *_instance = nil;
         [_modeList addObject:mode];
     }
     sqlite3_finalize(stmt);
+    //mode sync종료
     
+    
+    //현재 modeCreate
     Mode *mode = _modeList[index];
     _curModeID = mode.modeID;
     
@@ -442,6 +460,7 @@ static DBManager *_instance = nil;
         [self closeDB];
         return NO;
     }
+    //리스트 생성 끝
     
     
     //현재 리스트로 저장
@@ -473,6 +492,10 @@ static DBManager *_instance = nil;
 
     [self closeDB];
     return YES;
+}
+- (NSInteger)getCurModeID{
+    
+    return _curModeID;
 }
 - (BOOL)deleteModeWithModeID:(NSInteger)modeID{
     NSString *modeDeleteQuery = [NSString stringWithFormat:@"DELETE FROM MODE WHERE modeID = %d",(int)modeID];

@@ -12,4 +12,5 @@
 
 @interface PlayerViewController : UIViewController <AVAudioSessionDelegate>
 - (void)setSwipeController;
+
 @end

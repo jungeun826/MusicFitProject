@@ -27,7 +27,9 @@
 @implementation PlayListViewController{
     BOOL _editMode;
 }
-
+- (void)viewWillAppear:(BOOL)animated{
+    [self.playListTable reloadData];
+}
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     NSInteger rows = [_DBManager getNumberOfMusicInList];
 //    NSLog(@"%d", (int)rows);
@@ -37,11 +39,11 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     PlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLAYLIST_CELL" forIndexPath:indexPath];
-//    NSInteger musicID = [_DBManager getMusicInfoInPlayListWithIndex:indexPath.row];
-//    Music *music = [_DBManager getMusicWithMusicID:musicID];
+    NSInteger musicID = [_DBManager getKeyValueInListWithKey:@"musicID" index:indexPath.row];
+    Music *music = [_DBManager getMusicWithMusicID:musicID];
     
 //    NSLog(@"%@", music.title);
-//    [cell setWithTitle:music.title artist:music.artist BPM:music.BPM image:[music getAlbumImage]];
+    [cell setPlayListWithTitle:music.title artist:music.artist BPM:music.BPM image:[music getAlbumImage]];
     return cell;
     
 }
@@ -72,8 +74,6 @@
     return self;
 }
 - (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-    
     [self.playListTable reloadData];
 }
 - (void)viewDidLoad{
@@ -85,11 +85,14 @@
     
     [_DBManager syncMusic];
     [_DBManager syncList];
-    
-//    MyMusicPlayer *myMusicPlayer = [MyMusicPlayer sharedPlayer];
 }
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)changeShowCurSelectedMusic:(NSInteger)index{
+//    [self.playListTable.inde]
+//    [self.playListTable ]
 }
 @end

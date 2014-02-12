@@ -18,7 +18,8 @@
 #define ADDMODE_SECTION 1
 #define CUSTOMIZE_SECTION 2
 #define HIDDEN_Y 600
-#define MARGIN_Y 50
+#define _4INCH_MARGIN_Y 100
+#define _3_5INCH_MARGIN_Y 50
 
 @interface ModeViewController () <AddedModeDelegate, UIAlertViewDelegate>@property (weak, nonatomic) IBOutlet UIView *customModeView;
 @property (weak, nonatomic) IBOutlet UIView *backView;
@@ -36,6 +37,12 @@
 
 @implementation ModeViewController{
     DBManager *_DBManager;
+}
+- (NSInteger)getCustomModeViewMarginY{
+    if(IS_4_INCH_DEVICE)
+        return _4INCH_MARGIN_Y;
+    else
+        return _3_5INCH_MARGIN_Y;
 }
 - (IBAction)checkTextFieldLength:(id)sender {
     NSInteger titleLength = [self.titleTextField.text length];
@@ -112,6 +119,7 @@
             //음악 재생
             MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
             [player setPlayList];
+            [player setCurMode:[_DBManager getCurModeID]];
             //[player changePlayMusicWithIndex:0];
             //swipe
             [self.swipeViewController moveRightAnimated:YES];
@@ -132,20 +140,22 @@
             break;
         }
         default:{
-            [self changePositionCustomModeViewWithY:MARGIN_Y];
+            [self changePositionCustomModeViewWithY:[self getCustomModeViewMarginY]];
             break;
         }
     }
 }
 - (void)changePositionCustomModeViewWithY:(NSInteger)Y{
-    if(Y==MARGIN_Y){
+    if(Y==[self getCustomModeViewMarginY]){
+        self.backView.frame = self.view.frame;
         [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-            self.backView.frame = self.view.frame;
+
             self.customModeView.frame = CGRectMake( self.customModeView.frame.origin.x,Y, self.customModeView.frame.size.width, self.customModeView.frame.size.height);
         }completion:nil];
     }else{
+        self.backView.frame = CGRectMake(self.customModeView.frame.origin.x,HIDDEN_Y , self.customModeView.frame.size.width, self.customModeView.frame.size.height);
         [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-            self.backView.frame = CGRectMake(self.customModeView.frame.origin.x,HIDDEN_Y , self.customModeView.frame.size.width, self.customModeView.frame.size.height);
+            
             self.customModeView.frame = CGRectMake(self.customModeView.frame.origin.x, Y, self.customModeView.frame.size.width, self.customModeView.frame.size.height);
         }completion:nil];
     }
@@ -216,9 +226,6 @@
 }
 //FIXME : 디비를 한번에 여러개가 접근해서 생기는 문제임.
 //고쳐지면 다시 뷰 디드 로드로 옮겨야함.
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
-}
 - (void)viewDidLoad{
     [super viewDidLoad];
     
