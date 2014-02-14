@@ -1481,12 +1481,12 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA
         <image name="cycle.png" width="64" height="58"/>
         <image name="img_1_0.png" width="640" height="486"/>
         <image name="mode_title.jpg" width="715" height="87"/>
-        <image name="play_back.png" width="128" height="86"/>
-        <image name="play_next.png" width="128" height="86"/>
-        <image name="play_play.png" width="128" height="86"/>
+        <image name="play_back.png" width="48" height="32"/>
+        <image name="play_next.png" width="48" height="32"/>
+        <image name="play_play.png" width="70" height="70"/>
         <image name="play_play_on.png" width="128" height="86"/>
-        <image name="play_stop.png" width="128" height="86"/>
-        <image name="play_vol.png" width="128" height="86"/>
+        <image name="play_stop.png" width="70" height="70"/>
+        <image name="play_vol.png" width="44" height="32"/>
         <image name="player.jpg" width="719" height="91"/>
         <image name="progressCircle.png" width="189" height="189"/>
         <image name="status_claendar.png" width="640" height="78"/>

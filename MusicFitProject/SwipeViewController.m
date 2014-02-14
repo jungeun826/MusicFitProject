@@ -33,8 +33,6 @@
 
 - (void)setControllers:(NSArray *)controllers{
     [self setControllers:controllers withFrame:self.view.frame];
-    
-   // [self moveRightAnimated:YES];
 }
 - (void)viewDidLoad{
     [super viewDidLoad];
@@ -150,6 +148,18 @@
 - (void)handleSwipeWithDirection:(Direction)direction way:(Way)way velocity:(CGPoint)velocity translation:(CGPoint)translation{
     if (_lastSwipeWay != way || way == WayVertical)
         return;
+    BOOL nextControllerExists = NO;
+    nextControllerExists |= direction == DirectionRight && _visibleViewController.rightViewController;
+    nextControllerExists |= direction == DirectionLeft && _visibleViewController.leftViewController;
+    
+    if( direction == DirectionDown || direction == DirectionUp)
+        return;
+    
+    if (!nextControllerExists) {
+        [self goToViewController:_visibleViewController translation:CGPointZero velocity:CGPointZero way:WayNone animated:YES completion:^{
+        }];
+        return;
+    }
     
     if (way == WayHorizontal)
         translation.y = 0;
@@ -170,35 +180,20 @@
         totalPoints = _visibleViewController.view.frame.size.width;
         movedPoints = fabsf(translation.x);
     }
-    
-//    float alphaValue = movedPoints / totalPoints;
-//    _visibleViewController.view.alpha = alphaHiddenControllers + fabsf(1 - alphaValue);
-//    for (UIViewController *destination in _destinationControllersInWay)
-//        destination.view.alpha = alphaHiddenControllers + alphaValue;
 }
 
 - (void)handleEndedSwipeWithDirection:(Direction)direction way:(Way)way velocity:(CGPoint)velocity translation:(CGPoint)translation{
     const CGFloat horizontalThreshold = _visibleViewController.view.frame.size.width / 4;
     const CGFloat velocityThreshold = 1000;
     
-    BOOL nextControllerExists = NO;
-    nextControllerExists |= direction == DirectionRight && _visibleViewController.rightViewController;
-    nextControllerExists |= direction == DirectionLeft && _visibleViewController.leftViewController;
-    //nextControllerExists |= direction == MSPanDirectionUp && _visibleViewController.topViewController;
-    //nextControllerExists |= direction == MSPanDirectionDown && _visibleViewController.bottomViewController;
-    
     BOOL overHorizontalThreshold = fabs(translation.x) > horizontalThreshold;
     BOOL overVelocityXThreshold = fabs(velocity.x) > velocityThreshold;
     
-    if( direction == DirectionDown || direction == DirectionUp)
-        return;
-    
-    if (!nextControllerExists) {
-        [self goToViewController:_visibleViewController translation:translation velocity:CGPointZero way:WayNone animated:YES completion:^{
+    if ( translation.x == 0 || translation.y == 0) {
+        [self goToViewController:_visibleViewController translation:CGPointZero velocity:CGPointZero way:WayNone animated:YES completion:^{
         }];
         return;
     }
-    
     if (way == WayHorizontal && way == _lastSwipeWay && (overHorizontalThreshold || overVelocityXThreshold)) {
         if (direction == DirectionLeft) {
 //            NSLog(@"goto left controller");
@@ -240,11 +235,7 @@
         frameForVisibleViewController.origin.x = -newController.view.frame.origin.x;
         self.view.frame = frameForVisibleViewController;
         
-//        if (_visibleViewController != newController){
-//            _visibleViewController.view.alpha = alphaHiddenControllers;
-//            newController.view.alpha = 1.0;
-//        }else
-//            _visibleViewController.view.alpha = 1.0;
+        
     }completion:^(BOOL finished) {
         if (finished) {
             // call UIKit view callbacks. not sure it's right

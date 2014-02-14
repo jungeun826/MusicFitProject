@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ModeToPlayerDelegate.h"
 
 @interface ModeViewController : UIViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate>
+
+@property (weak) id<ModeToPlayerDelegate> modeToPlayerDegate;
 
 @end

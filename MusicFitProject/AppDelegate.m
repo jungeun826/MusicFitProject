@@ -8,9 +8,14 @@
 
 #import "AppDelegate.h"
 #import "DBManager.h"
+#import <AVFoundation/AVFoundation.h>
+
+
 @implementation AppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
+    
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 //    CGSize iOSDeviceScreenSize = [[UIScreen mainScreen] bounds].size;
 //    
 //    if (iOSDeviceScreenSize.height == 480) //화면세로길이가 480 (3gs,4, 4s)
@@ -40,36 +45,32 @@
 //        self.window.rootViewController  = initialViewController;
 //        [self.window makeKeyAndVisible];
 //    }
+    
+//    UIStoryboard *storyboard = nil;
+//    UIViewController *initialViewController = nil;
 //    
-//
-    
-    
-    
-    UIStoryboard *storyboard = nil;
-    UIViewController *initialViewController = nil;
-    
-    if(IS_4_INCH_DEVICE)
-        storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    else
-        storyboard = [UIStoryboard storyboardWithName:@"Main3.5inch" bundle:nil];
-    
-    initialViewController = [storyboard instantiateInitialViewController];
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = initialViewController;
-    
-    [self.window makeKeyAndVisible];
+//    if(IS_4_INCH_DEVICE)
+//        storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    else
+//        storyboard = [UIStoryboard storyboardWithName:@"Main3.5inch" bundle:nil];
+//    
+//    initialViewController = [storyboard instantiateInitialViewController];
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    self.window.rootViewController = initialViewController;
+//    
+//    [self.window makeKeyAndVisible];
     return YES;
 }
 							
-- (void)applicationWillResignActive:(UIApplication *)application
-{
+- (void)applicationWillResignActive:(UIApplication *)application{
+//    [viewController alertNotification] setHidden:YES];
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
 }
 
-- (void)applicationDidEnterBackground:(UIApplication *)application
-{
-    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
+- (void)applicationDidEnterBackground:(UIApplication *)application{
+//    [viewController alertNotification] setHidden:YES];
+    // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
 }
 
@@ -89,5 +90,85 @@
     DBManager *temp = [DBManager sharedDBManager];
     [temp closeDB];
 }
-
+-(void)remoteControlReceivedWithEvent:(UIEvent *)event{
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"RemoteControlEventReceived" object:event];
+    
+    _player = [MusicFitPlayer sharedPlayer];
+    _timer = [TimerLabel sharedTimer];
+    
+//    //    switch (event.subtype) {
+//case UIEventSubtypeRemoteControlPlay:
+//    if (_player.status != MusicFitPlayerStatusPlaying)
+//        [_player play];
+//    break;
+//    // You get the idea.
+//case UIEventSubtypeRemoteControlPause:
+//    if (_player.status == MusicFitPlayerStatusPlaying)
+//        [
+//         default:
+//         break;
+//         }
+    switch (event.subtype) {
+        case UIEventSubtypeRemoteControlTogglePlayPause:
+            if (_player.status == MusicFitPlayerStatusPlaying){
+                [_player pause];
+                if([_timer running] && [_timer fire]){
+                    [_timer pause];
+                    NSLog(@"timer pause");
+                }
+            } else {
+                [_player play];
+                if(![_timer running]&& [_timer fire]){
+                    [_timer start];
+                    NSLog(@"timer start");
+                }
+            }
+            break;
+        case UIEventSubtypeRemoteControlPause:
+            if (_player.status == MusicFitPlayerStatusPlaying){
+                [_player pause];
+                if([_timer running]&& [_timer fire])
+                    [_timer pause];
+                 NSLog(@"timer pause");
+            }
+            break;
+        case UIEventSubtypeRemoteControlPlay:
+            if (_player.status != MusicFitPlayerStatusPlaying){
+                [_player play];
+                if(![_timer running]&& [_timer fire])
+                    [_timer start];
+                NSLog(@"timer start");
+            }
+            break;
+        case UIEventSubtypeRemoteControlNextTrack:
+            if(_player.status == MusicFitPlayerStatusPlaying){
+                [_player nextPlay];
+            }
+            break;
+        case UIEventSubtypeRemoteControlPreviousTrack:
+            if(_player.status == MusicFitPlayerStatusPlaying)
+                [_player prevPlay];
+            // You get the idea.
+        default:
+            break;
+    }
+    
+}
+-(void)remoteControlEventNotification:(NSNotification *)note{
+    UIEvent *event = note.object;
+    if (event.type == UIEventTypeRemoteControl){
+        switch (event.subtype) {
+            case UIEventSubtypeRemoteControlTogglePlayPause:
+                if (_player.status == MusicFitPlayerStatusPlaying){
+                    [_player pause];
+                } else {
+                    [_player play];
+                }
+                break;
+                // You get the idea.
+            default:
+                break;
+        }
+    }
+}
 @end

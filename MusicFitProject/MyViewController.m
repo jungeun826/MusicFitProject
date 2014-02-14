@@ -39,7 +39,7 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    _menuList = @[@"CALENDER_CELL", @"RECOMMEND_CELL", @"INTEREST_CELL", @"BACKCHANGE_CELL",@"ALRAM_CELL"];
+    _menuList = @[@"CALENDER_CELL", @"RECOMMEND_CELL", @"INTEREST_CELL", /*@"BACKCHANGE_CELL",@"ALRAM_CELL"*/];
 }
 
 - (void)didReceiveMemoryWarning

@@ -8,11 +8,14 @@
 
 #import "PlayerViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import <MediaPlayer/MediaPlayer.h>
+
 #import "DBManager.h"
 #import "SwipeViewController.h"
 #import "AddedModeDelegate.h"
 #import "MusicFitPlayer.h"
 #import "DBManager.h"
+#import "TimerLabel.h"
 
 #define SOUNDVIEW_HIDDEN_X -320
 #define SOUNDVIEW_MARGIN_X 0
@@ -30,12 +33,13 @@
 @property (weak, nonatomic) IBOutlet UISlider *playTimeSlider;
 @property (weak, nonatomic) IBOutlet UILabel *playTimeLabel;
 @property (weak, nonatomic) IBOutlet UISlider *playVolumSlider;
-
+@property (nonatomic, strong) MPVolumeView *volumeView;
 @end
 
 @implementation PlayerViewController{
     DBManager *_DBManager;
     NSInteger curPlayIndex;
+    TimerLabel *_timer;
 }
 
 - (IBAction)changeVolume:(id)sender {
@@ -61,10 +65,18 @@
 - (IBAction)playORpause:(id)sender {
     MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
     BOOL isPlaying = [player isPlaying];
-    if(isPlaying)
+    if(isPlaying){
+        self.playBtn.selected = !self.playBtn.selected;
         [player pause];
-    else
+        if([_timer running])
+            [_timer start];
+    }
+    else{
+        self.playBtn.selected = !self.playBtn.selected;
         [player play];
+        if([_timer running])
+            [_timer pause];
+    }
 }
 
 - (IBAction)playNext:(id)sender {
@@ -87,16 +99,84 @@
     
     [player changePlayVolume:self.playVolumSlider.value];
 }
+- (void)addVolumeView{
+    self.volumeView = [[MPVolumeView alloc] init];
+    
+    [self.volumeView setShowsVolumeSlider:YES];
+    [self.volumeView setShowsRouteButton:NO];
+    
+    CGRect frame = self.volumeView.frame;
+    frame.origin.x = 71;
+    frame.origin.y = 10;
+    frame.size.width = 238;
+    self.volumeView.frame = frame;
+//
+    UIImage *thumbImage = [UIImage imageNamed:@"play_volume_control.png"] ;
 
+    CGSize size = CGSizeMake(20, 20);
+    UIGraphicsBeginImageContext(size);
+    [thumbImage drawInRect:CGRectMake(0,0,size.width,size.height)];
+    UIImage* thumbResizeImage = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+//
+    [self.volumeView setVolumeThumbImage:thumbResizeImage forState:UIControlStateSelected];
+
+    [self.volumeView setVolumeThumbImage:thumbResizeImage forState:UIControlStateNormal];
+
+
+    [self.soundView addSubview:self.volumeView];
+    self.volumeView.userInteractionEnabled = YES;
+    self.soundView.backgroundColor = [UIColor redColor];
+    NSLog(@"sound view : %@", NSStringFromCGRect(self.soundView.frame));
+    [self.volumeView sizeToFit];
+}
+- (void)changeSettingPlayTimeSlider{
+    CGSize size = CGSizeMake(250, 10);
+    
+    UIImage *tempImage = [UIImage imageNamed:@"play_volume_control_bg.png"];
+    UIGraphicsBeginImageContext(size);
+    [tempImage drawInRect:CGRectMake(0,0,size.width,size.height)];
+    UIImage* resizeImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+//    [self.playTimeSlider setMaximumTrackTintColor:[UIColor clearColor]];
+    [self.playTimeSlider setMaximumTrackImage:resizeImage forState:UIControlStateNormal];
+    [self.playTimeSlider setMaximumTrackImage:resizeImage forState:UIControlStateApplication];
+    [self.playTimeSlider setMaximumTrackImage:resizeImage forState:UIControlStateHighlighted];
+    [self.playTimeSlider setMinimumTrackImage:resizeImage forState:UIControlStateReserved];
+    [self.playTimeSlider setMinimumTrackImage:resizeImage forState:UIControlStateSelected];
+    
+    
+    
+    tempImage = [UIImage imageNamed:@"play_control.png"] ;
+    
+    size = CGSizeMake(20, 20);
+    
+    UIGraphicsBeginImageContext(size);
+    [tempImage drawInRect:CGRectMake(0,0,size.width,size.height)];
+    resizeImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    [self.playTimeSlider setThumbImage:resizeImage forState:UIControlStateNormal];
+    [self.playTimeSlider setThumbImage:resizeImage forState:UIControlStateSelected];
+    
+//    /Users/sdt-1/Documents/Projects/MusicFitProject/images/play_volume_control.png
+    [self.playTimeSlider sizeToFit];
+}
 - (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     MusicFitPlayer *player= [MusicFitPlayer sharedPlayer];
+    [self changeSettingPlayTimeSlider];
+    [self addVolumeView];
     
     player.playerDelegate = self;
-    [player syncData];
+    [player setAudioSession];
+    [player syncLabel];
     [player checkCurTime];
-    [player setSliderMaxDelegate];
+    [player callSliderMaxDelegate];
+    
+   
+    
 //    [myMusicPlayer registerHandlerPlayerRateChanged:^{
 //        [self syncPlayPauseButtons];
 //    }CurrentItemChanged:^(AVPlayerItem *item) {
@@ -137,12 +217,23 @@
 //        NSLog(@"%@", [error localizedDescription]);
 //    }];
 }
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+}
 
+- (void)viewWillDisappear:(BOOL)animated {
+    [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
+    
+    [super viewWillDisappear:animated];
+}
 - (void)setSwipeController{
     SwipeViewController *swipeVC = [[SwipeViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 438)];
     [self addChildViewController:swipeVC];
@@ -152,27 +243,18 @@
     [swipeVC didMoveToParentViewController:self];
     
     UIViewController *modeViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"mode"];
-    //    [self addChildViewController:modeViewController];
-    //    [self.swipeContainerView addSubview:modeViewController.view];
-    //    [modeViewController didMoveToParentViewController:self];
     modeViewController.row = 0;
     modeViewController.col = 0;
     
     UIViewController *playViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"play"];
-    //    [self addChildViewController:playViewController];
-    //    [self.swipeContainerView addSubview:playViewController.view];
     playViewController.row = 0;
     playViewController.col = 1;
     
     UIViewController *playListViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"playList"];
-    //    [self addChildViewController:playListViewController];
-    //    [self.swipeContainerView addSubview:playListViewController.view];
     playListViewController.row = 0;
     playListViewController.col = 2;
     
     UIViewController *myViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"my"];
-    //    [self addChildViewController:myViewController];
-    //    [self.swipeContainerView addSubview:myViewController.view];
     myViewController.row = 0;
     myViewController.col = 3;
     

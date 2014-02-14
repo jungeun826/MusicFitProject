@@ -24,15 +24,20 @@
     
     return self;
 }
-- (UIImage *)getAlbumImage{
+- (UIImage *)getAlbumImageWithSize:(CGSize)size{
     UIImage *albumImage = nil;
     
+//    if(_title==nil || _artist==nil){
+//        albumImage = [UIImage imageNamed:@"artview.png"];
+//        return albumImage;
+//    }
     MPMediaPropertyPredicate *titlePredicate = [MPMediaPropertyPredicate predicateWithValue:_title forProperty:MPMediaItemPropertyTitle];
     MPMediaPropertyPredicate *artistPredicate = [MPMediaPropertyPredicate predicateWithValue:_artist forProperty:MPMediaItemPropertyArtist];
     
     NSSet *predicateSet = [NSSet setWithObjects:titlePredicate, artistPredicate, nil];
     
     MPMediaQuery *mediaQuery = [[MPMediaQuery alloc] initWithFilterPredicates:predicateSet];
+  
     NSArray *musics = [mediaQuery items];
     
     if([musics count] != 0){
@@ -42,9 +47,25 @@
         
         // Obtain a UIImage object from the MPMediaItemArtwork object
         if (artwork)
-            albumImage = [artwork imageWithSize:CGSizeMake (30, 30)];
+            albumImage = [artwork imageWithSize:size];
     }else
-        albumImage = [UIImage imageNamed:@"artview.png"];
+        albumImage = [UIImage imageNamed:@"artview_1.png"];
     return albumImage;
+}
+
+- (MPMediaItem *)getMPMediaItemOfMusic{
+    
+    MPMediaPropertyPredicate *titlePredicate = [MPMediaPropertyPredicate predicateWithValue:_title forProperty:MPMediaItemPropertyTitle];
+    MPMediaPropertyPredicate *artistPredicate = [MPMediaPropertyPredicate predicateWithValue:_artist forProperty:MPMediaItemPropertyArtist];
+    
+    NSSet *predicateSet = [NSSet setWithObjects:titlePredicate, artistPredicate, nil];
+    
+    MPMediaQuery *mediaQuery = [[MPMediaQuery alloc] initWithFilterPredicates:predicateSet];
+    NSArray *musics = [mediaQuery items];
+    
+    if([musics count] == 0)
+        return nil;
+    
+    return [musics objectAtIndex:0];
 }
 @end

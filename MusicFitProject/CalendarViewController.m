@@ -44,6 +44,9 @@
     [self.calenderView reloadSections:[NSIndexSet indexSetWithIndex:0]];
 }
 - (IBAction)showNextMonth:(id)sender {
+    if( [_curDate month] == [_month month])
+        return;
+    
     [self setMonthWithMonth:[_month month]+1];
     
     [self setSelectedDate:1];

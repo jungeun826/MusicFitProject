@@ -115,7 +115,7 @@ static DBManager *_instance = nil;
         }
         
         if (rc != SQLITE_OK){
-            NSLog(@"close fail.  rc=%d", rc);
+            NSLog(@"close fail.  rc=%d : %s", rc, sqlite3_errmsg(db));
             return NO;
         }
     }
@@ -188,6 +188,42 @@ static DBManager *_instance = nil;
     [self closeDB];
     return YES;
 }
+- (BOOL)insertListWithArray:(NSArray *)insertArr{
+    //indexPath
+    int count = [insertArr count];
+    if(count == 0){
+        NSLog(@"notSelect insertList (addSong)");
+        return YES;
+    }
+    
+    sqlite3_stmt *insertStmt;
+    char *insetQuery = "INSERT INTO LIST (musicID, modeID) VALUES (?, ?) ";
+    [self openDB];
+    int ret = sqlite3_prepare_v2(db, insetQuery, -1, &insertStmt, NULL);
+    if(ret != SQLITE_OK){
+        NSLog(@"error add array: %s", sqlite3_errmsg(db));
+        return NO;
+    }
+    
+    for(int index = 0 ; index < count ; index++) {
+        
+        NSIndexPath *selectIndexPath = insertArr[index];
+        int listIndex = selectIndexPath.row;
+        
+        int musicID = [_musicList[listIndex] musicID];
+        
+        ret = sqlite3_bind_int(insertStmt, 1, musicID);
+        ret = sqlite3_bind_int(insertStmt, 2, _curModeID);
+        
+        ret = sqlite3_step(insertStmt);
+        
+        ret = sqlite3_reset(insertStmt);
+    }
+    sqlite3_finalize(insertStmt);
+    [self syncList];
+    [self closeDB];
+    return YES;
+}
 - (BOOL)deleteListWithListID:(NSInteger)listID{
     NSString *deleteQuery = [NSString stringWithFormat:@"DELETE FROM List WHERE ListID = %d",(int)listID];
     
@@ -205,11 +241,16 @@ static DBManager *_instance = nil;
     int count = [deleteArr count];
     sqlite3_stmt *deleteStmt;
     char *deleteQuery = "DELETE FROM LIST WHERE listID = ? ";
-    
+    if(count == 0){
+        NSLog(@"notSelect deleteList(deleteSong)");
+        return YES;
+    }
+
     [self openDB];
     int ret = sqlite3_prepare_v2(db, deleteQuery, -1, &deleteStmt, NULL);
     if(ret != SQLITE_OK){
         NSLog(@"error delete array: %s", sqlite3_errmsg(db));
+        [self closeDB];
         return NO;
     }
     MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
@@ -218,6 +259,9 @@ static DBManager *_instance = nil;
     for(int index = 0 ; index < count ; index++) {
         
         NSIndexPath *selectIndexPath = deleteArr[index];
+        if(selectIndexPath.section != 0)
+            continue;
+        
         int listIndex = selectIndexPath.row;
         if(listIndex < curPlayIndex)
             (player.curPlayIndex)--;
@@ -234,7 +278,6 @@ static DBManager *_instance = nil;
     }
     sqlite3_finalize(deleteStmt);
     [self syncList];
-    [self closeDB];
     return YES;
 }
 - (BOOL)deleteListWithModeID:(NSInteger)modeID{
@@ -299,7 +342,7 @@ static DBManager *_instance = nil;
     NSUserDefaults *userDefualt = [NSUserDefaults standardUserDefaults];
     [userDefualt setInteger:_curModeID forKey:@"mode_preference"];
 }
-- (BOOL)getModeListWithIndex:(NSInteger)index{
+- (BOOL)syncModeListWithIndex:(NSInteger)index{
     
     _curPlayMusicList = [[NSMutableArray alloc]init];
     _curModeID = [self getModeIDInMODEWithIndex:index];
@@ -594,7 +637,7 @@ static DBManager *_instance = nil;
 }
 - (BOOL)syncMusic{
     _musicList = [[NSMutableArray alloc]init];
-    NSString *allSelectQuery = [NSString stringWithFormat:@"SELECT * FROM MUSIC"];
+    NSString *allSelectQuery = [NSString stringWithFormat:@"SELECT * FROM MUSIC ORDER BY title ASC"];
     sqlite3_stmt *stmt = nil;
    
     [self openDB];

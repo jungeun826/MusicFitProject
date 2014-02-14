@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+#import "EditListToPlayerDelegate.h"
+
 @interface EditModeViewController : UIViewController
+@property (strong) NSMutableArray *addSongList;
+
+@property (weak) id<EditListToPlayerDelegate> editListToPlayerDelegate;
 
 @end

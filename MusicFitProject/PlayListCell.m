@@ -58,13 +58,13 @@
     [super setSelected:selected animated:animated];
 
     //add
-    if(self.BPMView.hidden == YES && _playList){
+    if(self.BPMView.hidden == YES && _playList == NO){
         if(selected){
             self.albumImageView.image = [UIImage imageNamed:@"icon_songs_check_small.png"];
         }else{
             self.albumImageView.image = [UIImage imageNamed:@"PlayList_albumDefault.png"];
         }
-    }else if(self.BPMView.hidden == YES){
+    }else if(self.BPMView.hidden == _playList){
         if(selected){
             self.albumImageView.image = [UIImage imageNamed:@"icon_songs_check_small.png"];
         }else{

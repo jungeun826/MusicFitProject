@@ -10,4 +10,5 @@
 
 @interface AddSongViewController : UIViewController
 
+@property (strong, nonatomic) NSArray *addSongList;
 @end

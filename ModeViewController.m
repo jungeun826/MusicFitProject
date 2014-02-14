@@ -80,7 +80,7 @@
             ModeCell *staticCell = [tableView dequeueReusableCellWithIdentifier:@"MODE_CELL" forIndexPath:indexPath];
            Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
             
-            [staticCell setStaticWithImageName:[NSString stringWithFormat:@"icon_mode%d.png", indexPath.row+1] title:mode.title minBPM:[mode getStringMinBPM]];
+            [staticCell setStaticWithImageName:[NSString stringWithFormat:@"icon_mode%d.png", (int)(indexPath.row+1)] title:mode.title minBPM:[mode getStringMinBPM]];
 
             return staticCell;
         }
@@ -111,30 +111,21 @@
     //커스텀이 아닌 경우 해당 셀에 대한 mode정보를 얻어온 후 해당하는 범위의 bpm을 찾아 리스트를 생성한다.
     switch (indexPath.section){
         case STATIC_SECTION:{
-            //mode의 bpm정보
-//           Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
-            //리스트 생성
-            [_DBManager getModeListWithIndex:indexPath.row];
-//            [_DBManager syncPlayList];
-            //음악 재생
-            MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
-            [player setPlayList];
-            [player setCurMode:[_DBManager getCurModeID]];
-            //[player changePlayMusicWithIndex:0];
+            //modeID로 리스트 갱신
+            [_DBManager syncModeListWithIndex:indexPath.row];
+            
+            //음악 재생에 대한 정보 갱신을 위해 player에게 전달
+            [self.modeToPlayerDegate changeMode:[_DBManager getCurModeID]];
+            
             //swipe
             [self.swipeViewController moveRightAnimated:YES];
             break;
         }
         case ADDMODE_SECTION:{
-            //mode의 bpm정보
-//            Mode *mode = [_DBManager getModeWithIndex:indexPath.row+3];
-//            [_DBManager createListWithMinBPM:mode.minBPM maxBPM:mode.maxBPM];
-            [_DBManager getModeListWithIndex:indexPath.row+4];
-//            [_DBManager syncPlayList];
-            //음악 재생
-            MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
-            [player setPlayList];
-            //[player changePlayMusicWithIndex:0];
+            
+            [_DBManager syncModeListWithIndex:indexPath.row+4];
+            [self.modeToPlayerDegate changeMode:[_DBManager getCurModeID]];
+            
             //swipe
             [self.swipeViewController moveRightAnimated:YES];
             break;
@@ -228,9 +219,9 @@
 //고쳐지면 다시 뷰 디드 로드로 옮겨야함.
 - (void)viewDidLoad{
     [super viewDidLoad];
+    self.modeToPlayerDegate = [MusicFitPlayer sharedPlayer];
     
     _DBManager = [DBManager sharedDBManager];
-
     [_DBManager syncMode];
 }
 @end

@@ -7,9 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MusicFitPlayer.h"
+#import "TimerLabel.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
-
+@property MusicFitPlayer *player;
+@property TimerLabel *timer;
 @end

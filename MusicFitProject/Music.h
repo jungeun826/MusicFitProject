@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+
+@class MPMediaItem;
 //CREATE  TABLE  IF NOT EXISTS "main"."MUSIC" ("Music_ID" INTEGER PRIMARY KEY  NOT NULL , "BPM" INTEGER DEFAULT 0, "Title" VARCHAR, "Artist" VARCHAR, "Location" VARCHAR, "IsMusic" BOOL DEFAULT YES)
 @interface Music : NSObject
 
@@ -18,5 +20,6 @@
 @property (nonatomic, readonly) BOOL isMusic;
 
 -(id)initWithMusicID:(NSInteger)musicID BPM:(NSInteger)bpm title:(NSString *)title artist:(NSString *)artist location:(NSString *)location isMusic:(BOOL)isMusic;
-- (UIImage *)getAlbumImage;
+- (UIImage *)getAlbumImageWithSize:(CGSize)size;
+- (MPMediaItem *)getMPMediaItemOfMusic;
 @end

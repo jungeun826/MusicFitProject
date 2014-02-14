@@ -10,9 +10,10 @@
 #import "PlayListCell.h"
 #import "PlayerViewController.h"
 #import "MusicFitPlayer.h"
-
+#import "DBManager.h"
 //#define PALYMODE 0 NO
 //#define EDITMODE 1 YES
+
 
 #define CELL_IDENTIFIER @"PLAYLIST_CELL"
 
@@ -43,7 +44,7 @@
     Music *music = [_DBManager getMusicWithMusicID:musicID];
     
 //    NSLog(@"%@", music.title);
-    [cell setPlayListWithTitle:music.title artist:music.artist BPM:music.BPM image:[music getAlbumImage]];
+    [cell setPlayListWithTitle:music.title artist:music.artist BPM:music.BPM image:[music getAlbumImageWithSize:CGSizeMake(30, 30)]];
     return cell;
     
 }
@@ -74,6 +75,7 @@
     return self;
 }
 - (void)viewDidAppear:(BOOL)animated{
+    
     [self.playListTable reloadData];
 }
 - (void)viewDidLoad{

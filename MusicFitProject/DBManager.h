@@ -25,12 +25,13 @@
 
 //+ (id)sharedPlayListDBManager;
 - (BOOL)insertListWithMusicID:(NSInteger)musicID;
+- (BOOL)insertListWithArray:(NSArray *)insertArr;
 - (BOOL)deleteListWithArray:(NSArray *)deleteArr;
 - (BOOL)deleteListWithListID:(NSInteger)ListID;
 - (BOOL)syncList;
 - (NSInteger)getNumberOfMusicInList;
 - (NSInteger)getKeyValueInListWithKey:(NSString *)key index:(NSInteger)index;
-- (BOOL)getModeListWithIndex:(NSInteger)index;
+- (BOOL)syncModeListWithIndex:(NSInteger)index;
 
 
 //+ (id)sharedModeDBManager;
