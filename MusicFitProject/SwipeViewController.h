@@ -16,16 +16,22 @@ typedef enum {
     ShiftVertical
 }ShiftDirection;
 
+
 @protocol SwipeControllerDelegate <NSObject>
 @optional
-- (void)willMoveToViewController:(UIViewController *)viewController atPosition:(Position)position;
+//- (void)willMoveToViewController:(UIViewController *)viewController atPosition:(Position)position;
 - (void)didMoveToViewController:(UIViewController *)viewController atPosition:(Position)position;
 @end
 
+//@protocol CalendarToPlayerDelegate <NSObject>
+//- (void)hiddenPlayer;
+//- (void)showPlayer;
+//@end;
 
 @interface SwipeViewController : UIViewController
 
-@property(weak, nonatomic) id <SwipeControllerDelegate> delegate;
+//@property (weak) id<CalendarToPlayerDelegate> delegate;
+
 @property(weak, readonly, nonatomic) UIViewController *visibleViewController;
 @property(strong, readonly, nonatomic) NSArray *viewControllers;
 @property(assign, readonly, nonatomic) NSInteger maxRow;
@@ -37,7 +43,7 @@ typedef enum {
 
 - (void)setControllers:(NSArray *)controllers;
 
-- (void)goToViewController:(UIViewController *)controller way:(Way)way animated:(BOOL)animated completion:(void (^)(void))completion;
+//- (void)goToViewController:(UIViewController *)controller way:(Way)way animated:(BOOL)animated completion:(void (^)(void))completion;
 
 - (void)moveLeftAnimated:(BOOL)animated;
 

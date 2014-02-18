@@ -132,14 +132,13 @@ static TimerLabel *_timerInstance;
         if(abs(timeDiff) >= timerValue){
             [self pause];
             timeToShow = [date1970 dateByAddingTimeInterval:0];
-            pausedTime = nil;
-            startCountDate = nil;
             
-            if([_delegate respondsToSelector:@selector(timerLabel:)]){
-                [_delegate timerLabel:self];
+            if([_delegate respondsToSelector:@selector(timerLabel:startDate:timerValue:)]){
+                [_delegate timerLabel:self startDate:startCountDate timerValue:timerValue];
                 [self reset];
             }
-            
+            pausedTime = nil;
+            startCountDate = nil;
         }else{
             
             timeToShow = [timeToCountOff dateByAddingTimeInterval:(timeDiff*-1)+0.999]; //added 0.999 to make it actually counting the whole first second

@@ -41,7 +41,7 @@ typedef enum
 - (void)syncMusicProgress:(NSString *)timeString timePoint:(NSInteger)timePoint;
 - (void)setMusicProgressMax:(NSInteger)max;
 - (void)initMusicProgress;
-- (void)changePlayBtnSelected;
+- (void)changePlayBtnSelected:(BOOL)selected;
 
 @end
 
@@ -53,7 +53,7 @@ typedef enum
 @property (weak) id<MusicFitPlayerDelegate> playerDelegate;
 @property (weak) id<FitModeImageViewDelegate> fitModeDelegate;
 @property (nonatomic) MusicFitPlayerStatus status;
-
+@property (nonatomic) BOOL playing;
 + (id)sharedPlayer;
 - (void)setAudioSession;
 

@@ -124,14 +124,6 @@
                 }
             }
             break;
-        case UIEventSubtypeRemoteControlPause:
-            if (_player.status == MusicFitPlayerStatusPlaying){
-                [_player pause];
-                if([_timer running]&& [_timer fire])
-                    [_timer pause];
-                 NSLog(@"timer pause");
-            }
-            break;
         case UIEventSubtypeRemoteControlPlay:
             if (_player.status != MusicFitPlayerStatusPlaying){
                 [_player play];
@@ -149,6 +141,15 @@
             if(_player.status == MusicFitPlayerStatusPlaying)
                 [_player prevPlay];
             // You get the idea.
+            break;
+        case UIEventSubtypeRemoteControlStop:
+        case UIEventSubtypeRemoteControlPause:
+            if (_player.status == MusicFitPlayerStatusPlaying){
+                [_player pause];
+                if([_timer running]&& [_timer fire])
+                    [_timer pause];
+                NSLog(@"timer pause");
+            }            break;
         default:
             break;
     }

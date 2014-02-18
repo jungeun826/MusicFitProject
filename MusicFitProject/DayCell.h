@@ -12,10 +12,13 @@
 @interface DayCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel *dayLabel;
-@property (weak, nonatomic) IBOutlet UIButton *dayBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *modeImageView;
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated;
+@property (weak, nonatomic) IBOutlet UIImageView *selectImageView;
+
+
 - (id)initBlankCell;
-- (id)initWithDay:(NSString *)day lastMode:(NSString *)mode;
-
+- (id)initWithDay:(NSString *)day lastMode:(NSInteger)mode;
+- (void)selectCell;
+- (void)dismissCell;
 @end

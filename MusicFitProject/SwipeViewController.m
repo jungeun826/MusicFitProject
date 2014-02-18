@@ -8,8 +8,9 @@
 
 #import "SwipeViewController.h"
 #import "SwipeView.h"
-
+#import "PlayerViewController.h"
 //#define alphaHiddenControllers 0.0
+
 
 @interface SwipeViewController ()
 @property(strong, nonatomic) SwipeGestureRecognizer *swipeGestureRecognizer;
@@ -35,6 +36,7 @@
     [self setControllers:controllers withFrame:self.view.frame];
 }
 - (void)viewDidLoad{
+    
     [super viewDidLoad];
 }
 #pragma mark - Public methods
@@ -54,12 +56,12 @@
 
 
 - (void)moveLeftAnimated:(BOOL)animated withCompletion:(void (^)(void))completion{
-    [self goToViewController:_visibleViewController.leftViewController way:WayHorizontal animated:animated completion:completion];
+    [self goToViewController:_visibleViewController.leftViewController way:WayHorizontal direction:DirectionRight animated:animated completion:completion];
 }
 
 - (void)moveRightAnimated:(BOOL)animated withCompletion:(void (^)(void))completion{
     UIViewController *rightVC =_visibleViewController.rightViewController;
-    [self goToViewController:rightVC way:WayHorizontal animated:animated completion:completion];
+    [self goToViewController:rightVC way:WayHorizontal direction:DirectionRight animated:animated completion:completion];
 }
 
 - (UIViewController *)getControllerAtPosition:(Position)position{
@@ -71,8 +73,8 @@
     return [viewControllersWithMatchedPosition objectAtIndex:0];
 }
 
-- (void)goToViewController:(UIViewController *)controller way:(Way)way animated:(BOOL)animated completion:(void (^)(void))completion{
-    [self goToViewController:controller translation:CGPointZero velocity:CGPointZero way:way animated:animated completion:completion];
+- (void)goToViewController:(UIViewController *)controller way:(Way)way direction:(Direction)direction animated:(BOOL)animated completion:(void (^)(void))completion{
+    [self goToViewController:controller translation:CGPointZero velocity:CGPointZero way:way direction:direction animated:animated completion:completion];
 }
 
 
@@ -83,7 +85,7 @@
 
     CGFloat screenWidth = frame.size.width;
     CGFloat screenHeight = frame.size.height;
-    
+    int index = 0;
     for (UIViewController *child in _viewControllers) {
         Position left = child.position;
         left.col = left.col - 1;
@@ -97,10 +99,18 @@
         child.leftViewController = [self getControllerAtPosition:left];
         child.rightViewController = [self getControllerAtPosition:right];
         
+        if(index == 3){
+            CGRect frameInsideMasterView = child.view.frame;
+            frameInsideMasterView.origin.x = screenWidth * child.col;
+            frameInsideMasterView.origin.y = screenHeight * child.row;
+            frameInsideMasterView.size.height = 480;
+            child.view.frame = frameInsideMasterView;
+        }
         CGRect frameInsideMasterView = child.view.frame;
         frameInsideMasterView.origin.x = screenWidth * child.col;
         frameInsideMasterView.origin.y = screenHeight * child.row;
         child.view.frame = frameInsideMasterView;
+        index ++;
     }
     
     CGSize contentSize = CGSizeMake(screenWidth * (_maxCol + 1), screenHeight * (_maxRow + 1));
@@ -152,14 +162,8 @@
     nextControllerExists |= direction == DirectionRight && _visibleViewController.rightViewController;
     nextControllerExists |= direction == DirectionLeft && _visibleViewController.leftViewController;
     
-    if( direction == DirectionDown || direction == DirectionUp)
+    if( direction == DirectionDown || direction == DirectionUp || !nextControllerExists)
         return;
-    
-    if (!nextControllerExists) {
-        [self goToViewController:_visibleViewController translation:CGPointZero velocity:CGPointZero way:WayNone animated:YES completion:^{
-        }];
-        return;
-    }
     
     if (way == WayHorizontal)
         translation.y = 0;
@@ -186,32 +190,39 @@
     const CGFloat horizontalThreshold = _visibleViewController.view.frame.size.width / 4;
     const CGFloat velocityThreshold = 1000;
     
+    BOOL nextControllerExists = NO;
+    nextControllerExists |= direction == DirectionRight && _visibleViewController.rightViewController;
+    nextControllerExists |= direction == DirectionLeft && _visibleViewController.leftViewController;
+    
+    if( direction == DirectionDown || direction == DirectionUp || !nextControllerExists)
+        return;
+    
     BOOL overHorizontalThreshold = fabs(translation.x) > horizontalThreshold;
     BOOL overVelocityXThreshold = fabs(velocity.x) > velocityThreshold;
     
     if ( translation.x == 0 || translation.y == 0) {
-        [self goToViewController:_visibleViewController translation:CGPointZero velocity:CGPointZero way:WayNone animated:YES completion:^{
+        [self goToViewController:_visibleViewController translation:CGPointZero velocity:CGPointZero way:WayNone direction:direction animated:YES completion:^{
         }];
         return;
     }
     if (way == WayHorizontal && way == _lastSwipeWay && (overHorizontalThreshold || overVelocityXThreshold)) {
         if (direction == DirectionLeft) {
 //            NSLog(@"goto left controller");
-            [self goToViewController:_visibleViewController.leftViewController translation:translation velocity:velocity way:WayHorizontal animated:YES completion:^{
+            [self goToViewController:_visibleViewController.leftViewController translation:translation velocity:velocity way:WayHorizontal direction:direction animated:YES completion:^{
             }];
             return;
         }
         else if (direction == DirectionRight) {
 //            NSLog(@"goto right controller");
-            [self goToViewController:_visibleViewController.rightViewController translation:translation velocity:velocity way:WayHorizontal animated:YES completion:^{
+            [self goToViewController:_visibleViewController.rightViewController translation:translation velocity:velocity way:WayHorizontal direction:direction animated:YES completion:^{
             }];
             return;
         }
     }
 }
 
-- (void)goToViewController:(UIViewController *)newController translation:(CGPoint)translation velocity:(CGPoint)velocity way:(Way)way animated:(BOOL)animated completion:(void (^)(void))completion{
-    [_delegate willMoveToViewController:newController atPosition:newController.position];
+- (void)goToViewController:(UIViewController *)newController translation:(CGPoint)translation velocity:(CGPoint)velocity way:(Way)way  direction:(Direction)direction animated:(BOOL)animated completion:(void (^)(void))completion{
+//    [_delegate willMoveToViewController:newController atPosition:newController.position];
     
     NSTimeInterval velocityAnimation = INT_MAX;
     if (!animated)
@@ -229,21 +240,30 @@
             velocityAnimation = MAX(0.3, MIN(velocityAnimation, 0.7));
         }
     }
-    
+    if(_visibleViewController.rightViewController.rightViewController == nil && direction ==DirectionRight){
+        //            [self.delegate hiddenPlayer];
+        PlayerViewController *playerVC = (PlayerViewController *)[self parentViewController];
+        [playerVC hiddenPlayerWithDuration:velocityAnimation];
+    }else if(_visibleViewController.rightViewController == nil && direction ==DirectionLeft){
+        PlayerViewController *playerVC = (PlayerViewController *)[self parentViewController];
+        
+        [playerVC showPlayerWithDuration:velocityAnimation];
+    }
     [UIView animateWithDuration:velocityAnimation animations:^{
         CGRect frameForVisibleViewController = self.view.frame;
         frameForVisibleViewController.origin.x = -newController.view.frame.origin.x;
         self.view.frame = frameForVisibleViewController;
         
+        [_visibleViewController viewDidDisappear:animated];
+        [newController viewDidAppear:animated];
+
         
     }completion:^(BOOL finished) {
         if (finished) {
             // call UIKit view callbacks. not sure it's right
-            [_visibleViewController viewDidDisappear:animated];
-            [newController viewDidAppear:animated];
-            
+           
             _visibleViewController = newController;
-            [_delegate didMoveToViewController:newController atPosition:newController.position];
+//            [_delegate didMoveToViewController:newController atPosition:newController.position];
             if (completion)
                 completion();
         }

@@ -8,6 +8,7 @@
 
 #import "DBManager.h"
 #import "MusicFitPlayer.h"
+#import "CalendarDayInfo.h"
 
 #define KEY_LISTID @"listID"
 #define KEY_MUSICID @"musicID"
@@ -74,8 +75,17 @@ static DBManager *_instance = nil;
             
             ret = sqlite3_exec(db, createQuery_List, NULL, NULL, &errorMsg);
             if( ret != SQLITE_OK){//Music DB create fail
-//                [fileManager removeItemAtPath:dbFilePath error:nil];
+                //                [fileManager removeItemAtPath:dbFilePath error:nil];
                 NSLog(@"create List TABLE fail : %s", errorMsg);
+                return;
+            }
+            
+            char *createQuery_Calendar = "CREATE TABLE CALENDAR (calendarID INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL, modeID INTEGER NOT NULL,  ExerTime INTEGER NOT NULL, startDate DATETIME NOT NULL)";
+            
+            ret = sqlite3_exec(db, createQuery_Calendar, NULL, NULL, &errorMsg);
+            if( ret != SQLITE_OK){//Music DB create fail
+                //                [fileManager removeItemAtPath:dbFilePath error:nil];
+                NSLog(@"create CALENDAR TABLE fail : %s", errorMsg);
                 return;
             }
             
@@ -132,7 +142,7 @@ static DBManager *_instance = nil;
         NSLog(@"InsertQuery Error : %s", sqlite3_errmsg(db));
         return NO;
     }else
-//        NSLog(@"insert Query : %@", insertQuery);
+        NSLog(@"insert Query : %@", insertQuery);
     
     sqlite3_finalize(stmt);
     
@@ -153,9 +163,6 @@ static DBManager *_instance = nil;
     sqlite3_finalize(stmt);
     return YES;
 }
-- (sqlite3 *)dbReturn{
-    return db;
-}
 - (sqlite3_stmt *) SELECT:(NSString *)selectQuery{
     sqlite3_stmt *stmt=nil;
     //    SELECT * FROM ( A테이블 left join B테이블 on  A테이블.칼럼 = B테이블.칼럼 )
@@ -171,26 +178,10 @@ static DBManager *_instance = nil;
 
 
 
-
-
-
-
 //FIXME: List관련 부분 modeID 추가 필요
-- (BOOL)insertListWithMusicID:(NSInteger)musicID{
-    NSString *insertQuery = [NSString stringWithFormat:@"INSERT INTO List (musicID, modeID) VALUES (%d,%d)",(int)musicID, _curModeID];
-    
-    [self openDB];
-    if(![self INSERT:insertQuery]){
-        NSLog(@"Error in List");
-        [self closeDB];
-        return NO;
-    }
-    [self closeDB];
-    return YES;
-}
 - (BOOL)insertListWithArray:(NSArray *)insertArr{
     //indexPath
-    int count = [insertArr count];
+    int count = (int)[insertArr count];
     if(count == 0){
         NSLog(@"notSelect insertList (addSong)");
         return YES;
@@ -208,12 +199,12 @@ static DBManager *_instance = nil;
     for(int index = 0 ; index < count ; index++) {
         
         NSIndexPath *selectIndexPath = insertArr[index];
-        int listIndex = selectIndexPath.row;
+        NSInteger listIndex = selectIndexPath.row;
         
-        int musicID = [_musicList[listIndex] musicID];
+        NSInteger musicID = [_musicList[listIndex] musicID];
         
-        ret = sqlite3_bind_int(insertStmt, 1, musicID);
-        ret = sqlite3_bind_int(insertStmt, 2, _curModeID);
+        ret = sqlite3_bind_int(insertStmt, 1, (int)musicID);
+        ret = sqlite3_bind_int(insertStmt, 2, (int)_curModeID);
         
         ret = sqlite3_step(insertStmt);
         
@@ -224,21 +215,9 @@ static DBManager *_instance = nil;
     [self closeDB];
     return YES;
 }
-- (BOOL)deleteListWithListID:(NSInteger)listID{
-    NSString *deleteQuery = [NSString stringWithFormat:@"DELETE FROM List WHERE ListID = %d",(int)listID];
-    
-    [self openDB];
-    if(![self DELETE:deleteQuery]){
-        NSLog(@"Error in List");
-        [self closeDB];
-        return NO;
-    }
-    [self closeDB];
-    return YES;
-}
 - (BOOL)deleteListWithArray:(NSArray *)deleteArr{
     //indexPath
-    int count = [deleteArr count];
+    NSInteger count = [deleteArr count];
     sqlite3_stmt *deleteStmt;
     char *deleteQuery = "DELETE FROM LIST WHERE listID = ? ";
     if(count == 0){
@@ -262,7 +241,7 @@ static DBManager *_instance = nil;
         if(selectIndexPath.section != 0)
             continue;
         
-        int listIndex = selectIndexPath.row;
+        NSInteger listIndex = selectIndexPath.row;
         if(listIndex < curPlayIndex)
             (player.curPlayIndex)--;
         if(listIndex == curPlayIndex)
@@ -341,6 +320,7 @@ static DBManager *_instance = nil;
 - (void)setUserDefualtMode{
     NSUserDefaults *userDefualt = [NSUserDefaults standardUserDefaults];
     [userDefualt setInteger:_curModeID forKey:@"mode_preference"];
+    [userDefualt synchronize];
 }
 - (BOOL)syncModeListWithIndex:(NSInteger)index{
     
@@ -348,7 +328,7 @@ static DBManager *_instance = nil;
     _curModeID = [self getModeIDInMODEWithIndex:index];
     [self setUserDefualtMode];
     
-    NSLog(@"선택 modeID : %d", _curModeID);
+    NSLog(@"선택 modeID : %d", (int)_curModeID);
     NSString *modeListSelectQuery = [NSString stringWithFormat:@"SELECT ListID, musicID FROM LIST where modeID= %d", (int)_curModeID];
 
     sqlite3_stmt *stmt;
@@ -408,27 +388,34 @@ static DBManager *_instance = nil;
         NSInteger lastestMode = [[[NSUserDefaults standardUserDefaults] stringForKey:@"mode_preference"] intValue];
         
         _curModeID = lastestMode;
+        [self syncList];
         return;
     }
     
     if(index != 4){
+        //먼저 모든 리스트제거
+        _curModeID = 1;
         if([self insertModeWithMinBPM:120 maxBPM:0 title:@"걷기"] == NO){
             [self closeDB];
             return ;
         }
+                _curModeID = 2;
         if( [self insertModeWithMinBPM:160 maxBPM:0 title:@"러닝"] == NO){
             [self closeDB];
             return ;
         }
+                _curModeID = 3;
         if([self insertModeWithMinBPM:140 maxBPM:0 title:@"조깅,트레드밀"] == NO){
             [self closeDB];
             return ;
         }
+                _curModeID = 4;
         if([self insertModeWithMinBPM:130 maxBPM:0 title:@"사이클링"] == NO){
             [self closeDB];
             return ;
         }
         _curModeID = 1;
+        [self syncList];
     }
 }
 
@@ -494,7 +481,7 @@ static DBManager *_instance = nil;
     //insert INTO List (musicID, modeID) select musicID  , @MODEID  From MUSIC
     NSString *listInsertQuery;
     if(maxBPM == 0) //max 설정 안함
-        listInsertQuery = [NSString stringWithFormat:@"INSERT INTO List (musicID, modeID) SELECT musicID, %d FROM MUSIC where BPM > %d ORDER BY title ASC", (int)_curModeID,(int)minBPM];
+        listInsertQuery = [NSString stringWithFormat:@"INSERT INTO List (musicID, modeID) SELECT musicID, %d FROM MUSIC where BPM >= %d ORDER BY title ASC", (int)_curModeID,(int)minBPM];
     else
         listInsertQuery = [NSString stringWithFormat:@"INSERT INTO List (musicID, modeID) SELECT musicID,%d FROM MUSIC where BPM > %d AND BPM < %d ORDER BY title ASC", (int)_curModeID,(int)minBPM, (int)maxBPM];
     
@@ -506,41 +493,41 @@ static DBManager *_instance = nil;
     //리스트 생성 끝
     
     
-    //현재 리스트로 저장
-    allSelectQuery = @"SELECT * FROM List";
-    sqlite3_stmt *selectStmt = nil;
-    selectStmt = [self SELECT:allSelectQuery];
-    if(selectStmt == nil){
-        NSLog(@"Error createMusicIDArrayWithBPM... in List ");
-        sqlite3_finalize(selectStmt);
-        [self closeDB];
-        return NO;
-    }
-    
-    int musicID;
-    int listID;
-    _curPlayMusicList = [[NSMutableArray alloc]init];
-    NSDictionary *ListTableInfo = [[NSDictionary alloc]init];
-    while (sqlite3_step(selectStmt) == SQLITE_ROW) {
-        listID = sqlite3_column_int(selectStmt, 0);
-        musicID = sqlite3_column_int(selectStmt, 1);
-        ListTableInfo = @{@"listID":[NSString stringWithFormat:@"%d",listID ], @"musicID":[NSString stringWithFormat:@"%d", musicID]};
-        
-        //        NSLog(@"listID= %d, musicID = %d", listID, musicID);
-        
-        [_curPlayMusicList addObject:ListTableInfo];
-    }
-    sqlite3_finalize(selectStmt);
+////    //현재 리스트로 저장
+//    allSelectQuery = [NSString stringWithFormat:@"SELECT * FROM List"];
+//    sqlite3_stmt *selectStmt = nil;
+//    selectStmt = [self SELECT:allSelectQuery];
+//    if(selectStmt == nil){
+//        NSLog(@"Error createMusicIDArrayWithBPM... in List ");
+//        sqlite3_finalize(selectStmt);
+//        [self closeDB];
+//        return NO;
+//    }
+//
+//    int musicID;
+//    int listID;
+//    _curPlayMusicList = [[NSMutableArray alloc]init];
+//    NSDictionary *ListTableInfo = [[NSDictionary alloc]init];
+//    while (sqlite3_step(selectStmt) == SQLITE_ROW) {
+//        listID = sqlite3_column_int(selectStmt, 0);
+//        musicID = sqlite3_column_int(selectStmt, 1);
+//        ListTableInfo = @{@"listID":[NSString stringWithFormat:@"%d",listID ], @"musicID":[NSString stringWithFormat:@"%d", musicID]};
+////
+//               NSLog(@"listID= %d, musicID = %d", listID, musicID);
+////
+//        [_curPlayMusicList addObject:ListTableInfo];
+//    }
+//    sqlite3_finalize(selectStmt);
     
 
     [self closeDB];
     return YES;
 }
 - (NSInteger)getCurModeID{
-    
     return _curModeID;
 }
-- (BOOL)deleteModeWithModeID:(NSInteger)modeID{
+- (BOOL)deleteModeWithIndex:(NSInteger)index{
+    NSInteger modeID = [_modeList[index] modeID];
     NSString *modeDeleteQuery = [NSString stringWithFormat:@"DELETE FROM MODE WHERE modeID = %d",(int)modeID];
     NSString *listDeleteQuery = [NSString stringWithFormat:@"DELETE FROM LIST WHERE modeID = %d",(int)modeID];
     [self closeDB];
@@ -749,11 +736,184 @@ static DBManager *_instance = nil;
     [self closeDB];
     return music;
 }
-
-
 - (NSMutableArray *)getListArray{
     if([_curPlayMusicList count]==0)
         return nil;
     return _curPlayMusicList;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+- (BOOL)insertCalendarWithExerTime:(NSInteger)exerTime startdate:(NSDate *)startDate {
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"KST"]];
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    
+    NSString *todayDate = [dateFormatter stringFromDate:startDate];
+//    sqlite3_bind_text(saveStmt, 1, [dateString UTF8String] , -1, SQLITE_TRANSIENT);
+    NSString *insertQuery = [NSString stringWithFormat:@"INSERT INTO CALENDAR (modeID, ExerTime, startDate) VALUES (%d,%d,'%@')", _curModeID, exerTime, todayDate];
+    [self openDB];
+    if(![self INSERT:insertQuery]){
+        NSLog(@"Error in MUSIC");
+        [self closeDB];
+        return NO;
+    }
+    [self closeDB];
+    return YES;
+}
+- (NSDictionary *)getCalendarMonthDicWithMonth:(NSDateComponents *)month{
+    NSDictionary *monthInfo;
+    sqlite3_stmt *selectStmt;
+    
+    char *selectQuery = "SELECT ExerTime FROM CALENDAR where startDate>= (?) AND startDate < (?)";
+    [self openDB];
+    int ret = sqlite3_prepare_v2(db, selectQuery, -1, &selectStmt, NULL);
+    if(ret != SQLITE_OK){
+        NSLog(@"error add array: %s", sqlite3_errmsg(db));
+        return NO;
+    }
+    
+    [month setDay:1];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"KST"]];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    
+    
+    NSString *todayDate = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:month]];
+    
+    NSString *nextDayDate;
+    int exerCount = 0;
+    int exerMinuteCount = 0;
+    BOOL alreadyCount = NO;
+    for(int index = 1 ; index <= 31 ; index++) {
+        [month setDay:index+1];
+        nextDayDate =  [dateFormatter stringFromDate:[month date]];
+        
+        ret = sqlite3_bind_text(selectStmt, 1, [todayDate UTF8String], -1,nil);
+        ret = sqlite3_bind_text(selectStmt, 2, [nextDayDate UTF8String], -1,nil);
+        
+        while(sqlite3_step(selectStmt) == SQLITE_ROW){
+            if(!alreadyCount){
+                exerCount++;
+                alreadyCount = YES;
+            }
+            exerMinuteCount += sqlite3_column_int(selectStmt, 2);
+        }
+        alreadyCount = NO;
+        ret = sqlite3_reset(selectStmt);
+    }
+    sqlite3_finalize(selectStmt);
+    [self closeDB];
+    monthInfo = @{@"totalExerCount": [NSNumber numberWithInt:exerCount], @"totalExerMinute":[NSNumber numberWithInt:exerMinuteCount]};
+    
+    return monthInfo;
+}
+
+- (NSArray *)getCalendarMonthInfoWithMonth:(NSDateComponents *)month{
+    NSMutableArray *dayArrForMonth = [[NSMutableArray alloc] init];
+    sqlite3_stmt *selectStmt;
+    
+    //하루에 정보 하나씩만 가지고 온다.
+    char *selectQuery = "SELECT modeID FROM CALENDAR where startDate>= (?) AND startDate < (?) ORDER BY calendarID DESC Limit 1";
+    [self openDB];
+    int ret = sqlite3_prepare_v2(db, selectQuery, -1, &selectStmt, NULL);
+    if(ret != SQLITE_OK){
+        NSLog(@"error add array: %s", sqlite3_errmsg(db));
+        return NO;
+    }
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"KST"]];
+    dateFormatter.dateFormat = @"yyyy-MM-dd";
+    
+    [month setDay:1];
+
+    
+    NSString *todayDate;
+    NSString *nextDayDate ;
+    int modeID = 0;
+    for(int index = 1 ; index <= 31 ; index++) {
+        todayDate = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:month]];
+        [month setDay:index+1];
+        nextDayDate = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:month]];
+        
+        ret = sqlite3_bind_text(selectStmt, 1, [todayDate UTF8String], -1,nil);
+        ret = sqlite3_bind_text(selectStmt, 2, [nextDayDate UTF8String], -1,nil);
+        
+        if(sqlite3_step(selectStmt) == SQLITE_ROW){
+            modeID = sqlite3_column_int(selectStmt, 0);
+        }else{
+            modeID = 0;
+        }
+        [dayArrForMonth addObject:[NSNumber numberWithInt:modeID]];
+        ret = sqlite3_reset(selectStmt);
+    }
+    sqlite3_finalize(selectStmt);
+    [self closeDB];
+    
+    return dayArrForMonth;
+}
+
+- (NSArray *)getCalendarDayInfoWithDay:(NSDateComponents *)day{
+    sqlite3_stmt *selectStmt;
+//    where
+    char *selectQuery = "SELECT * FROM CALENDAR where startDate >= (?) AND startDate < (?)";
+    [self openDB];
+    int ret = sqlite3_prepare_v2(db, selectQuery, -1, &selectStmt, NULL);
+    if(ret != SQLITE_OK){
+        NSLog(@"error add array: %s", sqlite3_errmsg(db));
+        return NO;
+    }
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"KST"]];
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
+    
+
+    [day setHour:0];
+    [day setMinute:0];
+    NSString *todayDate = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:day]];
+    [day setDay:[day day]+1];
+    NSString *nextDayDate = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:day]];
+    
+  
+        ret = sqlite3_bind_text(selectStmt, 1, [todayDate UTF8String], -1,nil);
+        ret = sqlite3_bind_text(selectStmt, 2, [nextDayDate UTF8String], -1,nil);
+    NSMutableArray *dayArr = [[NSMutableArray alloc]init];
+    CalendarDayInfo *dayInfo;
+    while(sqlite3_step(selectStmt) == SQLITE_ROW){
+            //array로 얻어오기
+            int modeID = sqlite3_column_int(selectStmt, 1);
+            int exerTime = sqlite3_column_int(selectStmt, 2);
+        NSString *date = [NSString stringWithUTF8String:(char *)sqlite3_column_text(selectStmt, 3)];
+        NSDate *startDate = [[NSDate alloc]init];
+        startDate = [dateFormatter dateFromString:date];
+            dayInfo = [[CalendarDayInfo alloc] initWithDate:startDate modeID:modeID exerTime:exerTime];
+            
+            [dayArr addObject:dayInfo];
+    }
+    
+    sqlite3_finalize(selectStmt);
+    [self closeDB];
+    
+    return dayArr;
+}
+
 @end

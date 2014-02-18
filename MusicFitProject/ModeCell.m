@@ -53,9 +53,12 @@
 
 - (void)setSelectedColor{
     UIView * selectedBackgroundView = [[UIView alloc] initWithFrame:self.frame];
+    UIImageView *selectedImageView = [[UIImageView alloc]initWithFrame:self.frame];
     
-    [selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.2]]; // set color here
-    [selectedBackgroundView setAlpha:0.2];
+    selectedImageView.image = [UIImage imageNamed:@"basic_bg_2_on.png"];
+    [selectedBackgroundView addSubview:selectedImageView];
+//    [selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.3]]; // set color here
+    [selectedBackgroundView setAlpha:0.4];
     
     [self setSelectedBackgroundView:selectedBackgroundView];
 }

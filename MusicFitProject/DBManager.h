@@ -19,15 +19,13 @@
 - (BOOL) closeDB;
 - (BOOL) INSERT:(NSString *)insertQuery;
 - (BOOL) DELETE:(NSString *)deleteQuery;
-- (sqlite3 *)dbReturn;
-//- (void)setDB:(sqlite3 *)getDB;
 
 
 //+ (id)sharedPlayListDBManager;
-- (BOOL)insertListWithMusicID:(NSInteger)musicID;
+
 - (BOOL)insertListWithArray:(NSArray *)insertArr;
 - (BOOL)deleteListWithArray:(NSArray *)deleteArr;
-- (BOOL)deleteListWithListID:(NSInteger)ListID;
+
 - (BOOL)syncList;
 - (NSInteger)getNumberOfMusicInList;
 - (NSInteger)getKeyValueInListWithKey:(NSString *)key index:(NSInteger)index;
@@ -39,7 +37,7 @@
 -(BOOL)insertModeWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM title:(NSString *)title;
 - (NSInteger)getCurModeID;
 - (Mode *)getModeWithIndex:(NSInteger)index;
-- (BOOL)deleteModeWithModeID:(NSInteger)index;
+- (BOOL)deleteModeWithIndex:(NSInteger)index;
 - (BOOL)syncMode;
 - (NSInteger)getNumberOfMode;
 //+ (id)sharedMusicDBManager;
@@ -51,4 +49,12 @@
 - (NSInteger)getNumberOfMusic;
 - (BOOL)isExistWithlocation:(NSString *)location;
 - (NSMutableArray *)getListArray;
+
+
+
+
+- (BOOL)insertCalendarWithExerTime:(NSInteger)exerTime startdate:(NSDate *)startDate;
+- (NSArray *)getCalendarDayInfoWithDay:(NSDateComponents *)day;
+- (NSArray *)getCalendarMonthInfoWithMonth:(NSDateComponents *)month;
+- (NSDictionary *)getCalendarMonthDicWithMonth:(NSDateComponents *)month;
 @end

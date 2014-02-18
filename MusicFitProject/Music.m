@@ -27,10 +27,10 @@
 - (UIImage *)getAlbumImageWithSize:(CGSize)size{
     UIImage *albumImage = nil;
     
-//    if(_title==nil || _artist==nil){
-//        albumImage = [UIImage imageNamed:@"artview.png"];
-//        return albumImage;
-//    }
+    if(_title==nil || _artist==nil){
+        albumImage = [UIImage imageNamed:@"artview.png"];
+        return albumImage;
+    }
     MPMediaPropertyPredicate *titlePredicate = [MPMediaPropertyPredicate predicateWithValue:_title forProperty:MPMediaItemPropertyTitle];
     MPMediaPropertyPredicate *artistPredicate = [MPMediaPropertyPredicate predicateWithValue:_artist forProperty:MPMediaItemPropertyArtist];
     

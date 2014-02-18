@@ -21,16 +21,15 @@
 @property (nonatomic) BOOL ForcePause;
 @property (nonatomic) BOOL BufferingPause;
 
-
 @end
+
 @implementation MusicFitPlayer{
     AVQueuePlayer *_player;
     NSMutableArray *_playQueue;
     Music *_curPlayMusic;
     MPMediaItem *_curPlayItem;
-    
-    BOOL _playing;
 }
+
 static MusicFitPlayer *_playerInstance = nil;
 + (id)sharedPlayer{
     if(_playerInstance == nil){
@@ -46,7 +45,6 @@ static MusicFitPlayer *_playerInstance = nil;
         //일반 변수 초기화
         _curPlayMusic = [[Music alloc]init];
         _curPlayIndex = 0;
-        _playing = NO;
         _playingItemDeleted = NO;
         self.curMode = [dbManager getCurModeID];
 
@@ -56,21 +54,30 @@ static MusicFitPlayer *_playerInstance = nil;
         
         //얻어온 플레이 리스트를 AVPlayerItem의 array로 만들어
         //플레이어의 아이템으로 만듦
-        [self setPlayListQueueWithPlayIndex:0];
-        
-        //그 아이템으로 플레이어 초기화
-        _player = [[AVQueuePlayer alloc]initWithItems:_playQueue];
+        if([self setPlayListQueueWithPlayIndex:0]){
+            //그 아이템으로 플레이어 초기화
+            _player = [[AVQueuePlayer alloc]initWithItems:_playQueue];
+            //바뀐 curPlayIndex와  curPlayMusic의 sync를 맞춤
+            [self syncChangeMusic];
+
+        }else{
+            _player = [[AVQueuePlayer alloc]init];
+        }
         _player.actionAtItemEnd = AVPlayerActionAtItemEndAdvance;
         
         //플레이어의 notification등록함
         [self settingNoit];
-        //바뀐 curPlayIndex와  curPlayMusic의 sync를 맞춤
-        [self syncChangeMusic];
-        [self pause];
+                [self pause];
+        
+        
+        [self addObserver:self forKeyPath:@"self.playing" options:NSKeyValueObservingOptionNew context:nil];
+        
+        self.playing = NO;
     }
     
     return self;
 }
+
 //바뀐 curPlayIndex와  curPlayMusic의 sync를 맞춤
 - (void)syncChangeMusic{
     //바뀐 인덱스에 대한  Music객체를 갖도록 변경
@@ -83,7 +90,7 @@ static MusicFitPlayer *_playerInstance = nil;
 }
 - (void)changeLockScreen{
     Class playingInfoCenter = NSClassFromString(@"MPNowPlayingInfoCenter");
-    
+
     if (playingInfoCenter) {
         UIImage *albumImage = [_curPlayMusic getAlbumImageWithSize:SCREENIMAGE_SIZE];
         if(albumImage == nil){
@@ -125,12 +132,14 @@ static MusicFitPlayer *_playerInstance = nil;
 
 //모드 변경이나 에디트 햇을 떄 새로운 큐리스트를 만들어
 //플레이어 큐에 반영해야 하므로 -  에디트 인경우 현재인덱스. 모드변경은 0
-- (void)setPlayListQueueWithPlayIndex:(NSInteger)index{
+- (BOOL)setPlayListQueueWithPlayIndex:(NSInteger)index{
     [self pause];
     [_playQueue removeAllObjects];
     _curPlayIndex = index;
     DBManager *dbManager = [DBManager sharedDBManager];
     NSArray *playList = [dbManager getListArray];
+    if(playList == nil)
+        return NO;
     NSInteger count  = [playList count];
     for(NSInteger index = 0 ; index < count ; index++ ){
         NSInteger musicID = [playList[index][@"musicID"] intValue];
@@ -148,11 +157,14 @@ static MusicFitPlayer *_playerInstance = nil;
     }
     [self changePlayerQueueWithIndex:index];
     [self play];
+    return YES;
 }
 
 //임의로 곡을 바꾸는 경우 index로 조절
 //그냥 처음에 리스트 변경인 경우는 index0으로 사용
 - (void)changePlayerQueueWithIndex:(NSInteger)index{
+    [_player.currentItem seekToTime:kCMTimeZero];
+    
     [_player removeAllItems];
     for (int i = (int)index; i <(int)_playQueue.count;  i ++) {
         AVPlayerItem* obj = [_playQueue objectAtIndex:i];
@@ -162,18 +174,41 @@ static MusicFitPlayer *_playerInstance = nil;
         }
     }
 }
+- (void)prevPlayItemAddInQueueWithIndex:(NSInteger)index{
+    AVPlayerItem *prevItem = [_playQueue objectAtIndex:index];
+    AVPlayerItem *curItem = _player.currentItem;
+
+    if ([_player canInsertItem:prevItem afterItem:curItem]) {
+        [_player.currentItem seekToTime:kCMTimeZero];
+        [_player insertItem:prevItem afterItem:curItem];
+        [_player advanceToNextItem];
+        [_player insertItem:curItem afterItem:prevItem];
+    }
+}
 //table에서 임의 인덱스 선택해서 음악 재생하는 경우
 - (BOOL)changePlayMusicWithIndex:(NSInteger)index{
     if(_curPlayIndex == index)
         return YES;
-   
+//    if(_curPlayIndex > index){
+//        int loopCount = (_curPlayIndex - index);
+//        int startAddIndex = _curPlayIndex;
+//        for( ; loopCount >0 ; loopCount--){
+//            [self prevPlayItemAddInQueueWithIndex:--startAddIndex];
+//        }
+//    }else{
+//        [_player.currentItem seekToTime:kCMTimeZero];
+//        for(int loopCount = (index - _curPlayIndex-1) ; loopCount >0 ; loopCount--){
+//            [_player removeItem:_player.currentItem];
+//        }
+//        [_player advanceToNextItem];
+//    }
     //인덱스가 다르면 현재 인덱스로 맞추어 줘야함.
     _curPlayIndex = index;
     //index부터 시작하는 큐를 플레이어에 넣어줌
     [self changePlayerQueueWithIndex:index];
     //
-    [self syncPlayTimeLabel];
     [self syncChangeMusic];
+    [self syncPlayTimeLabel];
     
     [self play];
     
@@ -186,44 +221,48 @@ static MusicFitPlayer *_playerInstance = nil;
     _player.volume = changeVolumeValue;
 }
 - (void)pause{
-    _playing = NO;
+    self.playing = NO;
     [_player pause];
-    [self.fitModeDelegate setWorkPlayer:_playing mode:_curMode];
+    [self.fitModeDelegate setWorkPlayer:self.playing mode:_curMode];
     [self.fitModeDelegate stopFitModeAnimation];
 }
 - (void)play{
-    _playing = YES;
+    self.playing = YES;
 //    NSLog(@"%d",[_player status]);
     [_player play];
-    [self.fitModeDelegate setWorkPlayer:_playing mode:_curMode];
+    [self.fitModeDelegate setWorkPlayer:self.playing mode:_curMode];
     [self.fitModeDelegate startFitModeAnimation];
     
 }
 - (void)nextPlay{
     ++_curPlayIndex;
-    if(_curPlayIndex == [_playQueue count]){
+    if(_curPlayIndex != [_playQueue count]){
+        [_player.currentItem seekToTime:kCMTimeZero];
+        [_player advanceToNextItem];
+    }else {
         _curPlayIndex = 0;
+        [self changePlayerQueueWithIndex:0];
     }
-
     [self.playerDelegate initMusicProgress];
-    [self changePlayerQueueWithIndex:_curPlayIndex];
+    
     [self syncChangeMusic];
     [self syncPlayTimeLabel];
-}
+} 
 - (void)prevPlay{
     --_curPlayIndex;
-    if(_curPlayIndex <= 0){
+    if(_curPlayIndex > 0){
+        [self prevPlayItemAddInQueueWithIndex:_curPlayIndex];
+    }else{
         _curPlayIndex = [_playQueue count]-1;
+        [self changePlayerQueueWithIndex:[_playQueue count]-1];
     }
-    
     [self.playerDelegate initMusicProgress];
-    [self changePlayerQueueWithIndex:_curPlayIndex];
     [self syncChangeMusic];
     [self syncPlayTimeLabel];
 }
 
 - (BOOL)isPlaying{
-    return _playing;
+    return self.playing;
 }
 
 
@@ -455,7 +494,7 @@ static MusicFitPlayer *_playerInstance = nil;
     
     [self syncPlayTimeLabel];
     //activity indicator 끄기 delegate
-    [self.fitModeDelegate setWorkPlayer:_playing mode:_curMode];
+    [self.fitModeDelegate setWorkPlayer:self.playing mode:_curMode];
 //    [NSThread detachNewThreadSelector:@selector(threadChangeMode:) toTarget:self withObject:[NSNumber numberWithInteger:mode]];
 
 }
@@ -485,7 +524,7 @@ static MusicFitPlayer *_playerInstance = nil;
         [self changePlayerQueueWithIndex:_curPlayIndex];
         //        [self playMusicWithIndex:_curPlayIndex];
         
-        [self.fitModeDelegate setWorkPlayer:_playing mode:_curMode];
+        [self.fitModeDelegate setWorkPlayer:self.playing mode:_curMode];
         [self.playerDelegate initMusicProgress];
         
         [self syncPlayTimeLabel];
@@ -498,6 +537,15 @@ static MusicFitPlayer *_playerInstance = nil;
 //        //그냥 현재 인덱스만 바뀜 (dbManager에서 바꿈)
 //        return;
 //    }
+}
+- (void)setPlaying:(BOOL)playing{
+    _playing = playing;
+}
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    if([keyPath  isEqual: @"self.playing"] && object == self){
+//        if(self.playing == YES)
+            [self.playerDelegate changePlayBtnSelected:self.playing];
+    }
 }
 - (void)pausePlayerForcibly:(BOOL)forcibly{
     if (forcibly)

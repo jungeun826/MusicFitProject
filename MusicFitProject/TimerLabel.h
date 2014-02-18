@@ -10,7 +10,7 @@
 @class TimerLabel;
 @protocol TimerLabelDelegate <NSObject>
 @optional
--(void)timerLabel:(TimerLabel*)timerLabel;
+-(void)timerLabel:(TimerLabel*)timerLabel startDate:(NSDate *)startDate timerValue:(NSInteger)timerValue;
 @end
 
 @interface TimerLabel : UILabel

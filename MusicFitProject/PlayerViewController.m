@@ -9,6 +9,7 @@
 #import "PlayerViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
+#import "CalendarViewController.h"
 
 #import "DBManager.h"
 #import "SwipeViewController.h"
@@ -33,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *playTimeSlider;
 @property (weak, nonatomic) IBOutlet UILabel *playTimeLabel;
 @property (weak, nonatomic) IBOutlet UISlider *playVolumSlider;
+@property (weak, nonatomic) IBOutlet UIView *playerView;
 @property (nonatomic, strong) MPVolumeView *volumeView;
 @end
 
@@ -175,7 +177,6 @@
     [player checkCurTime];
     [player callSliderMaxDelegate];
     
-   
     
 //    [myMusicPlayer registerHandlerPlayerRateChanged:^{
 //        [self syncPlayPauseButtons];
@@ -217,7 +218,12 @@
 //        NSLog(@"%@", [error localizedDescription]);
 //    }];
 }
-
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    if([keyPath  isEqual: @"playing"]){
+        
+        [self changePlayBtnSelected:[object playing]];
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -236,8 +242,9 @@
 }
 - (void)setSwipeController{
     SwipeViewController *swipeVC = [[SwipeViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 438)];
+    
+    
     [self addChildViewController:swipeVC];
-
     
     [self.view.subviews[1] addSubview:swipeVC.view];
     [swipeVC didMoveToParentViewController:self];
@@ -254,11 +261,11 @@
     playListViewController.row = 0;
     playListViewController.col = 2;
     
-    UIViewController *myViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"my"];
-    myViewController.row = 0;
-    myViewController.col = 3;
+    UIViewController *calendarViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"calendar"];
+    calendarViewController.row = 0;
+    calendarViewController.col = 3;
     
-    NSArray *controllers = @[ modeViewController, playViewController,playListViewController, myViewController];
+    NSArray *controllers = @[ modeViewController, playViewController,playListViewController, calendarViewController];
     [swipeVC setControllers:controllers];
     
     [swipeVC moveRightAnimated:NO];
@@ -289,5 +296,23 @@
 
 - (void)initMusicProgress{
     self.playTimeSlider.value = 0;
+}
+
+- (void)showPlayerWithDuration:(CGFloat)duration{
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        CGRect frame = self.playerView.frame;
+        frame.origin.x = 0;
+        self.playerView.frame = frame;
+    }completion:nil];
+}
+- (void)hiddenPlayerWithDuration:(CGFloat)duration{
+    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
+        CGRect frame = self.playerView.frame;
+        frame.origin.x = -320;
+        self.playerView.frame = frame;
+    }completion:nil];
+}
+- (void)changePlayBtnSelected:(BOOL)selected{
+    self.playBtn.selected = selected;
 }
 @end

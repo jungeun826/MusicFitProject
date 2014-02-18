@@ -7,36 +7,40 @@
 		<dict>
 			<key>Type</key>
 			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string></string>
+			<key>Key</key>
+			<string>profileImage_preference</string>
+			<key>DefaultValue</key>
+			<data></data>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
 			<key>Key</key>
 			<string>mode_preference</string>
 			<key>DefaultValue</key>
 			<integer>1</integer>
 		</dict>
 		<dict>
-			<key>AutocapitalizationType</key>
-			<string>None</string>
-			<key>AutocorrectionType</key>
-			<string>No</string>
-			<key>IsSecure</key>
-			<false/>
-			<key>Key</key>
-			<string>name_preference</string>
-			<key>KeyboardType</key>
-			<string>Alphabet</string>
-			<key>Title</key>
-			<string>Name</string>
 			<key>Type</key>
-			<string>PSTextFieldSpecifier</string>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string></string>
+			<key>Key</key>
+			<string>promise_preference</string>
+			<key>DefaultValue</key>
+			<string>0</string>
 		</dict>
 		<dict>
-			<key>DefaultValue</key>
-			<true/>
-			<key>Key</key>
-			<string>turorial_preference</string>
-			<key>Title</key>
-			<string>Tutorial 보기 설정</string>
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string></string>
+			<key>Key</key>
+			<string>tutorial_preference</string>
+			<key>DefaultValue</key>
+			<true/>
 		</dict>
 	</array>
 	<key>StringsTable</key>

@@ -207,9 +207,9 @@
 }
 -(void)deleteCell{
     int selectedIndex = (int)[self.modeTable indexPathForSelectedRow].row;
-    Mode *mode = [_DBManager getModeWithIndex:selectedIndex];
+//    Mode *mode = [_DBManager getModeWithIndex:selectedIndex];
 //    NSLog(@"mode_id:%d",(int)mode.modeID);
-    [_DBManager deleteModeWithModeID:mode.modeID];
+    [_DBManager deleteModeWithIndex:selectedIndex];
     [_DBManager syncMode];
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:ADDMODE_SECTION];

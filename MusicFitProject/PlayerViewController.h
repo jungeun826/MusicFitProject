@@ -12,5 +12,6 @@
 
 @interface PlayerViewController : UIViewController <AVAudioSessionDelegate>
 - (void)setSwipeController;
-
+- (void)hiddenPlayerWithDuration:(CGFloat)duration;
+- (void)showPlayerWithDuration:(CGFloat)duration;
 @end

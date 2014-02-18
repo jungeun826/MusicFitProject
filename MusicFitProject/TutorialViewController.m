@@ -71,6 +71,7 @@
     }while(!_repeat);
     //탈출하면 분석이 진행된 것이므로 사라지는 애니매이션과 같이 플레이 뷰로 옮기도록 함
     [self performSelector:@selector(movePlayView) withObject:nil afterDelay:0.3];
+    [self syncUserDefaultTutorial];
 }
 - (void)syncUserDefaultTutorial{
     NSUserDefaults *userDefualt = [NSUserDefaults standardUserDefaults];

@@ -34,8 +34,6 @@
 @implementation PlayViewController{
     //시간 설정이 되어 있느냐
     BOOL _startTimer;
-    //지금 음악을 듣고 있느냐
-    BOOL _isPlaing;
     NSInteger _curMode;
     TimerLabel *_timerLabel;
 }
@@ -97,13 +95,14 @@
     NSInteger timerTime = (hour*60*60+minute*60);
     NSLog(@"Timer Setting : %02d : %02d, total Second: %d", hour, minute, timerTime);
     [_timerLabel setCountDownTime: 10];
+    MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
     
     if(![_timerLabel running]){
 //        [_btnStartCountdownExample6 setTitle:@"Pause" forState:UIControlStateNormal];
         
         [_timerLabel start];
         NSLog(@"running....");
-        if(_isPlaing == NO)
+        if([player isPlaying])
             [_timerLabel pause];
     } else {
         [_timerLabel pause];
@@ -130,7 +129,7 @@
     }completion:nil];
 }
 - (void)fitmodeAnimation{
-    if(_startTimer && _isPlaing){
+    if([self.timeViewLabel fire]){
         self.fitModeImageView.animationImages =@[[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_0", _curMode]],[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_1", _curMode]],[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_2", _curMode]],[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_3", _curMode]]];
         self.fitModeImageView.animationDuration=0.8;
         self.fitModeImageView.animationRepeatCount=INFINITY;
@@ -149,19 +148,24 @@
     [NSThread detachNewThreadSelector:@selector(fitmodeAnimation) toTarget:self withObject:nil];
 }
 -(void)stopFitModeAnimation{
-    if(!_startTimer || !_isPlaing){
         [self.fitModeImageView stopAnimating];
-    }
 }
 -(void)setWorkPlayer:(BOOL)isPlaying mode:(NSInteger)curMode{
-    _isPlaing = isPlaying;
+   
     _curMode = curMode;
     [self setfitModeImage];
 }
-- (void)timerLabel:(TimerLabel*)timerLabel{
+- (void)timerLabel:(TimerLabel*)timerLabel startDate:(NSDate *)startDate timerValue:(NSInteger)timerValue{
 //    [_btnStartCountdownExample6 setTitle:@"Start" forState:UIControlStateNormal];
+    DBManager *dbManager = [DBManager sharedDBManager];
+    [dbManager insertCalendarWithExerTime:timerValue/60 startdate:startDate];
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"KST"]];
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
     
-    NSString *msg = @"Countdown finished!";
+    NSString *date = [dateFormatter stringFromDate:startDate];
+    
+    NSString *msg = [NSString stringWithFormat:@"Countdown finished! timer:%d startDate:%@", timerValue , date];
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:msg delegate:nil cancelButtonTitle:@"Awesome!" otherButtonTitles:nil];
     
     _startTimer = NO;
@@ -182,7 +186,6 @@
     _timerLabel = [TimerLabel sharedTimerSetWithLabel:self.timeViewLabel progressView:self.fitProgress];
     _timerLabel.delegate = self;
     _startTimer = NO;
-    _isPlaing = NO;
     
 	// Do any additional setup after loading the view.
     MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];

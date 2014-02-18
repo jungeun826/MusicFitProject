@@ -10,57 +10,60 @@
 @interface DayCell()
 
 @end
-@implementation DayCell
+@implementation DayCell{
+    BOOL _selected;
+}
 - (id)initBlankCell{
     self = [super init];
     if(self){
         self.dayLabel.hidden = YES;
-        self.dayBtn.hidden = YES;
+        self.modeImageView.hidden = YES;
+        self.selectImageView.hidden = YES;
+        self.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.contentView.layer.borderWidth = 1.0f;
     }
     return self;
 }
-- (id)initWithDay:(NSString *)day lastMode:(NSString *)mode{
+- (id)initWithDay:(NSString *)day lastMode:(NSInteger)mode{
     self = [super init];
     if(self){
+        CGFloat borderWidth = 1.0f;
+        UIView *bgView = [[UIView alloc] initWithFrame:self.frame];
+        bgView.backgroundColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"setting_calendar_today.png"]];
+        bgView.layer.borderColor = [UIColor colorWithPatternImage:[UIImage imageNamed:@"setting_calendar_today.png"]].CGColor;
+        bgView.layer.borderWidth = borderWidth;
+        
+        self.contentView.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.contentView.layer.borderWidth = 1.0f;
+        
+        
+        self.selectedBackgroundView = bgView;
+        
         self.dayLabel.hidden = NO;
-        self.dayBtn.hidden = NO;
-        if(mode == nil){
+        self.modeImageView.hidden = NO;
+        self.selectImageView.hidden = NO;
+        _selected = NO;
+        if(mode == 0){
             self.dayLabel.text = day;
-        }else if([mode isEqualToString:@"걷기"]){
+            self.modeImageView.image = nil;
+        }else if(mode == 1){
             self.dayLabel.text = @"";
-            [self.dayBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-            [self.dayBtn setImage:[UIImage imageNamed:@"48.png"] forState:UIControlStateSelected];
-        }else if([mode isEqualToString:@"조깅,트레밀러"]){
+            [self.modeImageView  setImage:[UIImage imageNamed:@"icon_mode1.png"]];
+        }else if(mode == 2){
                         self.dayLabel.text = @"";
-            [self.dayBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-            [self.dayBtn setImage:[UIImage imageNamed:@"48.png"] forState:UIControlStateSelected];
-        }else if([mode isEqualToString:@"뛰기"]){
+            [self.modeImageView  setImage:[UIImage imageNamed:@"icon_mode2.png"]];
+        }else if(mode == 3){
             self.dayLabel.text = @"";
-            [self.dayBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-            [self.dayBtn setImage:[UIImage imageNamed:@"48.png"] forState:UIControlStateSelected];
-        }else if([mode isEqualToString:@"사이클링"]){
+            [self.modeImageView  setImage:[UIImage imageNamed:@"icon_mode3.png"]];
+        }else if(mode == 4){
             self.dayLabel.text = @"";
-            [self.dayBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-            [self.dayBtn setImage:[UIImage imageNamed:@"48.png"] forState:UIControlStateSelected];
+            [self.modeImageView  setImage:[UIImage imageNamed:@"icon_mode4.png"]];
         }else{
             self.dayLabel.text = @"";
-            [self.dayBtn setImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-            [self.dayBtn setImage:[UIImage imageNamed:@"48.png"] forState:UIControlStateSelected];
+           [self.modeImageView  setImage:[UIImage imageNamed:@"pop.png"]];
         }
     }
     return self;
-}
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated{
-    [super setSelected:selected];
 }
 /*
 // Only override drawRect: if you perform custom drawing.
