@@ -21,7 +21,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rKh-TI-GbI" customClass="SwipeView">
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rKh-TI-GbI" customClass="SwipeView">
                                 <rect key="frame" x="0.0" y="20" width="320" height="460"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -47,8 +47,16 @@
                                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="play_volume_control_bg_small.png" translatesAutoresizingMaskIntoConstraints="NO" id="DYO-ou-Csx">
+                                                <rect key="frame" x="8" y="14" width="217" height="8"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="play_volume_control_bg_on_small.png" translatesAutoresizingMaskIntoConstraints="NO" id="gR6-5t-cNU">
+                                                <rect key="frame" x="8" y="14" width="1" height="7"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                            </imageView>
                                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="TY9-vy-dsg">
-                                                <rect key="frame" x="6" y="1" width="221" height="34"/>
+                                                <rect key="frame" x="6" y="0.0" width="221" height="34"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 <connections>
@@ -190,6 +198,7 @@
                         <outlet property="albumImageView" destination="okD-W4-zBj" id="5Iz-za-T0V"/>
                         <outlet property="artistLabel" destination="PHX-6C-Rct" id="Hs5-cj-FPQ"/>
                         <outlet property="playBtn" destination="Uia-jQ-i3F" id="gRx-HQ-NGh"/>
+                        <outlet property="playCurProgressImg" destination="gR6-5t-cNU" id="Tgl-Qx-peM"/>
                         <outlet property="playTimeLabel" destination="fYL-GV-5DC" id="pZF-f0-UnU"/>
                         <outlet property="playTimeSlider" destination="TY9-vy-dsg" id="Av7-9X-96L"/>
                         <outlet property="playerView" destination="oWc-7I-yws" id="6Fv-nt-Okq"/>
@@ -210,7 +219,7 @@
                         <viewControllerLayoutGuide type="top" id="kyr-Jx-mfP"/>
                         <viewControllerLayoutGuide type="bottom" id="qp3-hh-JM7"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="Y9L-og-k8t">
+                    <view key="view" contentMode="scaleAspectFit" id="Y9L-og-k8t">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="480"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
@@ -2442,7 +2451,6 @@
                         <gestureRecognizers/>
                     </view>
                     <connections>
-                        <outlet property="calendarTable" destination="DOb-0z-giM" id="K1g-1Q-gby"/>
                         <outlet property="calenderView" destination="MpG-Gb-wwF" id="4mh-44-62O"/>
                         <outlet property="dayExerInfoLabel" destination="QT5-9T-Riz" id="ICg-VF-cSn"/>
                         <outlet property="dayExerInfoView" destination="OvK-Gu-avZ" id="AzD-It-tTV"/>
@@ -3010,10 +3018,14 @@
         <image name="play_back.png" width="48" height="32"/>
         <image name="play_bg.png" width="640" height="180"/>
         <image name="play_bg2.png" width="640" height="98"/>
+        <image name="play_bg2.png" width="640" height="98"/>
         <image name="play_next.png" width="48" height="32"/>
         <image name="play_play.png" width="70" height="70"/>
         <image name="play_stop.png" width="70" height="70"/>
+        <image name="play_stop.png" width="70" height="70"/>
         <image name="play_vol.png" width="44" height="32"/>
+        <image name="play_volume_control_bg_on_small.png" width="463" height="12"/>
+        <image name="play_volume_control_bg_small.png" width="464" height="12"/>
         <image name="player.jpg" width="719" height="91"/>
         <image name="pop.png" width="156" height="156"/>
         <image name="progressCircle.png" width="189" height="189"/>
@@ -3022,8 +3034,12 @@
         <image name="splash.png" width="640" height="960"/>
         <image name="status_mode.png" width="640" height="78"/>
         <image name="status_musicfit.png" width="640" height="78"/>
+        <image name="status_musicfit.png" width="640" height="78"/>
         <image name="status_setting.png" width="640" height="78"/>
         <image name="status_songs.png" width="640" height="78"/>
+        <image name="status_songs.png" width="640" height="78"/>
+        <image name="status_songs.png" width="640" height="78"/>
+        <image name="time_right.png" width="44" height="44"/>
         <image name="time_right.png" width="44" height="44"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

@@ -115,8 +115,6 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
     
-    
-    
     [NSThread detachNewThreadSelector:@selector(getITunseSyncMusic) toTarget:self withObject:nil];
     //페이지 컨트롤러에 대한 이벤트를 추가함
     [self.pageControl addTarget:self action:@selector(pageChangeValue:) forControlEvents:UIControlEventValueChanged];
@@ -137,6 +135,9 @@
     NSArray *itemsFromGenericQuery = [everything items];
     //
     NSInteger count = [itemsFromGenericQuery count] -1;
+    
+    NSMutableArray *insertArr = [[NSMutableArray alloc]init];
+    NSLog(@"insert Start");
     for(int index = 0 ; index < count ; index++){
         
         MPMediaItem *music = [itemsFromGenericQuery objectAtIndex:index];
@@ -162,10 +163,13 @@
         //FIXME: bpm 분석 후 얻어오는 부분 추가시 위의 주석이랑 같이 처리
         NSInteger BPM = index*3 +2;
         
+        Music *song = [[Music alloc] initWithMusicID:0 BPM:BPM title:title artist:artist location:location isMusic:YES];
+        
+        [insertArr addObject:song];
         //FIXME:무조건 isMusic을 true로 넣는다 고쳐야함.
-        [dbManager insertMusicWithBPM:BPM title:title artist:artist location:location isMusic:YES];
     }
-    
+    [dbManager insertMusicWithMusicArr:insertArr];
+    NSLog(@"insert end");
     [dbManager initStaticMode];
     /*
      가슴 시린 이야기 (Feat. 용준형 of BEAST), 휘성, 8605142450541980905

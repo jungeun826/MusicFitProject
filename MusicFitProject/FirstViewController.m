@@ -59,7 +59,6 @@
 - (void)viewDidLoad{
     [super viewDidLoad];
 
-    
     [self performSelector:@selector(animationMainImage) withObject:nil afterDelay:1.0];
     [self performSelector:@selector(getITunseSyncMusic) withObject:nil afterDelay:0.0];
     
@@ -70,7 +69,7 @@
 
 //아이튠즈에서 음악에 대한 정보를 가져와 DB화 하는 함수를 부름
 - (void)getITunseSyncMusic{
-    
+    //1.7초
     DBManager *dbManager = [DBManager sharedDBManager];
     //아이튠즈 미디어들을 모두 가져와 초기화함
     MPMediaQuery *everything = [[MPMediaQuery alloc] init];
@@ -78,86 +77,19 @@
     NSArray *itemsFromGenericQuery = [everything items];
     //
     NSInteger count = [itemsFromGenericQuery count] -1;
-    for(int index = count ; index >= 0 ; index--){
+    
+    NSMutableArray *insertArr = [[NSMutableArray alloc]init];
+    NSLog(@"insert Start");
+    for(int index = 0 ; index < count ; index++){
         
         MPMediaItem *music = [itemsFromGenericQuery objectAtIndex:index];
         
-        NSURL *url =[music valueForProperty:MPMediaItemPropertyAssetURL] ;
+        NSString *stringURL = [[music valueForProperty:MPMediaItemPropertyAssetURL] absoluteString];
+        NSString *location = [stringURL substringFromIndex:32];
         
-        NSString *mp3URLString = [url absoluteString];
-        NSString *location = [mp3URLString substringFromIndex:32];
         
-//            __autoreleasing NSError *error;
-//            NSData *data = [NSData dataWithContentsOfURL:url];
-
-            
         if([dbManager isExistWithlocation:location])
             continue;
-        NSLog(@"Start!!!!!!!!!!!!!!!!!!!!!!");
-        NSString *wavURLString = [NSTemporaryDirectory() stringByAppendingPathComponent:@"temp.wav"];
-//        [self exportMP3:url toFileUrl:wavURLString];
-        [self convertToWav:url wavURLString:wavURLString];
-        //            NSData *data = [NSData dataWithContentsOfFile:stringURL];
-        uint_t err = 0;
-        
-        uint_t samplerate = 0;
-        
-        uint_t buf_size = 1024*2;//1024; // window size (2^12)
-        
-        uint_t hop_size = buf_size/4;
-        
-        uint_t n_frames = 0, read = 0;
-        //            NSURL *output = [NSURL URLWithString:urlString];
-        char_t *source_path = (char_t *)[wavURLString UTF8String];
-        aubio_source_t * source = new_aubio_source(source_path, samplerate, hop_size);
-        if (!source) {
-            err = 1; goto beach;
-        }
-        int loopCount =0;
-        float bpm = 0.0f;
-        if (samplerate == 0 ) samplerate = aubio_source_get_samplerate(source);
-        // create some vectors
-        fvec_t * in = new_fvec (hop_size); // input audio buffer
-        fvec_t * out = new_fvec (2); // output position
-        // create tempo object
-        aubio_tempo_t * o = new_aubio_tempo("default", buf_size, hop_size, samplerate);
-        //            NSLog(@"start");
-        do {
-            // put some fresh data in input vector
-            aubio_source_do(source, in, &read);
-            // execute tempo
-            aubio_tempo_do(o,in,out);
-            
-            //                smpl_t is_beat = fvec_get_sample (out, 0);
-            //                NSLog(@"%f", is_beat);
-            // do something with the beats
-            if (out->data[0] != 0) {
-                //                    float ms = aubio_tempo_get_last_ms(o);
-                //                    float s = aubio_tempo_get_last_s(o);
-                //                    int frame = aubio_tempo_get_last(o);
-                bpm += aubio_tempo_get_bpm(o);
-                //                    float confidence = aubio_tempo_get_confidence(o);
-                
-                //                    NSLog(@"beat at %.3fms, %.3fs, frame %d, %.2fbpm with confidence %.2f",ms,s,frame,bpm,confidence);
-                
-                loopCount++;
-            }
-            n_frames += read;
-        } while ( read == hop_size );
-        float reead = n_frames * 1. / samplerate;
-        int frames = n_frames;
-        int hz =samplerate;
-        int blocks =n_frames / hop_size;
-        int averBPM = bpm/loopCount;
-        NSLog(@"read %.2fs, %d frames at %dHz (%d blocks) from %s count:%d\n BPM:%d",reead ,frames,hz,blocks, source_path, loopCount, averBPM);
-        // clean up memory
-        del_aubio_tempo(o);
-        del_fvec(in);
-        del_fvec(out);
-        del_aubio_source(source);
-    beach:
-        aubio_cleanup();
-        //            return err;
         
         
         NSString *title = [NSString stringWithFormat:@"%@",[music valueForProperty:MPMediaItemPropertyTitle]];
@@ -166,17 +98,24 @@
         NSString *artist = [NSString stringWithFormat:@"%@",[music valueForProperty:                        MPMediaItemPropertyArtist]];
         artist =[artist stringByReplacingOccurrencesOfString: @"'" withString: @"''"];
         
-        
+//        NSString *wavURLString = [NSTemporaryDirectory() stringByAppendingPathComponent:@"temp.wav"];
+        ////        [self exportMP3:url toFileUrl:wavURLString];
+        ////        [self convertToWav:url wavURLString:wavURLString];
+        //        //            NSData *data = [NSData dataWithContentsOfFile:stringURL];
+        //
+        ////        NSInteger BPM = [self anlysisBPMWithWav:wavURLString];
         //유효 bpm범위 처리를 해야함.
-        //        NSInteger BPM = [[music valueForProperty:MPMediaItemPropertyBeatsPerMinute] intValue];
         
         //FIXME: bpm 분석 후 얻어오는 부분 추가시 위의 주석이랑 같이 처리
-//        NSInteger BPM = index*3 +2;
+        NSInteger BPM = index*3 +2;
         
+        Music *song = [[Music alloc] initWithMusicID:0 BPM:BPM title:title artist:artist location:location isMusic:YES];
+        
+        [insertArr addObject:song];
         //FIXME:무조건 isMusic을 true로 넣는다 고쳐야함.
-        [dbManager insertMusicWithBPM:averBPM title:title artist:artist location:location isMusic:YES];
     }
-    
+    [dbManager insertMusicWithMusicArr:insertArr];
+    NSLog(@"insert end");
     [dbManager initStaticMode];
     /*
      가슴 시린 이야기 (Feat. 용준형 of BEAST), 휘성, 8605142450541980905
@@ -232,7 +171,76 @@
     //        [_musicDBManager insertMusicWithBPM:BPM title:title artist:artist location:location isMusic:YES];
     //    }
 }
-
+- (NSInteger)anlysisBPMWithWav:(NSString *)wavURLString{
+    uint_t err = 0;
+    
+    uint_t samplerate = 0;
+    
+    uint_t buf_size = 1024*2;//1024; // window size (2^12)
+    
+    uint_t hop_size = buf_size/8;
+    
+    uint_t n_frames = 0, read = 0;
+    //            NSURL *output = [NSURL URLWithString:urlString];
+    char_t *source_path = (char_t *)[wavURLString UTF8String];
+    aubio_source_t * source = new_aubio_source(source_path, samplerate, hop_size);
+    
+    int averBPM = 0;
+    
+    if (!source) {
+        err = 1;
+        goto beach;
+    }
+    int loopCount =0;
+    float bpm = 0.0f;
+    
+    if (samplerate == 0 ) samplerate = aubio_source_get_samplerate(source);
+    // create some vectors
+    fvec_t * in = new_fvec (hop_size); // input audio buffer
+    fvec_t * out = new_fvec (2); // output position
+    // create tempo object
+    aubio_tempo_t * o = new_aubio_tempo("default", buf_size, hop_size, samplerate);
+    //            NSLog(@"start");
+    do {
+        // put some fresh data in input vector
+        aubio_source_do(source, in, &read);
+        // execute tempo
+        aubio_tempo_do(o,in,out);
+        
+        //                smpl_t is_beat = fvec_get_sample (out, 0);
+        //                NSLog(@"%f", is_beat);
+        // do something with the beats
+        if (out->data[0] != 0) {
+            //                    float ms = aubio_tempo_get_last_ms(o);
+            //                    float s = aubio_tempo_get_last_s(o);
+            //                    int frame = aubio_tempo_get_last(o);
+            bpm += aubio_tempo_get_bpm(o);
+            //                    float confidence = aubio_tempo_get_confidence(o);
+            
+            //                    NSLog(@"beat at %.3fms, %.3fs, frame %d, %.2fbpm with confidence %.2f",ms,s,frame,bpm,confidence);
+            
+            loopCount++;
+        }
+        n_frames += read;
+    } while ( read == hop_size );
+    float reead = n_frames * 1. / samplerate;
+    int frames = n_frames;
+    int hz =samplerate;
+    int blocks =n_frames / hop_size;
+    averBPM = bpm/loopCount;
+    NSLog(@"read %.2fs, %d frames at %dHz (%d blocks) from %s count:%d\n BPM:%d",reead ,frames,hz,blocks, source_path, loopCount, averBPM);
+    // clean up memory
+    del_aubio_tempo(o);
+    del_fvec(in);
+    del_fvec(out);
+    del_aubio_source(source);
+beach:
+    aubio_cleanup();
+    //            return err;
+    
+    return averBPM;
+    
+}
 -(NSString *)exportMP3:(NSURL*)url toFileUrl:(NSString*)fileURL{
     AVURLAsset *asset=[[AVURLAsset alloc] initWithURL:url options:nil];
 //    NSURL *url = [NSURL url]
@@ -462,9 +470,9 @@
     [assetWriter startWriting];
     [assetReader startReading];
     
-//    AVAssetTrack *soundTrack = [songAsset.tracks objectAtIndex:0];
-//    CMTime startTime = CMTimeMake (0, soundTrack.naturalTimeScale);
-//    [assetWriter startSessionAtSourceTime: startTime];
+    AVAssetTrack *soundTrack = [songAsset.tracks objectAtIndex:0];
+    CMTime startTime = CMTimeMake (0, soundTrack.naturalTimeScale);
+    [assetWriter startSessionAtSourceTime: startTime];
 //
 //    UInt64 convertedByteCount = 0;
 //    dispatch_queue_t mediaInputQueue = dispatch_queue_create("mediaInputQueue", NULL);
@@ -499,7 +507,7 @@
                 [assetWriter finishWritingWithCompletionHandler:^{}];
                  NSLog(@"end");
                  
-                 [NSThread sleepForTimeInterval:0.5];
+                 [NSThread sleepForTimeInterval:0.7];
              }
          }
 //     }];

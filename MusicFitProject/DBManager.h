@@ -42,6 +42,8 @@
 - (NSInteger)getNumberOfMode;
 //+ (id)sharedMusicDBManager;
 - (BOOL)insertMusicWithBPM:(NSInteger)bpm title:(NSString *)title artist:(NSString *)artist location:(NSString *)location isMusic:(BOOL)isMusic;
+- (BOOL)insertMusicWithMusicArr:(NSArray *)musicArr;
+
 - (Music *)getMusicWithIndex:(NSInteger)index;
 - (Music *)getMusicWithMusicID:(NSInteger)musicID;
 - (BOOL)deleteMusicWithMusicID:(NSInteger)musicID;
