@@ -16,11 +16,10 @@
 
 @end
 
-@implementation AddSongViewController{
-    DBManager *_DBManager;
-}
+@implementation AddSongViewController
 -(NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    NSInteger rows = [_DBManager getNumberOfMusic];
+    DBManager *dbManager = [DBManager sharedDBManager];
+    NSInteger rows = [dbManager getNumberOfMusic];
     NSLog(@"%d", (int)rows);
     return rows;
 }
@@ -40,35 +39,19 @@
 -(UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     PlayListCell *cell = [tableView dequeueReusableCellWithIdentifier:@"PLAYLIST_CELL" forIndexPath:indexPath];
+    DBManager *dbManager = [DBManager sharedDBManager];
     
-    Music *music = [_DBManager getMusicWithIndex:indexPath.row];
+    Music *music = [dbManager getMusicWithIndex:indexPath.row];
     
-    //    NSLog(@"%@", music.title);
     [cell setEditWithTitle:music.title artist:music.artist];
     return cell;
     
 }
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
-    _DBManager = [DBManager sharedDBManager];
 }
-- (void)viewWillAppear:(BOOL)animated{
-    //    [MusicFitPlayer sha]
-}
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }

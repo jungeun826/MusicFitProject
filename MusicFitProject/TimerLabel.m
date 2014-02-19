@@ -44,6 +44,8 @@ static TimerLabel *_timerInstance;
     if(self){
         self.timeLabel = theLabel;
         self.progressView = progressView;
+        _fire = NO;
+        _running = NO;
         [self setup];
     }
     return self;
@@ -92,7 +94,7 @@ static TimerLabel *_timerInstance;
         startCountDate = [[NSDate date] dateByAddingTimeInterval:-countedTime];
         pausedTime = nil;
     }
-    
+    _fire = YES;
     _running = YES;
     [_timer fire];
 }

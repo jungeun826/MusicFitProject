@@ -94,21 +94,24 @@
     NSInteger minute = [self.clockPicker selectedRowInComponent:MINUTE];
     NSInteger timerTime = (hour*60*60+minute*60);
     NSLog(@"Timer Setting : %02d : %02d, total Second: %d", hour, minute, timerTime);
-    [_timerLabel setCountDownTime: 10];
     MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
     
-    if(![_timerLabel running]){
+    if(![_timerLabel fire]){
 //        [_btnStartCountdownExample6 setTitle:@"Pause" forState:UIControlStateNormal];
-        
-        [_timerLabel start];
-        NSLog(@"running....");
-        if([player isPlaying])
+          [_timerLabel setCountDownTime: 10];
+        if([player isPlaying] == YES){
+            
+            [_timerLabel start];
+            NSLog(@"running....");
+        }else if([player isPlaying]){
+            [_timerLabel start];
             [_timerLabel pause];
-    } else {
-        [_timerLabel pause];
-        NSLog(@"pause....");
-//        [_btnStartCountdownExample6 setTitle:@"Resume" forState:UIControlStateNormal];
+        }
     }
+//        [_timerLabel pause];
+//        NSLog(@"pause....");
+//        [_btnStartCountdownExample6 setTitle:@"Resume" forState:UIControlStateNormal];
+//    }
 
     
     [self startFitModeAnimation];
@@ -192,15 +195,14 @@
     player.fitModeDelegate = self;
     _curMode = [[DBManager sharedDBManager] getCurModeID];
     self.fitModeImageView.image = [[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_0", (int)_curMode]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
-    //    [self setCurMode];
 }
 - (void)didReceiveMemoryWarning{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewDidAppear:(BOOL)animated{
-    [super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
     
 }
 @end

@@ -37,6 +37,12 @@
     }
 }
 - (IBAction)askListSave:(id)sender {
+    _deleteSongList = [self.editTable indexPathsForSelectedRows];
+    
+    if( [_deleteSongList count] == 0 && [_addSongList count] == 0){
+        [self dismissViewControllerAnimated:YES completion:nil];
+        return;
+    }
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:nil message:@"리스트를 저장하시겠습니까?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
     
     [alert show];
@@ -68,10 +74,8 @@
         [self dismissViewControllerAnimated:YES completion:nil];
     }else if(buttonIndex == alertView.firstOtherButtonIndex){
         //delete select된것을 삭제하도록 함.
-        NSArray *selectedIndexPaths =[self.editTable indexPathsForSelectedRows];
-        if([selectedIndexPaths count]>0 ){
-            _deleteSongList =  [self.editTable indexPathsForSelectedRows];
-        
+
+        if([_deleteSongList count]>0 ){
             [_DBManager deleteListWithArray:_deleteSongList];
             
             NSInteger latestDeleteIndex = 0;
@@ -103,15 +107,14 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     _deleteSongList = [self.editTable indexPathsForSelectedRows];
 }
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
     }
     return self;
 }
-- (void)viewDidAppear:(BOOL)animated{
+- (void)viewWillAppear:(BOOL)animated{
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:ADDEDMUSIC_SECTION];
     
     [self.editTable reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -124,17 +127,13 @@
         [self.editTable selectRowAtIndexPath:_deleteSongList[index] animated:NO scrollPosition:UITableViewScrollPositionNone];
     }
 }
-- (void)viewDidLoad
-{
+- (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
      self.editListToPlayerDelegate = [MusicFitPlayer sharedPlayer];
     _DBManager = [DBManager sharedDBManager];
     _deleteSongList = [[NSArray alloc]init];
     _addSongList = [[NSMutableArray alloc]init];
-}
-- (void)viewWillAppear:(BOOL)animated{
-//    [MusicFitPlayer sha]
 }
 - (void)didReceiveMemoryWarning
 {
