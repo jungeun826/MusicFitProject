@@ -19,4 +19,6 @@
 
 - (id)initBlankCell;
 - (id)initWithDay:(NSString *)day lastMode:(NSInteger)mode;
+- (void)selectCell;
+- (void)dismissCell;
 @end

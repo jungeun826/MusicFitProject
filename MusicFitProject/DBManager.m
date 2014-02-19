@@ -22,21 +22,13 @@ static DBManager *_instance = nil;
 +(id)sharedDBManager{
     if (nil == _instance){
         _instance = [[DBManager alloc] init];
-       
+        _instance->_curPlayMusicList = [[NSMutableArray alloc]init];
+        _instance->_modeList = [[NSMutableArray alloc]init];
+        _instance->_musicList = [[NSMutableArray alloc]init];
+        
+        [_instance createTable];
     }
     return _instance;
-}
-- (id)init{
-    self = [super init];
-    if(self){
-        _curPlayMusicList = [[NSMutableArray alloc]init];
-        _modeList = [[NSMutableArray alloc]init];
-        _musicList = [[NSMutableArray alloc]init];
-    
-        [self createTable];
-        _curModeID = [[[NSUserDefaults standardUserDefaults] stringForKey:@"mode_preference"] intValue];
-    }
-    return self;
 }
 
 - (void)createTable{
@@ -150,7 +142,7 @@ static DBManager *_instance = nil;
         NSLog(@"InsertQuery Error : %s", sqlite3_errmsg(db));
         return NO;
     }else
-//        NSLog(@"insert Query : %@", insertQuery);
+        NSLog(@"insert Query : %@", insertQuery);
     
     sqlite3_finalize(stmt);
     
@@ -330,7 +322,6 @@ static DBManager *_instance = nil;
     [userDefualt setInteger:_curModeID forKey:@"mode_preference"];
     [userDefualt synchronize];
 }
-
 - (BOOL)syncModeListWithIndex:(NSInteger)index{
     
     _curPlayMusicList = [[NSMutableArray alloc]init];
@@ -424,7 +415,6 @@ static DBManager *_instance = nil;
             return ;
         }
         _curModeID = 1;
-        [self setUserDefualtMode];
         [self syncList];
     }
 }
@@ -621,38 +611,6 @@ static DBManager *_instance = nil;
     [self closeDB];
     return YES;
 }
-
-- (BOOL)insertMusicWithMusicArr:(NSArray *)musicArr{
-    
-    int count = (int)[musicArr count];
-    
-    sqlite3_stmt *insertStmt;
-    char *insetQuery = "INSERT INTO MUSIC (BPM, Title, Artist, Location, IsMusic) VALUES (?,?,?,?,?)";
-    
-    [self openDB];
-    int ret = sqlite3_prepare_v2(db, insetQuery, -1, &insertStmt, NULL);
-    if(ret != SQLITE_OK){
-        NSLog(@"error add array: %s", sqlite3_errmsg(db));
-        return NO;
-    }
-    
-    for(int index = 0 ; index < count ; index++) {
-        Music *insertMusic = musicArr[index];
-        
-        ret = sqlite3_bind_int(insertStmt, 1, insertMusic.BPM);
-        ret = sqlite3_bind_text(insertStmt, 2, [insertMusic.title UTF8String], -1, nil);
-        ret = sqlite3_bind_text(insertStmt, 3, [insertMusic.artist UTF8String], -1, nil);
-        ret = sqlite3_bind_text(insertStmt, 4, [insertMusic.location UTF8String], -1, nil);
-        ret = sqlite3_bind_int(insertStmt, 5, insertMusic.isMusic);
-        ret = sqlite3_step(insertStmt);
-        
-        ret = sqlite3_reset(insertStmt);
-    }
-    sqlite3_finalize(insertStmt);
-    [self syncList];
-    return YES;
-}
-
 - (BOOL)deleteMusicWithMusicID:(NSInteger)musicID{
     NSString *deleteQuery = [NSString stringWithFormat:@"DELETE FROM MUSIC WHERE musicID = %d",(int)musicID];
     [self openDB];
@@ -841,12 +799,11 @@ static DBManager *_instance = nil;
     
     NSString *todayDate = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:month]];
     
-    NSString *nextDayDate = todayDate;
+    NSString *nextDayDate;
     int exerCount = 0;
     int exerMinuteCount = 0;
     BOOL alreadyCount = NO;
     for(int index = 1 ; index <= 31 ; index++) {
-        todayDate = nextDayDate;
         [month setDay:index+1];
         nextDayDate =  [dateFormatter stringFromDate:[month date]];
         
@@ -865,7 +822,6 @@ static DBManager *_instance = nil;
     }
     sqlite3_finalize(selectStmt);
     [self closeDB];
-    NSLog(@"month : count %d time  %d", exerCount , exerMinuteCount);
     monthInfo = @{@"totalExerCount": [NSNumber numberWithInt:exerCount], @"totalExerMinute":[NSNumber numberWithInt:exerMinuteCount]};
     
     return monthInfo;
@@ -950,8 +906,7 @@ static DBManager *_instance = nil;
         NSDate *startDate = [[NSDate alloc]init];
         startDate = [dateFormatter dateFromString:date];
             dayInfo = [[CalendarDayInfo alloc] initWithDate:startDate modeID:modeID exerTime:exerTime];
-        
-        NSLog(@"SELECT DAYINFO DATA!!!!!!!! date:%@, modeID : %d, exerTime: %d",date, modeID, exerTime);
+            
             [dayArr addObject:dayInfo];
     }
     

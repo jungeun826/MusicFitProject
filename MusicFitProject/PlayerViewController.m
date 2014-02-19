@@ -22,7 +22,6 @@
 #define SOUNDVIEW_MARGIN_X 0
 
 @interface PlayerViewController () <UIAlertViewDelegate, MusicFitPlayerDelegate>
-@property (weak, nonatomic) IBOutlet UIImageView *playCurProgressImg;
 
 @property (weak, nonatomic) IBOutlet UIView *swipeView;
 @property (weak, nonatomic) IBOutlet UIView *soundView;
@@ -42,7 +41,7 @@
 @implementation PlayerViewController{
     DBManager *_DBManager;
     NSInteger curPlayIndex;
-//    TimerLabel *_timer;
+    TimerLabel *_timer;
 }
 
 - (IBAction)changeVolume:(id)sender {
@@ -56,7 +55,8 @@
         self.soundView.frame = CGRectMake( X, self.soundView.frame.origin.y, self.soundView.frame.size.width, self.soundView.frame.size.height);
     }completion:nil];
 }
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil{
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         // Custom initialization
@@ -67,20 +67,17 @@
 - (IBAction)playORpause:(id)sender {
     MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
     BOOL isPlaying = [player isPlaying];
-    TimerLabel *timer = [TimerLabel sharedTimer];
     if(isPlaying){
         self.playBtn.selected = !self.playBtn.selected;
         [player pause];
-        //정지임
-        if([timer fire] && [timer running])
-            [timer pause];
+        if([_timer running])
+            [_timer start];
     }
     else{
         self.playBtn.selected = !self.playBtn.selected;
         [player play];
-        //플레이임
-        if([timer fire] && ![timer running])
-            [timer start];
+        if([_timer running])
+            [_timer pause];
     }
 }
 
@@ -98,7 +95,6 @@
     MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
     
     [player changePlayPoint:self.playTimeSlider.value];
-    [self changePlaySliderImagePoint];
 }
 - (IBAction)changePlayVolume:(id)sender {
     MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
@@ -137,17 +133,30 @@
     [self.volumeView sizeToFit];
 }
 - (void)changeSettingPlayTimeSlider{
-    CGSize size = self.playTimeSlider.frame.size;
-
-    [self.playTimeSlider setMaximumTrackTintColor:[UIColor clearColor]];
-    [self.playTimeSlider setMinimumTrackTintColor:[UIColor clearColor]];
-    UIImage *tempImage = [UIImage imageNamed:@"play_control.png"] ;
+    CGSize size = CGSizeMake(250, 10);
+    
+    UIImage *tempImage = [UIImage imageNamed:@"play_volume_control_bg.png"];
+    UIGraphicsBeginImageContext(size);
+    [tempImage drawInRect:CGRectMake(0,0,size.width,size.height)];
+    UIImage* resizeImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+//    [self.playTimeSlider setMaximumTrackTintColor:[UIColor clearColor]];
+    [self.playTimeSlider setMaximumTrackImage:resizeImage forState:UIControlStateNormal];
+    [self.playTimeSlider setMaximumTrackImage:resizeImage forState:UIControlStateApplication];
+    [self.playTimeSlider setMaximumTrackImage:resizeImage forState:UIControlStateHighlighted];
+    [self.playTimeSlider setMinimumTrackImage:resizeImage forState:UIControlStateReserved];
+    [self.playTimeSlider setMinimumTrackImage:resizeImage forState:UIControlStateSelected];
+    
+    
+    
+    tempImage = [UIImage imageNamed:@"play_control.png"] ;
     
     size = CGSizeMake(20, 20);
     
     UIGraphicsBeginImageContext(size);
     [tempImage drawInRect:CGRectMake(0,0,size.width,size.height)];
-    UIImage *resizeImage = UIGraphicsGetImageFromCurrentImageContext();
+    resizeImage = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     [self.playTimeSlider setThumbImage:resizeImage forState:UIControlStateNormal];
     [self.playTimeSlider setThumbImage:resizeImage forState:UIControlStateSelected];
@@ -167,6 +176,7 @@
     [player syncLabel];
     [player checkCurTime];
     [player callSliderMaxDelegate];
+    
     
 //    [myMusicPlayer registerHandlerPlayerRateChanged:^{
 //        [self syncPlayPauseButtons];
@@ -208,10 +218,23 @@
 //        NSLog(@"%@", [error localizedDescription]);
 //    }];
 }
-- (void)didReceiveMemoryWarning{
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context{
+    if([keyPath  isEqual: @"playing"]){
+        
+        [self changePlayBtnSelected:[object playing]];
+    }
+}
+- (void)didReceiveMemoryWarning
+{
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    [[UIApplication sharedApplication] beginReceivingRemoteControlEvents];
+}
+
 - (void)viewWillDisappear:(BOOL)animated {
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     
@@ -219,6 +242,7 @@
 }
 - (void)setSwipeController{
     SwipeViewController *swipeVC = [[SwipeViewController alloc] initWithFrame:CGRectMake(0, 0, 320, 438)];
+    
     
     [self addChildViewController:swipeVC];
     
@@ -263,14 +287,8 @@
 - (void)syncMusicProgress:(NSString *)timeString timePoint:(NSInteger)timePoint{
     self.playTimeLabel.text = timeString;
     self.playTimeSlider.value = timePoint;
-    
-    [self changePlaySliderImagePoint];
 }
-- (void)changePlaySliderImagePoint{
-    float rate = (float)(self.playTimeSlider.value / self.playTimeSlider.maximumValue);
-    
-    self.playCurProgressImg.frame = CGRectMake(8, 14 , 217*rate , 8);
-}
+
 - (void)setMusicProgressMax:(NSInteger)max{
     [self.playTimeSlider setMaximumValue:max];
 //    NSLog(@"%d",(int)max);

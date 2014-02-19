@@ -36,6 +36,7 @@
     [self setControllers:controllers withFrame:self.view.frame];
 }
 - (void)viewDidLoad{
+    
     [super viewDidLoad];
 }
 #pragma mark - Public methods
@@ -124,13 +125,13 @@
     }
     
     _swipeGestureRecognizer = [[SwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swipeDetected:)];
-    
     [self.view addGestureRecognizer:_swipeGestureRecognizer];
     
     _visibleViewController = [_viewControllers objectAtIndex:0];
 }
 
-- (void)swipeDetected:(SwipeGestureRecognizer *)swipe{
+- (void)swipeDetected:(SwipeGestureRecognizer *)swipe
+{
     if (swipe.state == UIGestureRecognizerStateBegan) {
         _positionBeforeSwipe = self.view.frame.origin;
         _lastSwipeWay = swipe.way;
@@ -253,8 +254,8 @@
         frameForVisibleViewController.origin.x = -newController.view.frame.origin.x;
         self.view.frame = frameForVisibleViewController;
         
-        [_visibleViewController viewWillDisappear:animated];
-        [newController viewWillAppear:animated];
+        [_visibleViewController viewDidDisappear:animated];
+        [newController viewDidAppear:animated];
 
         
     }completion:^(BOOL finished) {
