@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 @class TimerLabel;
+@class CustomProgressBar;
+
 @protocol TimerLabelDelegate <NSObject>
 @optional
 -(void)timerLabel:(TimerLabel*)timerLabel startDate:(NSDate *)startDate timerValue:(NSInteger)timerValue;
@@ -17,10 +19,10 @@
 @property (strong) id<TimerLabelDelegate> delegate;
 
 @property (nonatomic,strong) UILabel *timeLabel;
-@property (nonatomic, strong) UIProgressView *progressView;
+@property (nonatomic, strong) CustomProgressBar *progressView;
 @property (assign,readonly) BOOL running;
 @property (assign,readonly) BOOL fire;
-+ (id)sharedTimerSetWithLabel:(UILabel *)theLabel progressView:(UIProgressView *)progressView;
++ (id)sharedTimerSetWithLabel:(UILabel *)theLabel progressView:(CustomProgressBar *)progressView;
 + (id)sharedTimer;
 //- (id)initWithLabel:(UILabel *)theLabel progressView:(UIProgressView *)progressView;
 

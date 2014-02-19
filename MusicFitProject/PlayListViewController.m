@@ -44,7 +44,7 @@
     Music *music = [_DBManager getMusicWithMusicID:musicID];
     
 //    NSLog(@"%@", music.title);
-    [cell setPlayListWithTitle:music.title artist:music.artist BPM:music.BPM image:[music getAlbumImageWithSize:CGSizeMake(30, 30)]];
+    [cell setPlayListWithTitle:music.title artist:music.artist BPM:music.BPM image:[music getAlbumImageWithSize:CGSizeMake(20, 20)]];
     return cell;
     
 }

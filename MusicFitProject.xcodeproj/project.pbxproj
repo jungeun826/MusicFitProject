@@ -120,6 +120,7 @@
 		00F4C2521886A47E006146CD /* PlayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F4C2511886A47E006146CD /* PlayViewController.m */; };
 		00F5C20118A36B2F007DC1F0 /* EditModeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F5C20018A36B2F007DC1F0 /* EditModeViewController.m */; };
 		00F6C83F18B07B01003C9E42 /* DayInfoCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F6C83E18B07B01003C9E42 /* DayInfoCell.m */; };
+		00F78C4218B468B800FE24AF /* CustomProgressBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 00F78C4118B468B800FE24AF /* CustomProgressBar.m */; };
 		00FC19AD1892220B00BA2036 /* Mode.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19AC1892220B00BA2036 /* Mode.m */; };
 		00FC19C11892544A00BA2036 /* ModeCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC19C01892544A00BA2036 /* ModeCell.m */; };
 		00FC8799189F430400F7F52E /* Music.m in Sources */ = {isa = PBXBuildFile; fileRef = 00FC8798189F430400F7F52E /* Music.m */; };
@@ -280,6 +281,8 @@
 		00F5C20018A36B2F007DC1F0 /* EditModeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditModeViewController.m; sourceTree = "<group>"; };
 		00F6C83D18B07B01003C9E42 /* DayInfoCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DayInfoCell.h; sourceTree = "<group>"; };
 		00F6C83E18B07B01003C9E42 /* DayInfoCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DayInfoCell.m; sourceTree = "<group>"; };
+		00F78C4018B468B800FE24AF /* CustomProgressBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomProgressBar.h; sourceTree = "<group>"; };
+		00F78C4118B468B800FE24AF /* CustomProgressBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomProgressBar.m; sourceTree = "<group>"; };
 		00FC19AB1892220B00BA2036 /* Mode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Mode.h; sourceTree = "<group>"; };
 		00FC19AC1892220B00BA2036 /* Mode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Mode.m; sourceTree = "<group>"; };
 		00FC19BF1892544A00BA2036 /* ModeCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModeCell.h; sourceTree = "<group>"; };
@@ -542,6 +545,8 @@
 				00F4C2511886A47E006146CD /* PlayViewController.m */,
 				0012896B18ACEB8A009D5ABE /* TimerLabel.h */,
 				0012896C18ACEB8A009D5ABE /* TimerLabel.m */,
+				00F78C4018B468B800FE24AF /* CustomProgressBar.h */,
+				00F78C4118B468B800FE24AF /* CustomProgressBar.m */,
 			);
 			name = Play;
 			sourceTree = "<group>";
@@ -810,6 +815,7 @@
 				00B1513B187F77EE0036182C /* main.m in Sources */,
 				00F6C83F18B07B01003C9E42 /* DayInfoCell.m in Sources */,
 				00F4C2521886A47E006146CD /* PlayViewController.m in Sources */,
+				00F78C4218B468B800FE24AF /* CustomProgressBar.m in Sources */,
 				00EEDC8618A8703C006E9ABA /* CalendarViewController.m in Sources */,
 				00FC19C11892544A00BA2036 /* ModeCell.m in Sources */,
 				00F5C20118A36B2F007DC1F0 /* EditModeViewController.m in Sources */,

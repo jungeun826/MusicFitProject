@@ -6,16 +6,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MusicFitProject/SwipeViewController.m"
-            timestampString = "414469295.568399"
+            filePath = "MusicFitProject/MusicFitPlayer.m"
+            timestampString = "414499366.206068"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "158"
-            endingLineNumber = "158"
-            landmarkName = "-handleSwipeWithDirection:way:velocity:translation:"
+            startingLineNumber = "181"
+            endingLineNumber = "181"
+            landmarkName = "-changePlayerQueueWithIndex:edit:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -25,13 +25,29 @@
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MusicFitProject/SwipeViewController.m"
-            timestampString = "414469300.011106"
+            filePath = "MusicFitProject/MusicFitPlayer.m"
+            timestampString = "414499366.206068"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "146"
-            endingLineNumber = "146"
-            landmarkName = "-setDestinationControllersWithWay:"
+            startingLineNumber = "160"
+            endingLineNumber = "160"
+            landmarkName = "-setPlayListQueueWithPlayIndex:edit:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MusicFitProject/MusicFitPlayer.m"
+            timestampString = "414499366.206068"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "162"
+            endingLineNumber = "162"
+            landmarkName = "-setPlayListQueueWithPlayIndex:edit:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -41,13 +57,45 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MusicFitProject/SwipeViewController.m"
-            timestampString = "414469364.617098"
+            filePath = "MusicFitProject/MusicFitPlayer.m"
+            timestampString = "414500784.084712"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "134"
-            endingLineNumber = "134"
-            landmarkName = "-swipeDetected:"
+            startingLineNumber = "526"
+            endingLineNumber = "526"
+            landmarkName = "-changeMode:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MusicFitProject/MusicFitPlayer.m"
+            timestampString = "414496209.357315"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "141"
+            endingLineNumber = "141"
+            landmarkName = "-setPlayListQueueWithPlayIndex:edit:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MusicFitProject/MusicFitPlayer.m"
+            timestampString = "414499366.206068"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "185"
+            endingLineNumber = "185"
+            landmarkName = "-changePlayerQueueWithIndex:edit:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
@@ -57,13 +105,29 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "MusicFitProject/SwipeViewController.m"
-            timestampString = "414469351.797772"
+            filePath = "MusicFitProject/MusicFitPlayer.m"
+            timestampString = "414499366.206068"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "126"
-            endingLineNumber = "126"
-            landmarkName = "-setControllers:withFrame:"
+            startingLineNumber = "172"
+            endingLineNumber = "172"
+            landmarkName = "-setPlayListQueueWithPlayIndex:edit:"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "MusicFitProject/MusicFitPlayer.m"
+            timestampString = "414499366.206068"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "199"
+            endingLineNumber = "199"
+            landmarkName = "-changePlayerQueueWithIndex:edit:"
             landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>

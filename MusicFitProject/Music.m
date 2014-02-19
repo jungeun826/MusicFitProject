@@ -48,8 +48,10 @@
         // Obtain a UIImage object from the MPMediaItemArtwork object
         if (artwork)
             albumImage = [artwork imageWithSize:size];
+        
     }else
         albumImage = [UIImage imageNamed:@"artview_1.png"];
+    
     return albumImage;
 }
 

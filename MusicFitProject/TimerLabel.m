@@ -7,10 +7,10 @@
 //
 
 #import "TimerLabel.h"
-
+#import "CustomProgressBar.h"
 #define TimeFormat  @"HH:mm:ss"
 
-#define FireInterval  0.5
+#define FireInterval  0.1
 
 
 @interface TimerLabel(){
@@ -29,7 +29,7 @@
 
 @implementation TimerLabel
 static TimerLabel *_timerInstance;
-+ (id)sharedTimerSetWithLabel:(UILabel *)theLabel progressView:(UIProgressView *)progressView{
++ (id)sharedTimerSetWithLabel:(UILabel *)theLabel progressView:(CustomProgressBar *)progressView{
     if(_timerInstance == nil){
         _timerInstance = [[TimerLabel alloc]initWithLabel:theLabel progressView:progressView];
     }
@@ -38,7 +38,7 @@ static TimerLabel *_timerInstance;
 + (id)sharedTimer{
     return _timerInstance;
 }
-- (id)initWithLabel:(UILabel *)theLabel progressView:(UIProgressView *)progressView{
+- (id)initWithLabel:(UILabel *)theLabel progressView:(CustomProgressBar *)progressView{
     self = [super init];
     
     if(self){
@@ -55,7 +55,7 @@ static TimerLabel *_timerInstance;
 - (void)setCountDownTime:(NSTimeInterval)time{
     _fire = YES;
     timerValue = time;
-    timeToCountOff = [date1970 dateByAddingTimeInterval:time];
+    timeToCountOff = [date1970 dateByAddingTimeInterval:0];
     [self updateLabel];
 }
 
@@ -109,7 +109,8 @@ static TimerLabel *_timerInstance;
 -(void)reset{
     pausedTime = nil;
     _fire = NO;
-    startCountDate = (self.running)? [NSDate date] : nil;
+    startCountDate = nil;
+    _running = NO;
     [self updateLabel];
 }
 
@@ -135,6 +136,8 @@ static TimerLabel *_timerInstance;
             [self pause];
             timeToShow = [date1970 dateByAddingTimeInterval:0];
             
+            [self.progressView setProgress:0.0f animated:NO];
+            
             if([_delegate respondsToSelector:@selector(timerLabel:startDate:timerValue:)]){
                 [_delegate timerLabel:self startDate:startCountDate timerValue:timerValue];
                 [self reset];
@@ -143,7 +146,7 @@ static TimerLabel *_timerInstance;
             startCountDate = nil;
         }else{
             
-            timeToShow = [timeToCountOff dateByAddingTimeInterval:(timeDiff*-1)+0.999]; //added 0.999 to make it actually counting the whole first second
+            timeToShow = [timeToCountOff dateByAddingTimeInterval:(timeDiff)]; //added 0.999 to make it actually counting the whole first second
         }
     }else{
         timeToShow = timeToCountOff;
@@ -153,6 +156,8 @@ static TimerLabel *_timerInstance;
     
     NSString *strDate = [self.dateFormatter stringFromDate:timeToShow];
     self.timeLabel.text = strDate;
-    self.progressView.progress = (float)(timeDiff/timerValue);
+    float value = (float)(timeDiff/timerValue);
+    if(!isnan(value))
+        [self.progressView setProgress:value animated:YES];
 }
 @end

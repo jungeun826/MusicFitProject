@@ -10,6 +10,7 @@
 #import "DBManager.h"
 #import "MusicFitPlayer.h"
 #import "TimerLabel.h"
+#import "CustomProgressBar.h"
 
 #define CLOCKPICKERVIEW_HIDDEN_Y 600
 #define CLOCKPICKERVIEW_MARGIN_Y 100
@@ -27,7 +28,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *notiColockSetLabel;
 
 @property (weak, nonatomic) IBOutlet TimerLabel *timeViewLabel;
-@property (weak, nonatomic) IBOutlet UIProgressView *fitProgress;
+@property (weak, nonatomic) IBOutlet CustomProgressBar *progressBar;
 
 @end
 
@@ -87,7 +88,7 @@
 }
 - (IBAction)setClock:(id)sender {
     [self moveClockPickerViewWithY:CLOCKPICKERVIEW_HIDDEN_Y];
-    [self moveFitProgressView];
+    [self moveFitProgressView:YES];
     
     _startTimer = YES;
     NSInteger hour = [self.clockPicker selectedRowInComponent:HOUR];
@@ -140,12 +141,21 @@
         [self.fitModeImageView startAnimating];
     }
 }
-- (void)moveFitProgressView{
-    [UIView animateWithDuration:0.2 delay:0.3 options:UIViewAnimationOptionCurveLinear animations:^{
-        CGRect frame = self.fitProgressView.frame;
-        self.fitProgressView.frame = self.notiColockSetLabel.frame;
-        self.notiColockSetLabel.frame = frame;
-    }completion:nil];
+- (void)moveFitProgressView:(BOOL)animated{
+    if(animated){
+        [UIView animateWithDuration:0.1 delay:0 options:  UIViewAnimationOptionCurveLinear animations:^{
+            CGRect frame = self.fitProgressView.frame;
+            self.fitProgressView.frame = self.notiColockSetLabel.frame;
+            self.notiColockSetLabel.frame = frame;
+        }completion:nil];
+    }else{
+        [UIView animateWithDuration:0 delay:1 options:  UIViewAnimationOptionCurveLinear animations:^{
+        }completion:^(BOOL finished) {
+            CGRect frame = self.fitProgressView.frame;
+            self.fitProgressView.frame = self.notiColockSetLabel.frame;
+            self.notiColockSetLabel.frame = frame;
+        }];
+    }
 }
 - (void)startFitModeAnimation{
     [NSThread detachNewThreadSelector:@selector(fitmodeAnimation) toTarget:self withObject:nil];
@@ -172,9 +182,9 @@
     UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:msg delegate:nil cancelButtonTitle:@"Awesome!" otherButtonTitles:nil];
     
     _startTimer = NO;
-    
+    [self.progressBar setProgress:0.0f];
     [self stopFitModeAnimation];
-    [self moveFitProgressView];
+    [self moveFitProgressView:NO];
     
     MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
     [player pause];
@@ -184,9 +194,19 @@
 -(void)checkProgressTime{
 //    self.fitProgressView
 }
+
+//FIXME:운동시간 배경색 고치기
+- (void)initRoundedSlimProgressBar{
+    self.progressBar.progressTintColor = [UIColor colorWithRed:239/255.0f green:225/255.0f blue:13/255.0f alpha:1.0f];
+    
+    self.progressBar.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeTrack;
+    
+    self.progressBar.stripesColor             = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
+}
 - (void)viewDidLoad{
     [super viewDidLoad];
-    _timerLabel = [TimerLabel sharedTimerSetWithLabel:self.timeViewLabel progressView:self.fitProgress];
+    [self initRoundedSlimProgressBar];
+    _timerLabel = [TimerLabel sharedTimerSetWithLabel:self.timeViewLabel progressView:self.progressBar];
     _timerLabel.delegate = self;
     _startTimer = NO;
     

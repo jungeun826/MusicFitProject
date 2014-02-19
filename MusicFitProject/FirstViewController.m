@@ -177,7 +177,6 @@
     uint_t samplerate = 0;
     
     uint_t buf_size = 1024*2;//1024; // window size (2^12)
-    
     uint_t hop_size = buf_size/8;
     
     uint_t n_frames = 0, read = 0;
@@ -216,9 +215,7 @@
             //                    int frame = aubio_tempo_get_last(o);
             bpm += aubio_tempo_get_bpm(o);
             //                    float confidence = aubio_tempo_get_confidence(o);
-            
             //                    NSLog(@"beat at %.3fms, %.3fs, frame %d, %.2fbpm with confidence %.2f",ms,s,frame,bpm,confidence);
-            
             loopCount++;
         }
         n_frames += read;

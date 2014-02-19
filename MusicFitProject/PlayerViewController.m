@@ -9,8 +9,6 @@
 #import "PlayerViewController.h"
 #import <AVFoundation/AVFoundation.h>
 #import <MediaPlayer/MediaPlayer.h>
-#import "CalendarViewController.h"
-
 #import "DBManager.h"
 #import "SwipeViewController.h"
 #import "AddedModeDelegate.h"
@@ -22,7 +20,8 @@
 #define SOUNDVIEW_MARGIN_X 0
 
 @interface PlayerViewController () <UIAlertViewDelegate, MusicFitPlayerDelegate>
-@property (weak, nonatomic) IBOutlet UIImageView *playCurProgressImg;
+@property (weak, nonatomic) IBOutlet UIImageView *playBackProcessImg;
+@property (weak, nonatomic) IBOutlet UIImageView *soundValueBackImage;
 
 @property (weak, nonatomic) IBOutlet UIView *swipeView;
 @property (weak, nonatomic) IBOutlet UIView *soundView;
@@ -37,6 +36,7 @@
 @property (weak, nonatomic) IBOutlet UISlider *playVolumSlider;
 @property (weak, nonatomic) IBOutlet UIView *playerView;
 @property (nonatomic, strong) MPVolumeView *volumeView;
+//@property (nonatomic, strong) UISlider *volumeSlider;
 @end
 
 @implementation PlayerViewController{
@@ -100,10 +100,14 @@
     [player changePlayPoint:self.playTimeSlider.value];
     [self changePlaySliderImagePoint];
 }
-- (IBAction)changePlayVolume:(id)sender {
-    MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
-    
-    [player changePlayVolume:self.playVolumSlider.value];
+- (IBAction)changePlayVolume:(id)sender{
+    UISlider *slider = self.volumeView.subviews[0];
+    float rate = (float)( slider.value / slider.maximumValue);
+    CGRect frame = self.soundValueBackImage.frame;
+    float width = (self.volumeView.frame.size.width);
+    frame.origin.x = width*rate + 56;
+    frame.size.width = width*(1-rate);
+    self.soundValueBackImage.frame = frame;
 }
 - (void)addVolumeView{
     self.volumeView = [[MPVolumeView alloc] init];
@@ -111,12 +115,10 @@
     [self.volumeView setShowsVolumeSlider:YES];
     [self.volumeView setShowsRouteButton:NO];
     
-    CGRect frame = self.volumeView.frame;
-    frame.origin.x = 71;
-    frame.origin.y = 10;
-    frame.size.width = 238;
+    CGRect frame = self.soundValueBackImage.frame;
+    frame.origin.y -= 6;
     self.volumeView.frame = frame;
-//
+
     UIImage *thumbImage = [UIImage imageNamed:@"play_volume_control.png"] ;
 
     CGSize size = CGSizeMake(20, 20);
@@ -126,10 +128,16 @@
         UIGraphicsEndImageContext();
 //
     [self.volumeView setVolumeThumbImage:thumbResizeImage forState:UIControlStateSelected];
-
     [self.volumeView setVolumeThumbImage:thumbResizeImage forState:UIControlStateNormal];
 
-
+    [self.volumeView.subviews[0] setMaximumTrackTintColor:[UIColor clearColor]];
+    [self.volumeView.subviews[0] setMinimumTrackTintColor:[UIColor clearColor]];
+    [self.volumeView.subviews[0] addTarget:self
+                      action:@selector(changePlayVolume:)
+            forControlEvents:UIControlEventValueChanged];
+    
+//    [self.volumeView.subviews[0] addTarget:self action:@selector(changePlayVolume)];
+    
     [self.soundView addSubview:self.volumeView];
     self.volumeView.userInteractionEnabled = YES;
     self.soundView.backgroundColor = [UIColor redColor];
@@ -138,7 +146,7 @@
 }
 - (void)changeSettingPlayTimeSlider{
     CGSize size = self.playTimeSlider.frame.size;
-
+    
     [self.playTimeSlider setMaximumTrackTintColor:[UIColor clearColor]];
     [self.playTimeSlider setMinimumTrackTintColor:[UIColor clearColor]];
     UIImage *tempImage = [UIImage imageNamed:@"play_control.png"] ;
@@ -152,12 +160,17 @@
     [self.playTimeSlider setThumbImage:resizeImage forState:UIControlStateNormal];
     [self.playTimeSlider setThumbImage:resizeImage forState:UIControlStateSelected];
     
-//    /Users/sdt-1/Documents/Projects/MusicFitProject/images/play_volume_control.png
     [self.playTimeSlider sizeToFit];
 }
+
 - (void)viewDidLoad{
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
+    
+    //circle image
+    self.albumImageView.layer.masksToBounds = YES;
+    self.albumImageView.layer.cornerRadius = self.albumImageView.frame.size.width/2;
+    
     MusicFitPlayer *player= [MusicFitPlayer sharedPlayer];
     [self changeSettingPlayTimeSlider];
     [self addVolumeView];
@@ -268,8 +281,10 @@
 }
 - (void)changePlaySliderImagePoint{
     float rate = (float)(self.playTimeSlider.value / self.playTimeSlider.maximumValue);
-    
-    self.playCurProgressImg.frame = CGRectMake(8, 14 , 217*rate , 8);
+    CGRect frame = self.playBackProcessImg.frame;
+    frame.origin.x = 217*rate + 8;
+    frame.size.width = 217*(1-rate);
+    self.playBackProcessImg.frame = frame;
 }
 - (void)setMusicProgressMax:(NSInteger)max{
     [self.playTimeSlider setMaximumValue:max];

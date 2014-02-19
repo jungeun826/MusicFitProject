@@ -44,6 +44,37 @@
     else
         return _3_5INCH_MARGIN_Y;
 }
+- (IBAction)modeEditing:(id)sender {
+    [self.modeTable setEditing:!self.modeTable.editing animated:YES];
+    
+    //delegate..........?!?!
+    //cell에 버튼이 생기도록 한다.
+    //
+}
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
+    if (indexPath.section != CUSTOMIZE_SECTION) {
+        return NO;
+    }
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
+    //delete 누를 경우
+//    [self.dataMutableArray removeObjectAtIndex:indexPath.row];
+//    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
+//    [self.tableview deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
+    
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
+        return @"Delete";
+}
+
+- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return UITableViewCellEditingStyleDelete;
+}
+
 - (IBAction)checkTextFieldLength:(id)sender {
     NSInteger titleLength = [self.titleTextField.text length];
     NSInteger minBPMLength = [self.minBPMTextField.text length];

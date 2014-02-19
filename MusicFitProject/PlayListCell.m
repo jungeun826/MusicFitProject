@@ -13,15 +13,21 @@
 @property (weak, nonatomic) IBOutlet UILabel *artistLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *albumImageView;
 @property (weak, nonatomic) IBOutlet UIView *BPMView;
-
 @end
 
 @implementation PlayListCell{
     BOOL _playList;
 }
-
 //playList 경우
 - (void)setPlayListWithTitle:(NSString *)title artist:(NSString *)artist BPM:(NSInteger)bpm image:(UIImage *)image{
+    
+    
+    self.albumImageView.layer.masksToBounds = YES;
+    self.albumImageView.layer.cornerRadius = self.albumImageView.frame.size.width/2;
+//    self.albumImageView.layer.contents = (id)[UIImage imageNamed:@"artview_round_shadow.png"];
+
+    
+    
     self.BPMLabel.text = [NSString stringWithFormat:@"%d", (int)bpm];
     self.titleLabel.text = title;
     self.artistLabel.text = artist;
