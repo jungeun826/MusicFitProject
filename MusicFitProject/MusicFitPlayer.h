@@ -59,7 +59,6 @@ typedef enum
 
 
 - (BOOL)changePlayMusicWithIndex:(NSInteger)index;
-
 - (void)changePlayPoint:(NSInteger)changeTimePoint;
 - (void)changePlayVolume:(CGFloat)changeVolumeValue;
 

@@ -37,7 +37,9 @@
 -(BOOL)insertModeWithMinBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM title:(NSString *)title;
 - (NSInteger)getCurModeID;
 - (Mode *)getModeWithIndex:(NSInteger)index;
-- (BOOL)deleteModeWithIndex:(NSInteger)index;
+- (NSInteger)getCurModeIDIndex;
+
+- (BOOL)deleteModeWithModeID:(NSInteger)modeID;
 - (BOOL)syncMode;
 - (NSInteger)getNumberOfMode;
 //+ (id)sharedMusicDBManager;

@@ -1,4 +1,4 @@
-//
+ //
 //  ModeViewController.m
 //  MusicFitProject
 //
@@ -37,6 +37,7 @@
 
 @implementation ModeViewController{
     DBManager *_DBManager;
+    NSInteger _lastSelectIndex;
 }
 - (NSInteger)getCustomModeViewMarginY{
     if(IS_4_INCH_DEVICE)
@@ -46,19 +47,20 @@
 }
 - (IBAction)modeEditing:(id)sender {
     [self.modeTable setEditing:!self.modeTable.editing animated:YES];
-    
-    //delegate..........?!?!
-    //cell에 버튼이 생기도록 한다.
-    //
 }
-
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-    if (indexPath.section != CUSTOMIZE_SECTION) {
-        return NO;
+//    NSLog(@"indexPath.section : %d", (int)indexPath.section);
+    if (indexPath.section == ADDMODE_SECTION ){
+        if(indexPath.row  != _lastSelectIndex-4){
+            NSLog(@"lastIndex : %d indexPath : %d", _lastSelectIndex, (int)indexPath.row);
+        
+            return YES;
+        }else
+            return NO;
     }
-    return YES;
+    
+    return NO;
 }
-
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     //delete 누를 경우
 //    [self.dataMutableArray removeObjectAtIndex:indexPath.row];
@@ -66,11 +68,9 @@
 //    [self.tableview deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
     
 }
-
 - (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
         return @"Delete";
 }
-
 - (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
     return UITableViewCellEditingStyleDelete;
 }
@@ -94,9 +94,9 @@
     return 3;
 }
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    if(section == 0) //고정 모드 4개
+    if(section == STATIC_SECTION) //고정 모드 4개
         return STATICCELL_NUM;
-    else if(section ==1)//추가된 모드
+    else if(section == ADDMODE_SECTION)//추가된 모드
         return [_DBManager  getNumberOfMode]-4;
     else//커스터마이징할 모드
         return 1;
@@ -111,7 +111,7 @@
             ModeCell *staticCell = [tableView dequeueReusableCellWithIdentifier:@"MODE_CELL" forIndexPath:indexPath];
            Mode *mode = [_DBManager getModeWithIndex:indexPath.row];
             
-            [staticCell setStaticWithImageName:[NSString stringWithFormat:@"icon_mode%d.png", (int)(indexPath.row+1)] title:mode.title minBPM:[mode getStringMinBPM]];
+            [staticCell setStaticWithImageName:[NSString stringWithFormat:@"icon_mode%d.png", (int)(indexPath.row+1)] title:mode.title minBPM:[mode getStringMinBPM] modeID:mode.modeID];
 
             return staticCell;
         }
@@ -119,19 +119,24 @@
             ModeCell *addedCell = [tableView dequeueReusableCellWithIdentifier:@"MODE_CELL"];
             Mode *mode = [_DBManager getModeWithIndex:indexPath.row+4];
             
-            [addedCell setAddedWithTitle:mode.title minBPM:mode.minBPM maxBPM:mode.maxBPM];
+            [addedCell setAddedWithTitle:mode.title minBPM:mode.minBPM maxBPM:mode.maxBPM modeID:mode.modeID];
             addedCell.addedDelegate = self;
             
             return addedCell;
         }
         default:{
              UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"CUSTOMIZE_CELL"];
-            UIImageView *backgroundImageView = [[UIImageView alloc] initWithFrame:cell.frame];
-            backgroundImageView.image = [UIImage imageNamed:@"basic_bg.png"];
-            backgroundImageView.contentMode = UIViewContentModeScaleToFill;
-
-            [cell setBackgroundView:backgroundImageView];
+            UIView * selectedBackgroundView = [[UIView alloc] initWithFrame:cell.frame];
+            UIImageView *selectedImageView = [[UIImageView alloc]initWithFrame:cell.frame];
             
+            selectedImageView.image = [UIImage imageNamed:@"basic_bg_2_on.png"];
+            [selectedBackgroundView addSubview:selectedImageView];
+            //    [selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.3]]; // set color here
+            [selectedBackgroundView setAlpha:0.4];
+            
+            cell.selectedBackgroundView = selectedBackgroundView;
+            
+//            [cell setBackgroundView:backgroundImageView];
             return cell;
         }
     }
@@ -147,16 +152,19 @@
             
             //음악 재생에 대한 정보 갱신을 위해 player에게 전달
             [self.modeToPlayerDegate changeMode:[_DBManager getCurModeID]];
-            
+            _lastSelectIndex = indexPath.row;
+            NSLog(@"lastIndex : %d", _lastSelectIndex);
             //swipe
             [self.swipeViewController moveRightAnimated:YES];
+            
             break;
         }
         case ADDMODE_SECTION:{
             
             [_DBManager syncModeListWithIndex:indexPath.row+4];
             [self.modeToPlayerDegate changeMode:[_DBManager getCurModeID]];
-            
+            _lastSelectIndex = indexPath.row+4;
+            NSLog(@"lastIndex : %d", _lastSelectIndex);
             //swipe
             [self.swipeViewController moveRightAnimated:YES];
             break;
@@ -236,12 +244,12 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
--(void)deleteCell{
-    int selectedIndex = (int)[self.modeTable indexPathForSelectedRow].row;
-//    Mode *mode = [_DBManager getModeWithIndex:selectedIndex];
+-(void)deleteModeWithModeID:(NSInteger)modeID{
+//    int selectedIndex = (int)[self.modeTable indexPathForSelectedRow].row;
+    NSLog(@"deleteMode : %d", (int)modeID );
+//    Mode *mode = [_DBManager getModeWithModeID:modeID];
 //    NSLog(@"mode_id:%d",(int)mode.modeID);
-    [_DBManager deleteModeWithIndex:selectedIndex];
-    [_DBManager syncMode];
+    [_DBManager deleteModeWithModeID:modeID];
     
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:ADDMODE_SECTION];
     [self.modeTable reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
@@ -254,5 +262,7 @@
     
     _DBManager = [DBManager sharedDBManager];
     [_DBManager syncMode];
+    _lastSelectIndex = [_DBManager getCurModeIDIndex];
+    NSLog(@"lastIndex : %d", _lastSelectIndex);
 }
 @end

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @protocol AddedModeDelegate <NSObject>
--(void)deleteCell;
+-(void)deleteModeWithModeID:(NSInteger)modeID;
 @end
 
 //@protocol ModeDelegate <NSObject>

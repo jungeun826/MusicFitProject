@@ -170,7 +170,7 @@
     }
     [dbManager insertMusicWithMusicArr:insertArr];
     NSLog(@"insert end");
-    [dbManager initStaticMode];
+
     /*
      가슴 시린 이야기 (Feat. 용준형 of BEAST), 휘성, 8605142450541980905
      가질 수 없는 너, 하이니, 8605142450541980900
@@ -204,25 +204,26 @@
      미스터리 (Feat. San E), 박지윤, 8605142450541980848
      바람이 분다 (영화 '신이 보낸 사람' 삽입곡), 포맨(4men), 8605142450541980896
      */
-    //    NSArray *tempMP3 = @[@{@"title":@"가슴 시린 이야기 (Feat. 용준형 of BEAST)",@"artist":@"휘성",@"location":@"8605142450541980905"},@{@"title":@"가질 수 없는 너",@"artist":@"하이니",@"location":@"8605142450541980900"},                         @{@"title":@"금요일에 만나요 (Feat. 장이정 Of HISTORY)",@"artist":@"아이유",@"location":@"8605142450541980866"}];
-    //    NSString *location ;
-    //    NSString *title ;
-    //    NSString *artist ;
-    //    NSInteger BPM;
-    //    int count = (int)[tempMP3 count];
-    //    for(int index = 0 ; index < count ; index++){
-    //        location= tempMP3[index][@"location"];
-    //
-    //        if([_musicDBManager isExistWithlocation:location])
-    //            continue;
-    //
-    //        title = tempMP3[index][@"title"];
-    //        artist = tempMP3[index][@"artist"];
-    //
-    //        BPM = index*73 +30;
-    //
-    //        //FIXME:무조건 isMusic을 true로 넣는다 고쳐야함.
-    //        [_musicDBManager insertMusicWithBPM:BPM title:title artist:artist location:location isMusic:YES];
-    //    }
+//        NSArray *tempMP3 = @[@{@"title":@"가슴 시린 이야기 (Feat. 용준형 of BEAST)",@"artist":@"휘성",@"location":@"8605142450541980905"},@{@"title":@"가질 수 없는 너",@"artist":@"하이니",@"location":@"8605142450541980900"},                         @{@"title":@"금요일에 만나요 (Feat. 장이정 Of HISTORY)",@"artist":@"아이유",@"location":@"8605142450541980866"}];
+//        NSString *location ;
+//        NSString *title ;
+//        NSString *artist ;
+//        NSInteger BPM;
+//        int count = (int)[tempMP3 count];
+//        for(int index = 0 ; index < count ; index++){
+//            location= tempMP3[index][@"location"];
+//    
+//            if([dbManager isExistWithlocation:location])
+//                continue;
+//
+//            title = tempMP3[index][@"title"];
+//            artist = tempMP3[index][@"artist"];
+//    
+//            BPM = index*73 +30;
+//    
+//            //FIXME:무조건 isMusic을 true로 넣는다 고쳐야함.
+//        [dbManager insertMusicWithBPM:BPM title:title artist:artist location:location isMusic:YES];
+//        }
+        [dbManager initStaticMode];
 }
 @end

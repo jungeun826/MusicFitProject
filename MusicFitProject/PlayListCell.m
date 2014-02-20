@@ -16,7 +16,7 @@
 @end
 
 @implementation PlayListCell{
-    BOOL _playList;
+//    BOOL _playList;
 }
 //playList 경우
 - (void)setPlayListWithTitle:(NSString *)title artist:(NSString *)artist BPM:(NSInteger)bpm image:(UIImage *)image{
@@ -32,7 +32,7 @@
     self.titleLabel.text = title;
     self.artistLabel.text = artist;
     self.BPMView.hidden = NO;
-    _playList = YES;
+//    _playList = YES;
     self.albumImageView.image = image;
 }
 //edit일 때
@@ -41,18 +41,17 @@
     self.artistLabel.text = artist;
     self.albumImageView.image = [UIImage imageNamed:@"icon_mode_cancel.png"];
     self.BPMView.hidden = NO;
-    _playList = NO;
+//    _playList = NO;
 }
 //add눌렀을 때
 - (void)setAddWithTitle:(NSString *)title artist:(NSString *)artist {
     self.titleLabel.text = title;
     self.artistLabel.text = artist;
     self.albumImageView.image = [UIImage imageNamed:@"PlayList_albumDefault.png"];
-    _playList = NO;
+//    _playList = NO;
     self.BPMView.hidden = YES;
 }
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
-{
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
         // Initialization code
@@ -64,19 +63,19 @@
     [super setSelected:selected animated:animated];
 
     //add
-    if(self.BPMView.hidden == YES && _playList == NO){
-        if(selected){
-            self.albumImageView.image = [UIImage imageNamed:@"icon_songs_check_small.png"];
-        }else{
-            self.albumImageView.image = [UIImage imageNamed:@"PlayList_albumDefault.png"];
-        }
-    }else if(self.BPMView.hidden == _playList){
-        if(selected){
-            self.albumImageView.image = [UIImage imageNamed:@"icon_songs_check_small.png"];
-        }else{
-            self.albumImageView.image = [UIImage imageNamed:@"icon_mode_cancel.png"];
-        }
-    }
+//    if(self.BPMView.hidden == YES && _playList == NO){
+//        if(selected){
+//            self.albumImageView.image = [UIImage imageNamed:@"icon_songs_check_small.png"];
+//        }else{
+//            self.albumImageView.image = [UIImage imageNamed:@"PlayList_albumDefault.png"];
+//        }
+//    }else if(self.BPMView.hidden == _playList){
+//        if(selected){
+//            self.albumImageView.image = [UIImage imageNamed:@"icon_songs_check_small.png"];
+//        }else{
+//            self.albumImageView.image = [UIImage imageNamed:@"icon_mode_cancel.png"];
+//        }
+//    }
     // Configure the view for the selected state
 }
 

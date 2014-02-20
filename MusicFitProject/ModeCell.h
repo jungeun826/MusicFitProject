@@ -10,6 +10,6 @@
 #import "AddedModeDelegate.h"
 @interface ModeCell : UITableViewCell
 @property (weak, nonatomic) id<AddedModeDelegate> addedDelegate;
-- (void)setAddedWithTitle:(NSString *)title minBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM;
-- (void)setStaticWithImageName:(NSString *)imageName title:(NSString *)title minBPM:(NSString *)minBPM;
+- (void)setAddedWithTitle:(NSString *)title minBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM modeID:(NSInteger)modeID;
+- (void)setStaticWithImageName:(NSString *)imageName title:(NSString *)title minBPM:(NSString *)minBPM modeID:(NSInteger)modeID;
 @end

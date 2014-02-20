@@ -536,11 +536,10 @@ static DBManager *_instance = nil;
 - (NSInteger)getCurModeID{
     return _curModeID;
 }
-- (BOOL)deleteModeWithIndex:(NSInteger)index{
-    NSInteger modeID = [_modeList[index] modeID];
+- (BOOL)deleteModeWithModeID:(NSInteger)modeID{
     NSString *modeDeleteQuery = [NSString stringWithFormat:@"DELETE FROM MODE WHERE modeID = %d",(int)modeID];
     NSString *listDeleteQuery = [NSString stringWithFormat:@"DELETE FROM LIST WHERE modeID = %d",(int)modeID];
-    [self closeDB];
+    [self openDB];
     if(![self DELETE:modeDeleteQuery]){
         NSLog(@"Error in Mode");
         [self closeDB];
@@ -552,6 +551,9 @@ static DBManager *_instance = nil;
         return NO;
     }
     [self closeDB];
+    
+    [self syncMode];
+    
     return YES;
 }
 
@@ -598,7 +600,17 @@ static DBManager *_instance = nil;
 }
 
 
-
+- (NSInteger)getCurModeIDIndex{
+    Mode *mode;
+    for(int index = 0 ;index < [_modeList count] ; index++){
+        mode = _modeList[index];
+        if(mode.modeID == _curModeID){
+            NSLog(@"lastIndex : %d", index);
+            return index;
+        }
+    }
+    return -1;
+}
 
 
 

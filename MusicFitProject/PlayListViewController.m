@@ -49,10 +49,6 @@
     
 }
 
-- (void)changeMusic:(NSInteger)selectIndex{
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"미구현" message:Nil delegate:self cancelButtonTitle:nil otherButtonTitles:@"확인", nil];
-    [alert show];
-}
 - (void)tableView:tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     //editMode가 아닐 경우 touch시에 음악 재생
     if(_editMode){

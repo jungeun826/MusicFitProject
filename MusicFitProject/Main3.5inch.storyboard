@@ -298,6 +298,16 @@
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </imageView>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ta-Uw-go6">
+                                                    <rect key="frame" x="2" y="1" width="46" height="42"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <state key="normal" title="Button">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="modeCellDelete:" destination="Gg4-fV-Lvt" eventType="touchUpInside" id="tD5-Pr-g81"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </tableViewCellContentView>
@@ -305,6 +315,7 @@
                                         <connections>
                                             <outlet property="BPMRangeLabel" destination="frL-zF-PrI" id="yGo-nA-tH2"/>
                                             <outlet property="BPMView" destination="BH0-gj-cLp" id="GJt-uR-zdH"/>
+                                            <outlet property="deleteBtn" destination="0Ta-Uw-go6" id="J6F-IE-NBs"/>
                                             <outlet property="modeImageView" destination="kGA-It-afK" id="yvp-Uq-ek1"/>
                                             <outlet property="rangeImageView" destination="gO2-8Y-CMZ" id="40D-fq-4Hc"/>
                                             <outlet property="title_Label" destination="QdH-qD-tax" id="N3J-82-WLQ"/>
@@ -3056,9 +3067,18 @@
         <image name="arrow.png" width="21" height="32"/>
         <image name="arrow2.png" width="21" height="32"/>
         <image name="artview.png" width="70" height="70"/>
+        <image name="artview.png" width="70" height="70"/>
+        <image name="artview.png" width="70" height="70"/>
+        <image name="artview.png" width="70" height="70"/>
+        <image name="artview_round-shadow.png" width="98" height="98"/>
+        <image name="artview_round-shadow.png" width="98" height="98"/>
+        <image name="artview_round-shadow.png" width="98" height="98"/>
         <image name="artview_round-shadow.png" width="98" height="98"/>
         <image name="basic_bg_2.png" width="640" height="86"/>
         <image name="basic_bg_3.png" width="640" height="960"/>
+        <image name="bpm.png" width="20" height="52"/>
+        <image name="bpm.png" width="20" height="52"/>
+        <image name="bpm.png" width="20" height="52"/>
         <image name="bpm.png" width="20" height="52"/>
         <image name="icon_mode1.png" width="40" height="64"/>
         <image name="icon_mode_arrow.png" width="24" height="32"/>
@@ -3069,11 +3089,15 @@
         <image name="play_back.png" width="48" height="32"/>
         <image name="play_bg.png" width="640" height="180"/>
         <image name="play_bg2.png" width="640" height="98"/>
+        <image name="play_bg2.png" width="640" height="98"/>
         <image name="play_next.png" width="48" height="32"/>
         <image name="play_play.png" width="70" height="70"/>
         <image name="play_stop.png" width="70" height="70"/>
+        <image name="play_stop.png" width="70" height="70"/>
         <image name="play_vol.png" width="44" height="32"/>
         <image name="play_volume_control_bg_on_small.png" width="463" height="12"/>
+        <image name="play_volume_control_bg_on_small.png" width="463" height="12"/>
+        <image name="play_volume_control_bg_small.png" width="464" height="12"/>
         <image name="play_volume_control_bg_small.png" width="464" height="12"/>
         <image name="player.jpg" width="719" height="91"/>
         <image name="pop.png" width="156" height="156"/>
@@ -3083,8 +3107,12 @@
         <image name="splash.png" width="640" height="960"/>
         <image name="status_mode.png" width="640" height="78"/>
         <image name="status_musicfit.png" width="640" height="78"/>
+        <image name="status_musicfit.png" width="640" height="78"/>
         <image name="status_setting.png" width="640" height="78"/>
         <image name="status_songs.png" width="640" height="78"/>
+        <image name="status_songs.png" width="640" height="78"/>
+        <image name="status_songs.png" width="640" height="78"/>
+        <image name="time_right.png" width="44" height="44"/>
         <image name="time_right.png" width="44" height="44"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
