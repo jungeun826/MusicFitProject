@@ -32,7 +32,7 @@
 - (NSString *)getExerTime{
     NSInteger minute = self.exerTime%60;
     NSInteger hour = self.exerTime/60;
-    NSString *exerTimeString = [NSString stringWithFormat:@"%2d:%2d", hour, minute];
+    NSString *exerTimeString = [NSString stringWithFormat:@"%2d:%2d", (int)hour, (int)minute];
     return exerTimeString;
 }
 - (NSInteger)getDay{

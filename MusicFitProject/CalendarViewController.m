@@ -22,7 +22,6 @@
 @interface CalendarViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextFieldDelegate, UITableViewDataSource, UITableViewDelegate>
 @property (weak, nonatomic) IBOutlet UICollectionView *calenderView;
 @property (weak, nonatomic) IBOutlet UILabel *monthAndYearLabel;
-@property (weak, nonatomic) IBOutlet UITableView *calendarTable;
 @property (weak, nonatomic) IBOutlet UIImageView *profileImageView;
 @property (weak, nonatomic) IBOutlet UITextField *promiseTextField;
 @property (weak, nonatomic) IBOutlet UITableView *table;
@@ -123,7 +122,6 @@
     
     
     [self showMonthCellDetail];
-    [self calendarReload];
 }
 - (IBAction)showNextMonth:(id)sender {
     if( [_curDate month] == [_month month])
@@ -140,7 +138,6 @@
     
     
     [self showMonthCellDetail];
-    [self calendarReload];
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section{
@@ -152,7 +149,7 @@
     
     if(indexPath.row >= _firstDayIndex && indexPath.row < (_days+_firstDayIndex) ){
         NSInteger index =(indexPath.row - _firstDayIndex);
-        NSString  *day = [NSString stringWithFormat:@"%d",index+1 ];
+        NSString  *day = [NSString stringWithFormat:@"%d",(int)index+1 ];
         cell = [cell initWithDay:day lastMode: [_selectMonthArr[index] integerValue]];
     }else{
         cell = [cell initBlankCell];
@@ -163,7 +160,7 @@
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
     [self.promiseTextField resignFirstResponder];
     if(indexPath.row >= _firstDayIndex && indexPath.row < (_days+_firstDayIndex) ){
-        NSLog(@"select day : %d",(indexPath.row -_firstDayIndex +1));
+        NSLog(@"select day : %d",(int)(indexPath.row -_firstDayIndex +1));
         [_selectedDate setDay:(indexPath.row -_firstDayIndex)+1];
         [self showDayCellDetail:_selectedDate];
     }
@@ -197,7 +194,7 @@
     NSInteger month = [_month month];
     NSInteger year = [_month year];
     
-    NSString *monthAndYear = [NSString stringWithFormat:@"%04d.%02d",year,month];
+    NSString *monthAndYear = [NSString stringWithFormat:@"%04d.%02d",(int)year,(int)month];
     
     self.monthAndYearLabel.text = monthAndYear;
 }
@@ -229,10 +226,15 @@
     _selectMonthInfo = [[NSDictionary alloc]init];
     _selectMonthInfo  = [dbManager getCalendarMonthDicWithMonth:_month];
     
+    _selectMonthArr = [[NSMutableArray alloc]init];
+    _selectMonthArr = [dbManager getCalendarMonthInfoWithMonth:_month];
+    
     NSString *exertimeString = [self exerTimeString:[_selectMonthInfo[@"totalExerMinute"] integerValue]];
     NSInteger count = [_selectMonthInfo[@"totalExerCount"] intValue];
     
-    self.monthExerInfoLabel.text = [NSString stringWithFormat:@"%d월 운동 일수:%d 운동 시간: %@", [_month month],(int)count, exertimeString];
+    self.monthExerInfoLabel.text = [NSString stringWithFormat:@"%d월 운동 일수:%02d 운동 시간: %@", (int)[_month month],(int)count, exertimeString];
+    
+    [self calendarReload];
 }
 - (void)setSelectDayInfo{
     NSLog(@"selected Date : %04d.%02d.%02d", (int)[_selectedDate year], (int)[_selectedDate month], (int)[_selectedDate day]);
@@ -280,13 +282,15 @@
         CalendarDayInfo *info = _selectDayInfo[0];
         
         NSString *exerString = [self exerTimeString:totalDayExerTime];
-        self.dayExerInfoLabel.text = [NSString stringWithFormat:@"%d일 총 운동 시간 : %@",[info getDay],exerString];
+        self.dayExerInfoLabel.text = [NSString stringWithFormat:@"%d일 총 운동 시간 : %@",(int)[info getDay],exerString];
+        
+        [self tableReload];
     }
 }
 - (NSString *)exerTimeString:(NSInteger)exerTime{
     NSInteger minute = exerTime%60;
     NSInteger hour = exerTime/60;
-    NSString *exerTimeString = [NSString stringWithFormat:@"%2d:%2d", hour, minute];
+    NSString *exerTimeString = [NSString stringWithFormat:@"%02d:%02d", (int)hour, (int)minute];
 
     return exerTimeString;
 }
@@ -294,7 +298,7 @@
     NSData *profileImageData = [[NSUserDefaults standardUserDefaults] valueForKey:@"profileImage_preference"];
     UIImage *profileImage = [UIImage imageWithData:profileImageData];
     if (profileImage == nil) {
-        profileImage = [UIImage imageNamed:@"setting_profile_bg.png"];
+        profileImage = [UIImage imageNamed:@"setting_profile_thum.png"];
     }
     return profileImage;
 }
@@ -322,6 +326,9 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     //프로필 이미지와 다짐을 userDefault에서 가져옴
+    self.profileImageView.layer.masksToBounds = YES;
+    self.profileImageView.layer.cornerRadius = self.profileImageView.frame.size.width/2;
+
     self.profileImageView.image = [self loadFromUserDefaultProfileImage];
     self.promiseTextField.text = [self loadFromUserDefaultPromise];
 
@@ -360,14 +367,6 @@
 //month 바뀔 때
 - (void)calendarReload{
     //캘린더 릴로드
-//    [self.calenderView reloadSections:[NSIndexSet indexSetWithIndex:0]];
-    
-    //select부분 보여주기
-    NSIndexPath *path = [NSIndexPath indexPathForRow:_firstDayIndex + [_curDate day]-2 inSection:0];
-    [self.calenderView selectItemAtIndexPath:path animated:NO scrollPosition:UICollectionViewScrollPositionTop];
-    
-    [self.calendarTable reloadData];
-    
     //selectDayInfo 재구성
     [self setSelectDayInfo];
     
@@ -375,22 +374,27 @@
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
     [self.table reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
     //마지막 선택을 보여줄까말까
+    [self.table reloadData];
+    
+    //select부분 보여주기
+    [self.calenderView reloadData];
+    NSIndexPath *path = [NSIndexPath indexPathForRow:_firstDayIndex + [_selectedDate day]-1 inSection:0];
+    [self.calenderView selectItemAtIndexPath:path animated:NO scrollPosition:UICollectionViewScrollPositionTop];
 }
 //day바뀔 때
 - (void)tableReload{
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:0];
-    [self.table reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self.table reloadSections:indexSet withRowAnimation:UITableViewRowAnimationBottom];
     [self.table reloadData];
 }
 - (void)viewWillAppear:(BOOL)animated{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
 
     [self setSelectDayInfo];
-    
-    NSIndexPath *path = [NSIndexPath indexPathForRow:(_firstDayIndex + [_curDate day] - 2) inSection:0];
-    [self.calenderView selectItemAtIndexPath:path animated:NO scrollPosition:UICollectionViewScrollPositionTop];
-    
     [self showMonthCellDetail];
+    
+    NSIndexPath *path = [NSIndexPath indexPathForRow:(_firstDayIndex + [_selectedDate day] - 1) inSection:0];
+    [self.calenderView selectItemAtIndexPath:path animated:NO scrollPosition:UICollectionViewScrollPositionTop];
 }
 - (void)viewWillDisappear:(BOOL)animated{
     [[NSNotificationCenter defaultCenter] removeObserver:self];

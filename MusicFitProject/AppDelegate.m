@@ -15,14 +15,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions{
     
-    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
+//    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:0];
 //    CGSize iOSDeviceScreenSize = [[UIScreen mainScreen] bounds].size;
 //    
 //    if (iOSDeviceScreenSize.height == 480) //화면세로길이가 480 (3gs,4, 4s)
 //    {
 //        // UIStoryboard 생성
 //        UIStoryboard *iPhone35Storyboard = [UIStoryboard storyboardWithName:@"Main3.5inch" bundle:nil];
-//        // 생성한 UIStoryboard에서  initial view controller를 가져온다.
+//       // 생성한 UIStoryboard에서  initial view controller를 가져온다.
 //        UIViewController *initialViewController = [iPhone35Storyboard instantiateInitialViewController];
 //        
 //        // 화면크기로 윈도우 생성
@@ -46,19 +46,19 @@
 //        [self.window makeKeyAndVisible];
 //    }
     
-//    UIStoryboard *storyboard = nil;
-//    UIViewController *initialViewController = nil;
-//    
-//    if(IS_4_INCH_DEVICE)
-//        storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    else
-//        storyboard = [UIStoryboard storyboardWithName:@"Main3.5inch" bundle:nil];
-//    
-//    initialViewController = [storyboard instantiateInitialViewController];
-//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-//    self.window.rootViewController = initialViewController;
-//    
-//    [self.window makeKeyAndVisible];
+    UIStoryboard *storyboard = nil;
+    UIViewController *initialViewController = nil;
+    
+    if(IS_4_INCH_DEVICE)
+        storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    else
+        storyboard = [UIStoryboard storyboardWithName:@"Main3.5inch" bundle:nil];
+    
+    initialViewController = [storyboard instantiateInitialViewController];
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.rootViewController = initialViewController;
+    
+    [self.window makeKeyAndVisible];
     return YES;
 }
 							

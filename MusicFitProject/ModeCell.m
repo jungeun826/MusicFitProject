@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *rangeImageView;
 @property (weak, nonatomic) IBOutlet UIView *BPMView;
 @property (weak, nonatomic) IBOutlet UIButton *deleteBtn;
+@property (weak, nonatomic) IBOutlet UIImageView *backImgView;
 
 @end
 @implementation ModeCell{
@@ -25,13 +26,14 @@
 - (void)setAddedWithTitle:(NSString *)title minBPM:(NSInteger)minBPM maxBPM:(NSInteger)maxBPM modeID:(NSInteger)modeID{
     
     _modeID = modeID;
-    self.modeImageView.image = [UIImage imageNamed:@"icon_mode_music.png"];
+    self.modeImageView.image = [UIImage imageNamed:@"icon_mode5.png"];
     self.title_Label.text = title;
     self.rangeImageView.image = [UIImage imageNamed:@"icon_mode_cancel"];
     self.rangeImageView.hidden = YES;
     CGRect frame = self.BPMView.frame;
-    frame.origin.x += 10;
-    [self.BPMView setFrame:frame];
+    frame.origin.x += 20;
+    self.BPMView.frame = frame;
+//    [self.BPMView setFrame:frame];
     self.deleteBtn.hidden = YES;
     self.editingAccessoryType = UITableViewCellEditingStyleDelete;
 //    self.editingAccessoryView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"pop.png"]];
@@ -57,13 +59,16 @@
     self.title_Label.text = title;
     self.BPMRangeLabel.text = minBPM;
         self.deleteBtn.hidden = YES;
-    //[self setSelectedBg];
+    [self setSelectedBg];
 }
 //
 //-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event {
-//    NSLog(@"touchesBegan");
+//    self.backImgView.image =[UIImage imageNamed:@"basic_bg_2_on.png"];
+//    
 //}
-
+//- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event{
+//    self.backImgView.image =nil;
+//}
 //-(void)layoutSubviews {
 //    for (UIView *view in self.contentView.subviews) {
 //        NSLog(@"subview : %@", view);
@@ -83,11 +88,10 @@
     
     selectedImageView.image = [UIImage imageNamed:@"basic_bg_2_on.png"];
     [selectedBackgroundView addSubview:selectedImageView];
-//    [selectedBackgroundView setBackgroundColor:[UIColor colorWithRed:0.8 green:0.8 blue:0.8 alpha:0.3]]; // set color here
-    [selectedBackgroundView setAlpha:0.4];
 
-    self.selectedBackgroundView=selectedBackgroundView;
+    self.selectedBackgroundView = selectedBackgroundView;
 }
+
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier{
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {

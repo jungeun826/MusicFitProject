@@ -19,6 +19,7 @@
     NSDate *pausedTime;
     NSDate *date1970;
     NSDate *timeToCountOff;
+    BOOL _stop;
 }
 
 @property (strong) NSTimer *timer;
@@ -58,7 +59,10 @@ static TimerLabel *_timerInstance;
     timeToCountOff = [date1970 dateByAddingTimeInterval:0];
     [self updateLabel];
 }
-
+- (void)setExtendTime:(NSTimeInterval)time{
+    timerValue += time;
+    [self updateLabel];
+}
 
 - (NSDateFormatter*)dateFormatter{
     if (_dateFormatter == nil) {
@@ -98,7 +102,10 @@ static TimerLabel *_timerInstance;
     _running = YES;
     [_timer fire];
 }
-
+- (void)stop{
+    _stop = YES;
+    [self updateLabel];
+}
 -(void)pause{
     [_timer invalidate];
     _timer = nil;
@@ -130,20 +137,26 @@ static TimerLabel *_timerInstance;
     
     
     /***MZTimerLabelTypeTimer Logic***/
-    
     if (_running) {
-        if(abs(timeDiff) >= timerValue){
+        if(abs(timeDiff) >= timerValue || _stop){
             [self pause];
             timeToShow = [date1970 dateByAddingTimeInterval:0];
             
             [self.progressView setProgress:0.0f animated:NO];
-            
+            if (_stop) {
+                if([_delegate respondsToSelector:@selector(timerLabel:startDate:timerValue:)]){
+                    [_delegate timerLabel:self startDate:startCountDate timerValue:timeDiff];
+                    [self reset];
+                }
+            }else{
             if([_delegate respondsToSelector:@selector(timerLabel:startDate:timerValue:)]){
                 [_delegate timerLabel:self startDate:startCountDate timerValue:timerValue];
                 [self reset];
             }
+            }
             pausedTime = nil;
             startCountDate = nil;
+            _stop = NO;
         }else{
             
             timeToShow = [timeToCountOff dateByAddingTimeInterval:(timeDiff)]; //added 0.999 to make it actually counting the whole first second

@@ -30,7 +30,7 @@
 -(void)start;
 -(void)pause;
 -(void)reset;
-
+- (void)stop;
 /*--------Setter methods*/
 -(void)setCountDownTime:(NSTimeInterval)time;
 

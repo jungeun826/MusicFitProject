@@ -10,8 +10,14 @@
 #import <MediaPlayer/MediaPlayer.h>
 #import <AVFoundation/AVFoundation.h>
 
+typedef enum {
+    MoveToRight,
+    MoveToLeft,
+    MoveToDown,
+    MoveToUp
+}MoveToDirection;
 @interface PlayerViewController : UIViewController <AVAudioSessionDelegate>
 - (void)setSwipeController;
-- (void)hiddenPlayerWithDuration:(CGFloat)duration;
-- (void)showPlayerWithDuration:(CGFloat)duration;
+- (void)movePlayerWithDirection:(MoveToDirection)direction;
+//- (void)setAddSongList:(NSArray *)addSongList;
 @end

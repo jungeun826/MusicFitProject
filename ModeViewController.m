@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *modeTable;
 @property (weak, nonatomic) IBOutlet UITextField *titleTextField;
 @property (weak, nonatomic) IBOutlet UIButton *saveBtn;
+@property (weak, nonatomic) IBOutlet UIButton *editBtn;
 
 
 - (IBAction)saveCustomMode:(id)sender;
@@ -46,33 +47,22 @@
         return _3_5INCH_MARGIN_Y;
 }
 - (IBAction)modeEditing:(id)sender {
-    [self.modeTable setEditing:!self.modeTable.editing animated:YES];
+    BOOL editing = !self.modeTable.editing;
+    [self.modeTable setEditing:editing animated:YES];
+
+    self.editBtn.selected = editing;
+    SwipeViewController *swipeVC = (SwipeViewController *)self.parentViewController;
+    swipeVC.doSwipe = !editing;
 }
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath{
-//    NSLog(@"indexPath.section : %d", (int)indexPath.section);
     if (indexPath.section == ADDMODE_SECTION ){
         if(indexPath.row  != _lastSelectIndex-4){
-            NSLog(@"lastIndex : %d indexPath : %d", _lastSelectIndex, (int)indexPath.row);
-        
             return YES;
         }else
             return NO;
     }
     
     return NO;
-}
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
-    //delete 누를 경우
-//    [self.dataMutableArray removeObjectAtIndex:indexPath.row];
-//    NSArray *indexPaths = [NSArray arrayWithObject:indexPath];
-//    [self.tableview deleteRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
-    
-}
-- (NSString *)tableView:(UITableView *)tableView titleForDeleteConfirmationButtonForRowAtIndexPath:(NSIndexPath *)indexPath{
-        return @"Delete";
-}
-- (UITableViewCellEditingStyle)tableView:(UITableView *)tableView editingStyleForRowAtIndexPath:(NSIndexPath *)indexPath{
-    return UITableViewCellEditingStyleDelete;
 }
 
 - (IBAction)checkTextFieldLength:(id)sender {
@@ -153,7 +143,7 @@
             //음악 재생에 대한 정보 갱신을 위해 player에게 전달
             [self.modeToPlayerDegate changeMode:[_DBManager getCurModeID]];
             _lastSelectIndex = indexPath.row;
-            NSLog(@"lastIndex : %d", _lastSelectIndex);
+//            NSLog(@"lastIndex : %d", _lastSelectIndex);
             //swipe
             [self.swipeViewController moveRightAnimated:YES];
             
@@ -164,7 +154,7 @@
             [_DBManager syncModeListWithIndex:indexPath.row+4];
             [self.modeToPlayerDegate changeMode:[_DBManager getCurModeID]];
             _lastSelectIndex = indexPath.row+4;
-            NSLog(@"lastIndex : %d", _lastSelectIndex);
+//            NSLog(@"lastIndex : %d", _lastSelectIndex);
             //swipe
             [self.swipeViewController moveRightAnimated:YES];
             break;
@@ -248,9 +238,15 @@
 //    int selectedIndex = (int)[self.modeTable indexPathForSelectedRow].row;
     NSLog(@"deleteMode : %d", (int)modeID );
 //    Mode *mode = [_DBManager getModeWithModeID:modeID];
+     NSInteger modeIndex = [_DBManager getIndexOfModeID:modeID];
 //    NSLog(@"mode_id:%d",(int)mode.modeID);
     [_DBManager deleteModeWithModeID:modeID];
+   
+    NSLog(@" delete modeIndex :%d, lastSelectIndex :%d", modeIndex, _lastSelectIndex);
     
+    if(modeIndex < _lastSelectIndex){
+        _lastSelectIndex--;
+    }
     NSIndexSet *indexSet = [NSIndexSet indexSetWithIndex:ADDMODE_SECTION];
     [self.modeTable reloadSections:indexSet withRowAnimation:UITableViewRowAnimationAutomatic];
 }
@@ -262,7 +258,8 @@
     
     _DBManager = [DBManager sharedDBManager];
     [_DBManager syncMode];
-    _lastSelectIndex = [_DBManager getCurModeIDIndex];
+    [_DBManager syncMusic];
+    _lastSelectIndex = [_DBManager getIndexOfModeID:[_DBManager getCurModeID]];
     NSLog(@"lastIndex : %d", _lastSelectIndex);
 }
 @end

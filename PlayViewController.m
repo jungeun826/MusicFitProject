@@ -13,7 +13,7 @@
 #import "CustomProgressBar.h"
 
 #define CLOCKPICKERVIEW_HIDDEN_Y 600
-#define CLOCKPICKERVIEW_MARGIN_Y 100
+#define CLOCKPICKERVIEW_MARGIN_Y 80
 #define FITPROGRESSVIEW_HIDDEN_X -640
 #define FITPROGRESSVIEW_MARGIN_X 16
 
@@ -26,6 +26,7 @@
 
 @property (weak, nonatomic) IBOutlet UIView *fitProgressView;
 @property (weak, nonatomic) IBOutlet UILabel *notiColockSetLabel;
+@property (weak, nonatomic) IBOutlet UIButton *startBtn;
 
 @property (weak, nonatomic) IBOutlet TimerLabel *timeViewLabel;
 @property (weak, nonatomic) IBOutlet CustomProgressBar *progressBar;
@@ -43,7 +44,7 @@
 }
 -(NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component{
     if(component == HOUR)
-        return 12;
+        return 7;
     else
         return 60;
 }
@@ -52,22 +53,22 @@
     UILabel *timeCompoentLabel = [[UILabel alloc]init];
     CGRect frame = CGRectMake(0, 0, 50, 30);
     timeCompoentLabel.frame = frame;
-    [timeCompoentLabel setTextAlignment:NSTextAlignmentCenter];
+    [timeCompoentLabel setTextAlignment:NSTextAlignmentLeft];
     if(component == HOUR){
-        timeCompoentLabel.text =[NSString stringWithFormat:@"%d",row];
+        timeCompoentLabel.text =[NSString stringWithFormat:@"%d",(int)row];
 //        NSLog(@"row: %d, component: %d", row, component);
     }
     else{
-        timeCompoentLabel.text =[NSString stringWithFormat:@"%d",row];
+        timeCompoentLabel.text =[NSString stringWithFormat:@"%d",(int)row];
 //        NSLog(@"row: %d, component: %d", row, component);
     }
 
     UIView *labelView;
     if(view == nil){
         labelView = [[UIView alloc]initWithFrame:frame];
-        [labelView setBackgroundColor:[UIColor redColor]];
+        [labelView setBackgroundColor:[UIColor clearColor]];
         [labelView addSubview:timeCompoentLabel];
-        [labelView setContentMode:UIViewContentModeScaleToFill];
+        [labelView setContentMode:UIViewContentModeCenter];
     }else{
         [labelView addSubview:timeCompoentLabel];
     }
@@ -88,27 +89,38 @@
 }
 - (IBAction)setClock:(id)sender {
     [self moveClockPickerViewWithY:CLOCKPICKERVIEW_HIDDEN_Y];
+    
+    [self.startBtn setSelected:!self.startBtn.selected];
+    if(!self.startBtn.selected){
+        [_timerLabel stop];
+        return;
+    }
     [self moveFitProgressView:YES];
+    
+    
     
     _startTimer = YES;
     NSInteger hour = [self.clockPicker selectedRowInComponent:HOUR];
     NSInteger minute = [self.clockPicker selectedRowInComponent:MINUTE];
     NSInteger timerTime = (hour*60*60+minute*60);
-    NSLog(@"Timer Setting : %02d : %02d, total Second: %d", hour, minute, timerTime);
+    NSLog(@"Timer Setting : %02d : %02d, total Second: %d", (int)hour, (int)minute, (int)timerTime);
     MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
     
-    if(![_timerLabel fire]){
-//        [_btnStartCountdownExample6 setTitle:@"Pause" forState:UIControlStateNormal];
-          [_timerLabel setCountDownTime: 10];
-        if([player isPlaying] == YES){
-            
-            [_timerLabel start];
-            NSLog(@"running....");
-        }else if([player isPlaying]){
-            [_timerLabel start];
-            [_timerLabel pause];
-        }
+    //재생중인데 파이어 아니었음 -> 애니매이션도 처리해야함
+    if([player isPlaying] == YES && ![_timerLabel fire]){
+        [_timerLabel setCountDownTime: timerTime];
+        [_timerLabel start];
+        [self startFitModeAnimation];
+        NSLog(@"running....");
+    //플레이중이 아니면 그냥 시작했다 정지시킴
+    }else if(![player isPlaying] && ![_timerLabel fire]){
+        [_timerLabel setCountDownTime: timerTime];
+        [_timerLabel start];
+        [_timerLabel pause];
     }
+    //재생중에 파이어 다시 하면 ?!?! -> 카운트 다운 추가해야함.
+    
+//    if(![_timerLabel fire]){
 //        [_timerLabel pause];
 //        NSLog(@"pause....");
 //        [_btnStartCountdownExample6 setTitle:@"Resume" forState:UIControlStateNormal];
@@ -132,15 +144,6 @@
         self.clockPickerView.frame = frame;
     }completion:nil];
 }
-- (void)fitmodeAnimation{
-    if([self.timeViewLabel fire]){
-        self.fitModeImageView.animationImages =@[[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_0", _curMode]],[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_1", _curMode]],[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_2", _curMode]],[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_3", _curMode]]];
-        self.fitModeImageView.animationDuration=0.8;
-        self.fitModeImageView.animationRepeatCount=INFINITY;
-        
-        [self.fitModeImageView startAnimating];
-    }
-}
 - (void)moveFitProgressView:(BOOL)animated{
     if(animated){
         [UIView animateWithDuration:0.1 delay:0 options:  UIViewAnimationOptionCurveLinear animations:^{
@@ -158,18 +161,28 @@
     }
 }
 - (void)startFitModeAnimation{
-    [NSThread detachNewThreadSelector:@selector(fitmodeAnimation) toTarget:self withObject:nil];
+    MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
+//    [NSThread detachNewThreadSelector:@selector(fitmodeAnimation) toTarget:self withObject:nil];
+    if([_timerLabel fire] && [player isPlaying]){
+        self.fitModeImageView.animationImages =@[[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_0", (int)_curMode]],[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_1", (int)_curMode]],[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_2", (int)_curMode]],[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_3", (int)_curMode]]];
+        self.fitModeImageView.animationDuration=0.8;
+        self.fitModeImageView.animationRepeatCount=INFINITY;
+        
+        [self.fitModeImageView startAnimating];
+    }
 }
 -(void)stopFitModeAnimation{
         [self.fitModeImageView stopAnimating];
 }
 -(void)setWorkPlayer:(BOOL)isPlaying mode:(NSInteger)curMode{
-   
+   if(curMode > 4)
+       curMode = 5;
     _curMode = curMode;
     [self setfitModeImage];
 }
 - (void)timerLabel:(TimerLabel*)timerLabel startDate:(NSDate *)startDate timerValue:(NSInteger)timerValue{
 //    [_btnStartCountdownExample6 setTitle:@"Start" forState:UIControlStateNormal];
+    self.startBtn.selected = NO;
     DBManager *dbManager = [DBManager sharedDBManager];
     [dbManager insertCalendarWithExerTime:timerValue/60 startdate:startDate];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -178,8 +191,8 @@
     
     NSString *date = [dateFormatter stringFromDate:startDate];
     
-    NSString *msg = [NSString stringWithFormat:@"Countdown finished! timer:%d startDate:%@", timerValue , date];
-    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:msg delegate:nil cancelButtonTitle:@"Awesome!" otherButtonTitles:nil];
+//    NSString *msg = [NSString stringWithFormat:@"Countdown finished! timer:%d startDate:%@", (int)timerValue , date];
+//    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Alert" message:msg delegate:nil cancelButtonTitle:@"Awesome!" otherButtonTitles:nil];
     
     _startTimer = NO;
     [self.progressBar setProgress:0.0f];
@@ -189,7 +202,7 @@
     MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
     [player pause];
     NSLog(@"timer completion");
-    [alertView show];
+//    [alertView show];
 }
 -(void)checkProgressTime{
 //    self.fitProgressView
@@ -197,14 +210,25 @@
 
 //FIXME:운동시간 배경색 고치기
 - (void)initRoundedSlimProgressBar{
-    self.progressBar.progressTintColor = [UIColor colorWithRed:239/255.0f green:225/255.0f blue:13/255.0f alpha:1.0f];
+    NSArray *tintColors = @[
+                            [UIColor colorWithRed:224/255.0f green:70/255.0f blue:113/255.0f alpha:1.0f],
+                            [UIColor colorWithRed:184/255.0f green:119/255.0f blue:154/255.0f alpha:1.0f],
+                            [UIColor colorWithRed:185/255.0f green:185/255.0f blue:199/255.0f alpha:1.0f],
+                            [UIColor colorWithRed:119/255.0f green:168/255.0f blue:201/255.0f alpha:1.0f],
+                            [UIColor colorWithRed:58/255.0f green:194/255.0f blue:232/255.0f alpha:1.0f]];
     
+    self.progressBar.progressTintColors = tintColors;
     self.progressBar.indicatorTextDisplayMode = YLProgressBarIndicatorTextDisplayModeTrack;
     
-    self.progressBar.stripesColor             = [UIColor colorWithRed:0 green:0 blue:0 alpha:0.2f];
+    self.progressBar.stripesColor             = [UIColor clearColor];
 }
 - (void)viewDidLoad{
     [super viewDidLoad];
+    CGAffineTransform t0 = CGAffineTransformMakeTranslation (0, self.clockPicker.bounds.size.height/2);
+    CGAffineTransform s0 = CGAffineTransformMakeScale       (1.0, 0.8);
+    CGAffineTransform t1 = CGAffineTransformMakeTranslation (0, -self.clockPicker.bounds.size.height/2);
+    self.clockPicker.transform = CGAffineTransformConcat          (t0, CGAffineTransformConcat(s0, t1));
+    
     [self initRoundedSlimProgressBar];
     _timerLabel = [TimerLabel sharedTimerSetWithLabel:self.timeViewLabel progressView:self.progressBar];
     _timerLabel.delegate = self;
@@ -214,6 +238,8 @@
     MusicFitPlayer *player = [MusicFitPlayer sharedPlayer];
     player.fitModeDelegate = self;
     _curMode = [[DBManager sharedDBManager] getCurModeID];
+    if(_curMode > 4)
+        _curMode = 5;
     self.fitModeImageView.image = [[UIImage imageNamed:[NSString stringWithFormat:@"img_%d_0", (int)_curMode]] imageWithRenderingMode:UIImageRenderingModeAlwaysOriginal];
 }
 - (void)didReceiveMemoryWarning{

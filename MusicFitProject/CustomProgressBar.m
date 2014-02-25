@@ -356,7 +356,7 @@ const NSTimeInterval YLProgressBarProgressTime         = 0.25f;        // s
         CGContextClip(context);
         
         CFArrayRef colorRefs = (__bridge CFArrayRef)_colors;
-        int colorCount       = [_colors count];
+        int colorCount       = (int)[_colors count];
         
         float delta          = 1.0f / [_colors count];
         float semi_delta     = delta / 2.0f;
@@ -441,7 +441,7 @@ const NSTimeInterval YLProgressBarProgressTime         = 0.25f;        // s
     CGContextSaveGState(context);{
         UIBezierPath *allStripes = [UIBezierPath bezierPath];
         
-        int start       = -_stripesWidth;
+        int start       = -(int)_stripesWidth;
         int end         = rect.size.width / (2 * _stripesWidth) + (2 * _stripesWidth);
         CGFloat yOffset = YLProgressBarSizeInset;// : 0;
         for (int i = start; i <= end; i++){

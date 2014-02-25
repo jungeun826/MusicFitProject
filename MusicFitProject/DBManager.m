@@ -96,7 +96,7 @@ static DBManager *_instance = nil;
                 NSLog(@"create CALENDAR TABLE fail : %s", errorMsg);
                 return;
             }
-            
+            [self calendaarDummy];
             sqlite3_close(db);
         } else {
             NSLog(@"Failed to open/create database");
@@ -111,6 +111,7 @@ static DBManager *_instance = nil;
     int ret = sqlite3_open([dbFilePath UTF8String], &db);
     if ( ret !=SQLITE_OK ){
         NSLog(@"open fail");
+        [self closeDB];
         return NO;
     }
     return YES;
@@ -148,6 +149,7 @@ static DBManager *_instance = nil;
     int ret = sqlite3_step(stmt);
     if (ret != SQLITE_DONE){
         NSLog(@"InsertQuery Error : %s", sqlite3_errmsg(db));
+        [self closeDB];
         return NO;
     }else
 //        NSLog(@"insert Query : %@", insertQuery);
@@ -164,6 +166,7 @@ static DBManager *_instance = nil;
     int ret = sqlite3_step(stmt);
     if (ret != SQLITE_DONE){
         NSLog(@"DeleteQuery Error : %s", sqlite3_errmsg(db));
+        [self closeDB];
         return NO;
     }else
 //        NSLog(@"delete Query : %@", deleteQuery);
@@ -201,6 +204,7 @@ static DBManager *_instance = nil;
     int ret = sqlite3_prepare_v2(db, insetQuery, -1, &insertStmt, NULL);
     if(ret != SQLITE_OK){
         NSLog(@"error add array: %s", sqlite3_errmsg(db));
+        [self closeDB];
         return NO;
     }
     
@@ -397,6 +401,7 @@ static DBManager *_instance = nil;
         NSInteger lastestMode = [[[NSUserDefaults standardUserDefaults] stringForKey:@"mode_preference"] intValue];
         
         _curModeID = lastestMode;
+        [self syncMusic];
         [self syncList];
         return;
     }
@@ -404,27 +409,29 @@ static DBManager *_instance = nil;
     if(index != 4){
         //먼저 모든 리스트제거
         _curModeID = 1;
-        if([self insertModeWithMinBPM:120 maxBPM:0 title:@"걷기"] == NO){
+        if([self insertModeWithMinBPM:100 maxBPM:0 title:@"걷기"] == NO){
             [self closeDB];
             return ;
         }
                 _curModeID = 2;
-        if( [self insertModeWithMinBPM:160 maxBPM:0 title:@"러닝"] == NO){
+        if( [self insertModeWithMinBPM:130 maxBPM:0 title:@"러닝"] == NO){
             [self closeDB];
             return ;
         }
                 _curModeID = 3;
-        if([self insertModeWithMinBPM:140 maxBPM:0 title:@"조깅,트레드밀"] == NO){
+        if([self insertModeWithMinBPM:120 maxBPM:0 title:@"조깅,트레드밀"] == NO){
             [self closeDB];
             return ;
         }
                 _curModeID = 4;
-        if([self insertModeWithMinBPM:130 maxBPM:0 title:@"사이클링"] == NO){
+        if([self insertModeWithMinBPM:160 maxBPM:0 title:@"사이클링"] == NO){
             [self closeDB];
             return ;
         }
         _curModeID = 1;
         [self setUserDefualtMode];
+        
+        [self syncMusic];
         [self syncList];
     }
 }
@@ -600,12 +607,12 @@ static DBManager *_instance = nil;
 }
 
 
-- (NSInteger)getCurModeIDIndex{
+- (NSInteger)getIndexOfModeID:(NSInteger)modeID{
     Mode *mode;
     for(int index = 0 ;index < [_modeList count] ; index++){
         mode = _modeList[index];
-        if(mode.modeID == _curModeID){
-            NSLog(@"lastIndex : %d", index);
+        if(mode.modeID == modeID){
+//            NSLog(@"lastIndex : %d", index);
             return index;
         }
     }
@@ -645,13 +652,14 @@ static DBManager *_instance = nil;
     int ret = sqlite3_prepare_v2(db, insetQuery, -1, &insertStmt, NULL);
     if(ret != SQLITE_OK){
         NSLog(@"error add array: %s", sqlite3_errmsg(db));
+        [self closeDB];
         return NO;
     }
     
     for(int index = 0 ; index < count ; index++) {
         Music *insertMusic = musicArr[index];
         
-        ret = sqlite3_bind_int(insertStmt, 1, insertMusic.BPM);
+        ret = sqlite3_bind_int(insertStmt, 1, (int)insertMusic.BPM);
         ret = sqlite3_bind_text(insertStmt, 2, [insertMusic.title UTF8String], -1, nil);
         ret = sqlite3_bind_text(insertStmt, 3, [insertMusic.artist UTF8String], -1, nil);
         ret = sqlite3_bind_text(insertStmt, 4, [insertMusic.location UTF8String], -1, nil);
@@ -814,7 +822,114 @@ static DBManager *_instance = nil;
 
 
 
+- (void)calendaarDummy{
+    NSDate *date = [NSDate date];
 
+    NSDateComponents *dateComp = [[NSCalendar currentCalendar] components:NSCalendarUnitSecond|NSCalendarUnitDay|NSCalendarUnitMinute|NSCalendarUnitMinute|NSCalendarUnitHour|NSCalendarUnitYear|NSCalendarUnitTimeZone fromDate:date];
+    
+    
+    NSArray *exerTimeArr = @[[NSNumber numberWithInt:30], [NSNumber numberWithInt:40],[NSNumber numberWithInt:25],[NSNumber numberWithInt:37],[NSNumber numberWithInt:28],[NSNumber numberWithInt:30],[NSNumber numberWithInt:90],[NSNumber numberWithInt:50]];
+    
+    
+    
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"KST"]];
+    dateFormatter.dateFormat = @"yyyy-MM-dd HH:mm";
+//    NSString *todayDate = nil;
+    
+    [dateComp setTimeZone:[NSTimeZone timeZoneWithName:@"KST"]];
+    
+    //2014-2-7 18:30
+    [dateComp setYear:2014];
+    [dateComp setMonth:2];
+    [dateComp setDay:7];
+    [dateComp setHour:18];
+    [dateComp setMinute:30];
+    
+    NSString *date1 = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:dateComp]];
+    
+    [dateComp setYear:2014];
+    [dateComp setMonth:2];
+    [dateComp setDay:13];
+    [dateComp setHour:19];
+    [dateComp setMinute:10];
+    
+    NSString *date2 = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:dateComp]];
+    
+    [dateComp setYear:2014];
+    [dateComp setMonth:2];
+    [dateComp setDay:16];
+    [dateComp setHour:14];
+    [dateComp setMinute:21];
+    
+    NSString *date3 = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:dateComp]];
+    
+    [dateComp setYear:2014];
+    [dateComp setMonth:2];
+    [dateComp setDay:21];
+    [dateComp setHour:20];
+    [dateComp setMinute:39];
+    
+    NSString *date4 = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:dateComp]];
+    
+//    [dateComp setYear:2013];
+//    [dateComp setMonth:1];
+    [dateComp setDay:23];
+    [dateComp setHour:12];
+    [dateComp setMinute:44];
+    
+    NSString *date5 = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:dateComp]];
+    
+    [dateComp setYear:2014];
+    [dateComp setMonth:1];
+    [dateComp setDay:3];
+    [dateComp setHour:17];
+    [dateComp setMinute:37];
+    
+    NSString *date6 = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:dateComp]];
+    
+    [dateComp setYear:2014];
+    [dateComp setMonth:1];
+    [dateComp setDay:9];
+    [dateComp setHour:14];
+    [dateComp setMinute:21];
+    
+    NSString *date7 = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:dateComp]];
+    
+    [dateComp setYear:2014];
+    [dateComp setMonth:1];
+    [dateComp setDay:28];
+    [dateComp setHour:22];
+    [dateComp setMinute:37];
+    
+    NSString *date8 = [dateFormatter stringFromDate:[[NSCalendar currentCalendar] dateFromComponents:dateComp]];
+ 
+    NSArray *startDateArr = @[date1,date2,date3,date4,date5,date6,date7,date8];
+    NSArray *modeArr =@[[NSNumber numberWithInt:1], [NSNumber numberWithInt:3],[NSNumber numberWithInt:5],[NSNumber numberWithInt:4],[NSNumber numberWithInt:2],[NSNumber numberWithInt:1],[NSNumber numberWithInt:5],[NSNumber numberWithInt:4]];
+    sqlite3_stmt *insertStmt;
+    char *selectQuery = "INSERT INTO CALENDAR (modeID, ExerTime, startDate) VALUES (?,?,?)";
+    [self openDB];
+    int ret = sqlite3_prepare_v2(db, selectQuery, -1, &insertStmt, NULL);
+    if(ret != SQLITE_OK){
+        NSLog(@"error add array: %s", sqlite3_errmsg(db));
+        return ;
+    }
+    
+    for(int index = 0 ; index < [modeArr count] ; index++) {
+        ret = sqlite3_bind_int(insertStmt, 1, [modeArr[index] intValue]);
+        ret = sqlite3_bind_int(insertStmt, 2, [exerTimeArr[index] intValue]);
+        ret = sqlite3_bind_text(insertStmt, 3, [startDateArr[index] UTF8String], -1,nil);
+        
+        ret = sqlite3_step(insertStmt);
+        
+        sqlite3_reset(insertStmt);
+    }
+   
+    sqlite3_finalize(insertStmt);
+    [self closeDB];
+    
+}
 - (BOOL)insertCalendarWithExerTime:(NSInteger)exerTime startdate:(NSDate *)startDate {
     
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -823,7 +938,7 @@ static DBManager *_instance = nil;
     
     NSString *todayDate = [dateFormatter stringFromDate:startDate];
 //    sqlite3_bind_text(saveStmt, 1, [dateString UTF8String] , -1, SQLITE_TRANSIENT);
-    NSString *insertQuery = [NSString stringWithFormat:@"INSERT INTO CALENDAR (modeID, ExerTime, startDate) VALUES (%d,%d,'%@')", _curModeID, exerTime, todayDate];
+    NSString *insertQuery = [NSString stringWithFormat:@"INSERT INTO CALENDAR (modeID, ExerTime, startDate) VALUES (%d,%d,'%@')", (int)_curModeID, (int)exerTime, todayDate];
     [self openDB];
     if(![self INSERT:insertQuery]){
         NSLog(@"Error in MUSIC");
@@ -877,7 +992,7 @@ static DBManager *_instance = nil;
     }
     sqlite3_finalize(selectStmt);
     [self closeDB];
-    NSLog(@"month : count %d time  %d", exerCount , exerMinuteCount);
+    NSLog(@"month = count %d time  %d", exerCount , exerMinuteCount);
     monthInfo = @{@"totalExerCount": [NSNumber numberWithInt:exerCount], @"totalExerMinute":[NSNumber numberWithInt:exerMinuteCount]};
     
     return monthInfo;
@@ -893,6 +1008,7 @@ static DBManager *_instance = nil;
     int ret = sqlite3_prepare_v2(db, selectQuery, -1, &selectStmt, NULL);
     if(ret != SQLITE_OK){
         NSLog(@"error add array: %s", sqlite3_errmsg(db));
+        [self closeDB];
         return NO;
     }
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
@@ -922,6 +1038,7 @@ static DBManager *_instance = nil;
         ret = sqlite3_reset(selectStmt);
     }
     sqlite3_finalize(selectStmt);
+    sqlite3_close(db);
     [self closeDB];
     
     return dayArrForMonth;
@@ -935,6 +1052,7 @@ static DBManager *_instance = nil;
     int ret = sqlite3_prepare_v2(db, selectQuery, -1, &selectStmt, NULL);
     if(ret != SQLITE_OK){
         NSLog(@"error add array: %s", sqlite3_errmsg(db));
+        [self closeDB];
         return NO;
     }
     
@@ -963,7 +1081,7 @@ static DBManager *_instance = nil;
         startDate = [dateFormatter dateFromString:date];
             dayInfo = [[CalendarDayInfo alloc] initWithDate:startDate modeID:modeID exerTime:exerTime];
         
-        NSLog(@"SELECT DAYINFO DATA!!!!!!!! date:%@, modeID : %d, exerTime: %d",date, modeID, exerTime);
+//        NSLog(@"SELECT DAYINFO DATA!!!!!!!! date:%@, modeID : %d, exerTime: %d",date, modeID, exerTime);
             [dayArr addObject:dayInfo];
     }
     

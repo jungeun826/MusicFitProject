@@ -27,6 +27,8 @@
         
         _maxRow = 0;
         _maxCol = 3;
+        self.doSwipe = YES;
+        self.curCol = 0;
         return self;
     }
     return nil;
@@ -128,9 +130,13 @@
     [self.view addGestureRecognizer:_swipeGestureRecognizer];
     
     _visibleViewController = [_viewControllers objectAtIndex:0];
+    _curCol = 0;
 }
 
 - (void)swipeDetected:(SwipeGestureRecognizer *)swipe{
+    if(self.doSwipe == NO)
+        return;
+    
     if (swipe.state == UIGestureRecognizerStateBegan) {
         _positionBeforeSwipe = self.view.frame.origin;
         _lastSwipeWay = swipe.way;
@@ -172,9 +178,15 @@
     CGRect frame = self.view.frame;
     CGPoint newOrigin;
     newOrigin.x = _positionBeforeSwipe.x + translation.x;
-    newOrigin.y = _positionBeforeSwipe.y + translation.y;
+//    newOrigin.y = _positionBeforeSwipe.y + translation.y;
+//    CGFloat x = 0.0f;
+    
+//    if(newOrigin.x < x){
+//        newOrigin.x = x;
+//    }
     frame.origin = newOrigin;
     self.view.frame = frame;
+    
     
     CGFloat movedPoints = 0;
     CGFloat totalPoints = 0;
@@ -239,14 +251,20 @@
             velocityAnimation = MAX(0.3, MIN(velocityAnimation, 0.7));
         }
     }
+   
+//    if(self.curCol == 2 && direction ==DirectionRight){
+//        
+//
+//    }else if(self.curCol == 3 && direction ==DirectionLeft){
+//        
+//    }
     if(_visibleViewController.rightViewController.rightViewController == nil && direction ==DirectionRight){
         //            [self.delegate hiddenPlayer];
         PlayerViewController *playerVC = (PlayerViewController *)[self parentViewController];
-        [playerVC hiddenPlayerWithDuration:velocityAnimation];
+        [playerVC movePlayerWithDirection:MoveToLeft];
     }else if(_visibleViewController.rightViewController == nil && direction ==DirectionLeft){
         PlayerViewController *playerVC = (PlayerViewController *)[self parentViewController];
-        
-        [playerVC showPlayerWithDuration:velocityAnimation];
+        [playerVC movePlayerWithDirection:MoveToRight];
     }
     [UIView animateWithDuration:velocityAnimation animations:^{
         CGRect frameForVisibleViewController = self.view.frame;
@@ -262,10 +280,17 @@
             // call UIKit view callbacks. not sure it's right
            
             _visibleViewController = newController;
+            if(direction == DirectionRight)
+                self.curCol++;
+            else if(direction == DirectionLeft)
+                self.curCol--;
 //            [_delegate didMoveToViewController:newController atPosition:newController.position];
             if (completion)
                 completion();
         }
     }];
+    
+    
+    
 }
 @end

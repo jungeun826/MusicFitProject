@@ -9,5 +9,5 @@
 #import <Foundation/Foundation.h>
 
 @interface BPMAnalysis : NSObject
-
+- (BOOL)getiTunseMusic;
 @end

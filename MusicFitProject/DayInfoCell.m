@@ -30,7 +30,7 @@
     else if(modeID ==4)
         return @"icon_mode4.png";
     else
-        return @"progressive2.png";
+        return @"icon_mode5.png";
 }
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
@@ -41,11 +41,8 @@
     return self;
 }
 
-- (void)setSelected:(BOOL)selected animated:(BOOL)animated
-{
-    [super setSelected:selected animated:animated];
+- (void)setSelected:(BOOL)selected animated:(BOOL)animated{
 
-    // Configure the view for the selected state
 }
 
 @end

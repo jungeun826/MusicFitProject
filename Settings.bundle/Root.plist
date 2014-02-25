@@ -36,7 +36,7 @@
 			<key>Type</key>
 			<string>PSToggleSwitchSpecifier</string>
 			<key>Title</key>
-			<string></string>
+			<string>튜토리얼 다시보기</string>
 			<key>Key</key>
 			<string>tutorial_preference</string>
 			<key>DefaultValue</key>

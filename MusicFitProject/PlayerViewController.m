@@ -12,6 +12,8 @@
 #import "DBManager.h"
 #import "SwipeViewController.h"
 #import "AddedModeDelegate.h"
+#import "PlayListViewController.h"
+
 #import "MusicFitPlayer.h"
 #import "DBManager.h"
 #import "TimerLabel.h"
@@ -225,6 +227,7 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
 - (void)viewWillDisappear:(BOOL)animated {
     [[UIApplication sharedApplication] endReceivingRemoteControlEvents];
     
@@ -259,10 +262,14 @@
     
     [swipeVC moveRightAnimated:NO];
 }
-
 - (void)syncLabels:(UIImage *)albumImage music:(Music *)music{
     self.albumImageView.image = albumImage;
-    
+    if(music == nil){
+        self.titleLabel.text = @"";
+        self.artistLabel.text = @"";
+        self.BPMLabel.text = @"0";
+    }
+        
     self.titleLabel.text = music.title;
     self.artistLabel.text = music.artist;
     self.BPMLabel.text = [NSString stringWithFormat:@"%d",(int)music.BPM];
@@ -281,35 +288,51 @@
 }
 - (void)changePlaySliderImagePoint{
     float rate = (float)(self.playTimeSlider.value / self.playTimeSlider.maximumValue);
+        
     CGRect frame = self.playBackProcessImg.frame;
-    frame.origin.x = 217*rate + 8;
-    frame.size.width = 217*(1-rate);
+    
+    if(!isnan(rate)){
+        frame.origin.x = 217*rate + 8;
+        frame.size.width = 217*(1-rate);
+    }else{
+        frame.origin.x = 8;
+        frame.size.width = 217;
+    }
     self.playBackProcessImg.frame = frame;
 }
 - (void)setMusicProgressMax:(NSInteger)max{
     [self.playTimeSlider setMaximumValue:max];
 //    NSLog(@"%d",(int)max);
 }
-
 - (void)initMusicProgress{
     self.playTimeSlider.value = 0;
 }
 
-- (void)showPlayerWithDuration:(CGFloat)duration{
+- (void)movePlayerWithDirection:(MoveToDirection)direction{
+    CGRect frame = self.playerView.frame;
+    switch (direction) {
+            
+        case MoveToRight:
+            frame.origin.x = 0;
+            break;
+        case MoveToLeft:
+            frame.origin.x = -320;
+            break;
+        case MoveToDown:
+            frame.origin.y += 120;
+            break;
+        case MoveToUp:
+            frame.origin.y -= 120;
+            break;
+        default:
+            break;
+    }
     [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        CGRect frame = self.playerView.frame;
-        frame.origin.x = 0;
-        self.playerView.frame = frame;
-    }completion:nil];
-}
-- (void)hiddenPlayerWithDuration:(CGFloat)duration{
-    [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveLinear animations:^{
-        CGRect frame = self.playerView.frame;
-        frame.origin.x = -320;
         self.playerView.frame = frame;
     }completion:nil];
 }
 - (void)changePlayBtnSelected:(BOOL)selected{
     self.playBtn.selected = selected;
 }
+
 @end

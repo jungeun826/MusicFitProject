@@ -45,6 +45,9 @@ typedef enum
 
 @end
 
+@class AVQueuePlayer;
+@class MPMediaItem;
+
 @interface MusicFitPlayer : NSObject <ModeToPlayerDelegate, EditListToPlayerDelegate>
 
 @property NSInteger curMode;

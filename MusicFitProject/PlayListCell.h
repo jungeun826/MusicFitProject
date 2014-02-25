@@ -10,7 +10,7 @@
 
 @interface PlayListCell : UITableViewCell
 - (void)setPlayListWithTitle:(NSString *)title artist:(NSString *)artist BPM:(NSInteger)bpm image:(UIImage *)image;
-- (void)setEditWithTitle:(NSString *)title artist:(NSString *)artist;
+//- (void)setEditWithTitle:(NSString *)title artist:(NSString *)artist;
 - (void)setAddWithTitle:(NSString *)title artist:(NSString *)artist;
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated;
 @end

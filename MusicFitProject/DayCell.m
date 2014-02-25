@@ -45,12 +45,12 @@
         _selected = NO;
         if(mode == 0){
             self.dayLabel.text = day;
-            self.modeImageView.image = nil;
+            self.modeImageView.hidden = YES;
         }else if(mode == 1){
             self.dayLabel.text = @"";
             [self.modeImageView  setImage:[UIImage imageNamed:@"icon_mode1.png"]];
         }else if(mode == 2){
-                        self.dayLabel.text = @"";
+            self.dayLabel.text = @"";
             [self.modeImageView  setImage:[UIImage imageNamed:@"icon_mode2.png"]];
         }else if(mode == 3){
             self.dayLabel.text = @"";
@@ -60,7 +60,7 @@
             [self.modeImageView  setImage:[UIImage imageNamed:@"icon_mode4.png"]];
         }else{
             self.dayLabel.text = @"";
-           [self.modeImageView  setImage:[UIImage imageNamed:@"pop.png"]];
+           [self.modeImageView  setImage:[UIImage imageNamed:@"icon_mode5.png"]];
         }
     }
     return self;
